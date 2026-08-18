@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Filters — Vatika Sanctuary</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core & Dashboard Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- PRESERVED TOP SITE HEADER -->
+  <header class="navbar-wrapper">
+    <div class="navbar-full" id="main-navbar">
+      <div class="nav-brand-container">
+        <a href="index.html" class="nav-brand" aria-label="Vatika Homepage">
+          <div class="brand-logo-wrap">
+            <svg class="vitaki-logo-svg" viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="vLeafAF" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2bb673"/>
+                  <stop offset="60%" stop-color="#14532d"/>
+                  <stop offset="100%" stop-color="#091e14"/>
+                </linearGradient>
+                <linearGradient id="vJadeAF" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#2BB673"/>
+                  <stop offset="50%" stop-color="#6EE7B7"/>
+                  <stop offset="100%" stop-color="#10422B"/>
+                </linearGradient>
+              </defs>
+              <rect width="48" height="48" rx="14" fill="url(#vLeafAF)" />
+              <path d="M13 14L24 34L35 14" stroke="url(#vJadeAF)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 10C24 10 32 16 32 24C32 30 27 34 24 34C21 34 16 30 16 24C16 16 24 10 24 10Z" fill="url(#vJadeAF)" fill-opacity="0.3" stroke="url(#vJadeAF)" stroke-width="1.8"/>
+              <circle cx="24" cy="19" r="2.5" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <span class="brand-title">Vatika</span>
+            <span class="brand-tagline">Advanced Filters</span>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#herbarium-section" class="nav-link">Herbarium</a></li>
+          <li><a href="index.html#interactive-3d-section" class="nav-link">3D Anatomy</a></li>
+          <li><a href="index.html#ayush-section" class="nav-link">Ayurveda Wisdom</a></li>
+          <li><a href="index.html#studio-section" class="nav-link">Personal Notes</a></li>
+          <li><a href="dashboard.html" class="nav-link" style="color: var(--color-mint); font-weight: 700;">Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-right-action">
+        <a href="index.html" class="btn-nav-start">
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="user-profile-widget">
+        <div class="avatar-circle">AS</div>
+        <div class="user-info-text">
+          <div class="user-name">Dr. Ananya Sharma</div>
+          <div class="user-role">AYUSH Herbologist</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav-menu">
+        <li>
+          <a href="dashboard.html" class="nav-item-btn">
+            <span class="nav-left-content">All Gardens</span>
+            <span class="nav-item-badge">5</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-garden.html" class="nav-item-btn">
+            <span class="nav-left-content">My Garden (Favorites)</span>
+            <span class="nav-item-badge">4</span>
+          </a>
+        </li>
+        <li>
+          <a href="study-notes.html" class="nav-item-btn">
+            <span class="nav-left-content">Botanical Study Notes</span>
+            <span class="nav-item-badge">2</span>
+          </a>
+        </li>
+        <li>
+          <a href="advanced-filters.html" class="nav-item-btn active">
+            <span class="nav-left-content">Advanced Filters</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item-btn">
+            <span class="nav-left-content">Sanctuary Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <a href="signin.html" class="nav-item-btn" style="color: #ef4444;">
+          <span class="nav-left-content">Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content: Advanced Botanical Search & Filters -->
+    <main class="dashboard-main-content">
+      <div class="dash-section-header">
+        <div>
+          <h2 class="dash-section-title">Advanced Botanical Search & Filters</h2>
+          <p class="dash-section-subtitle">Search across 5,000+ years of classical codices, botanical binomials, Dravyaguna properties (Rasa, Virya), and active phytochemical compounds.</p>
+        </div>
+      </div>
+
+      <!-- Advanced Filter Panel Workspace -->
+      <section class="advanced-filter-panel">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 1.35rem; color: #FFFFFF; font-weight: 700;">Multi-Dimensional Filter Engine</h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-secondary); margin-top: 0.2rem;">Select criteria below to narrow down medicinal species across all 5 sanctuary gardens.</p>
+          </div>
+          <button onclick="resetFilters();" class="setting-pill-opt" style="border-color: rgba(239,68,68,0.4); color: #f87171;">Reset All Filters</button>
+        </div>
+
+        <!-- Keyword Input Bar -->
+        <div class="input-icon-wrap">
+          <input type="text" id="filter-keyword-input" class="input-botanical" placeholder="Search by name, Sanskrit title, or botanical binomial (e.g. Tulsi, Ocimum sanctum, Ashwagandha, Haridra)..." oninput="applyFilters();" style="padding-left: 1.2rem; font-size: 1rem;">
+        </div>
+
+        <!-- Property Dropdowns Grid -->
+        <div class="filter-controls-grid">
+          
+          <!-- Filter 1: Garden Realm -->
+          <div class="filter-group">
+            <label for="filter-realm">Garden Realm</label>
+            <select id="filter-realm" class="select-botanical-filter" onchange="applyFilters();">
+              <option value="all">All Gardens</option>
+              <option value="digestive">Digestive & Metabolic</option>
+              <option value="immunity">Immunity & Vitality</option>
+              <option value="skincare">Skincare & Radiance</option>
+              <option value="neuro">Neuro-Vitality & Sleep</option>
+              <option value="respiratory">Respiratory & Prana</option>
+            </select>
+          </div>
+
+          <!-- Filter 2: Rasa (Taste Profile) -->
+          <div class="filter-group">
+            <label for="filter-rasa">Rasa (Taste Profile)</label>
+            <select id="filter-rasa" class="select-botanical-filter" onchange="applyFilters();">
+              <option value="all">All Taste Profiles</option>
+              <option value="tikta">Tikta (Bitter)</option>
+              <option value="madhura">Madhura (Sweet)</option>
+              <option value="katu">Katu (Pungent)</option>
+              <option value="kashaya">Kashaya (Astringent)</option>
+              <option value="amla">Amla (Sour)</option>
+            </select>
+          </div>
+
+          <!-- Filter 3: Virya (Thermal Potency) -->
+          <div class="filter-group">
+            <label for="filter-virya">Virya (Thermal Potency)</label>
+            <select id="filter-virya" class="select-botanical-filter" onchange="applyFilters();">
+              <option value="all">All Virya Potencies</option>
+              <option value="ushna">Ushna (Heating)</option>
+              <option value="sita">Sita (Cooling)</option>
+            </select>
+          </div>
+
+          <!-- Filter 4: Plant Part Used -->
+          <div class="filter-group">
+            <label for="filter-part">Plant Part Used</label>
+            <select id="filter-part" class="select-botanical-filter" onchange="applyFilters();">
+              <option value="all">All Plant Parts</option>
+              <option value="patra">Patra (Leaf)</option>
+              <option value="mula">Mula (Root)</option>
+              <option value="rhizome">Rhizome</option>
+              <option value="phala">Phala (Fruit)</option>
+              <option value="twak">Twak (Bark)</option>
+            </select>
+          </div>
+
+          <!-- Filter 5: AYUSH System -->
+          <div class="filter-group">
+            <label for="filter-system">AYUSH Codified System</label>
+            <select id="filter-system" class="select-botanical-filter" onchange="applyFilters();">
+              <option value="all">All Systems</option>
+              <option value="ayurveda">Ayurveda</option>
+              <option value="siddha">Siddha</option>
+              <option value="unani">Unani</option>
+              <option value="homeopathy">Homeopathy</option>
+              <option value="sowarigpa">Sowa-Rigpa</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Quick Phytochemical Filter Chips -->
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+          <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 700;">Phytochemical Tag:</span>
+          <button class="setting-pill-opt" onclick="setCompound('eugenol')">Eugenol</button>
+          <button class="setting-pill-opt" onclick="setCompound('withanolides')">Withanolides</button>
+          <button class="setting-pill-opt" onclick="setCompound('curcumin')">Curcuminoids</button>
+          <button class="setting-pill-opt" onclick="setCompound('bacopasides')">Bacopasides</button>
+          <button class="setting-pill-opt" onclick="setCompound('nimbin')">Nimbin</button>
+          <button class="setting-pill-opt" onclick="setCompound('acemannan')">Acemannan</button>
+        </div>
+      </section>
+
+      <!-- Dynamic Filter Results Summary Header -->
+      <div id="filter-results-summary" style="margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; color: #FFFFFF;" id="results-count-text">Matching Species Results (7)</h3>
+      </div>
+
+      <!-- Live Filtered Species Cards Grid -->
+      <div class="filtered-species-grid" id="filtered-plants-container"></div>
+
+    </main>
+  </div>
+
+  <!-- Real-Time Botanical Filtering Engine Script -->
+  <script>
+    const botanicalDatabase = [
+      {
+        id: 'tulsi',
+        name: 'Tulsi (Holy Basil)',
+        binomial: 'Ocimum sanctum',
+        sanskrit: 'Tulasi',
+        realm: 'immunity',
+        rasa: 'katu',
+        virya: 'ushna',
+        part: 'patra',
+        system: 'ayurveda',
+        compound: 'eugenol',
+        desc: 'Respiratory clearing leaf rich in Eugenol essential oil. Clears Kapha-Vata mucus channels.',
+        image: 'assets/images/tulsi.jpg',
+        tags: ['Eugenol', 'Ushna Virya', 'Patra Leaf', 'Kapha-Vata']
+      },
+      {
+        id: 'ashwagandha',
+        name: 'Ashwagandha',
+        binomial: 'Withania somnifera',
+        sanskrit: 'Ashwagandha',
+        realm: 'immunity',
+        rasa: 'tikta',
+        virya: 'ushna',
+        part: 'mula',
+        system: 'ayurveda',
+        compound: 'withanolides',
+        desc: 'Rejuvenating taproot rich in Withanolides A-G. Rebuilds bio-energetic vitality & stress resilience.',
+        image: 'assets/images/ashwagandha.jpg',
+        tags: ['Withanolides', 'Mula Root', 'Rasayana', 'Balya']
+      },
+      {
+        id: 'turmeric',
+        name: 'Turmeric (Haridra)',
+        binomial: 'Curcuma longa',
+        sanskrit: 'Haridra',
+        realm: 'skincare',
+        rasa: 'tikta',
+        virya: 'ushna',
+        part: 'rhizome',
+        system: 'ayurveda',
+        compound: 'curcumin',
+        desc: 'Potent rhizome rich in Curcuminoids. Provides systemic blood purification and dermal healing.',
+        image: 'assets/images/ginger_turmeric.jpg',
+        tags: ['Curcumin', 'Rhizome', 'Rakta Shodhaka', 'Varnya']
+      },
+      {
+        id: 'brahmi',
+        name: 'Brahmi (Gotu Kola)',
+        binomial: 'Bacopa monnieri',
+        sanskrit: 'Brahmi',
+        realm: 'neuro',
+        rasa: 'tikta',
+        virya: 'sita',
+        part: 'patra',
+        system: 'ayurveda',
+        compound: 'bacopasides',
+        desc: 'Nootropic herb rich in Bacopasides A & B. Enhances synaptic memory and calms Pitta heat.',
+        image: 'assets/images/brahmi.jpg',
+        tags: ['Bacopasides', 'Medhya', 'Sita Virya', 'Brain Tonic']
+      },
+      {
+        id: 'aloe',
+        name: 'Aloe Vera (Kumari)',
+        binomial: 'Aloe barbadensis',
+        sanskrit: 'Kumari',
+        realm: 'skincare',
+        rasa: 'tikta',
+        virya: 'sita',
+        part: 'patra',
+        system: 'ayurveda',
+        compound: 'acemannan',
+        desc: 'Cooling succulent gel rich in Acemannan hydrogel. Soothes skin erythema & stimulates collagen.',
+        image: 'assets/images/aloe_vera.jpg',
+        tags: ['Acemannan', 'Sita Virya', 'Dermal Matrix', 'Pitta Shamak']
+      },
+      {
+        id: 'neem',
+        name: 'Neem (Nimba)',
+        binomial: 'Azadirachta indica',
+        sanskrit: 'Nimba',
+        realm: 'skincare',
+        rasa: 'tikta',
+        virya: 'sita',
+        part: 'patra',
+        system: 'ayurveda',
+        compound: 'nimbin',
+        desc: 'Bitter leaf and bark containing Nimbin & Gedunin limonoids. Powerful anti-microbial blood cleanser.',
+        image: 'assets/images/neem.jpg',
+        tags: ['Nimbin', 'Tikta Rasa', 'Kandughna', 'Anti-Microbial']
+      },
+      {
+        id: 'amla',
+        name: 'Amla (Indian Gooseberry)',
+        binomial: 'Phyllanthus emblica',
+        sanskrit: 'Amalaki',
+        realm: 'immunity',
+        rasa: 'amla',
+        virya: 'sita',
+        part: 'phala',
+        system: 'ayurveda',
+        compound: 'vitamin-c',
+        desc: 'Rejuvenating fruit rich in natural Vitamin C & Emblicanins. Harmonizes all 3 Dosha imbalances.',
+        image: 'assets/images/amla.jpg',
+        tags: ['Vitamin C', 'Phala Fruit', 'Tridoshahara', 'Ojas']
+      }
+    ];
+
+    function renderFilteredPlants(list) {
+      const container = document.getElementById('filtered-plants-container');
+      const summaryBox = document.getElementById('filter-results-summary');
+      const countText = document.getElementById('results-count-text');
+
+      if (!list || list.length === 0) {
+        countText.textContent = 'No matching medicinal species found.';
+        container.innerHTML = `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--color-text-muted); background: rgba(8,29,19,0.5); border-radius: 14px; border: 1px dashed rgba(43,182,115,0.3);">No species match the selected criteria. Try adjusting your filters.</div>`;
+        return;
+      }
+
+      countText.textContent = `Matching Species Results (${list.length})`;
+
+      container.innerHTML = list.map(item => `
+        <div class="specimen-card-filtered">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem;">
+              <span class="fav-plant-tag" style="text-transform: uppercase;">${item.sanskrit}</span>
+              <span style="font-size: 0.76rem; background: rgba(43, 182, 115, 0.2); color: var(--color-mint-light); padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 700;">${item.binomial}</span>
+            </div>
+            
+            <div class="garden-image-portal" style="height: 150px;">
+              <img src="${item.image}" alt="${item.name}" class="garden-img-thumb">
+            </div>
+
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: #FFFFFF; margin: 0.7rem 0 0.3rem;">${item.name}</h3>
+            <p style="font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.4; margin-bottom: 0.8rem;">${item.desc}</p>
+
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              ${item.tags.map(t => `<span style="font-size: 0.72rem; background: rgba(5,18,11,0.9); border: 1px solid rgba(43,182,115,0.3); color: var(--color-mint-light); padding: 0.15rem 0.55rem; border-radius: 12px; font-weight: 600;">${t}</span>`).join('')}
+            </div>
+          </div>
+
+          <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d" style="padding: 0.65rem 1rem; margin-top: 0.8rem; font-size: 0.85rem; text-align: center;">
+            <span>Dissect 3D Model</span>
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function applyFilters() {
+      const keyword = document.getElementById('filter-keyword-input').value.toLowerCase().trim();
+      const realm = document.getElementById('filter-realm').value;
+      const rasa = document.getElementById('filter-rasa').value;
+      const virya = document.getElementById('filter-virya').value;
+      const part = document.getElementById('filter-part').value;
+      const system = document.getElementById('filter-system').value;
+
+      const filtered = botanicalDatabase.filter(item => {
+        const matchesKeyword = !keyword || 
+          item.name.toLowerCase().includes(keyword) || 
+          item.binomial.toLowerCase().includes(keyword) || 
+          item.sanskrit.toLowerCase().includes(keyword) ||
+          item.desc.toLowerCase().includes(keyword) ||
+          item.compound.toLowerCase().includes(keyword);
+
+        const matchesRealm = (realm === 'all') || (item.realm === realm);
+        const matchesRasa = (rasa === 'all') || item.rasa.includes(rasa);
+        const matchesVirya = (virya === 'all') || (item.virya === virya);
+        const matchesPart = (part === 'all') || (item.part === part);
+        const matchesSystem = (system === 'all') || (item.system === system);
+
+        return matchesKeyword && matchesRealm && matchesRasa && matchesVirya && matchesPart && matchesSystem;
+      });
+
+      renderFilteredPlants(filtered);
+    }
+
+    function setCompound(compoundName) {
+      document.getElementById('filter-keyword-input').value = compoundName;
+      applyFilters();
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-keyword-input').value = '';
+      document.getElementById('filter-realm').value = 'all';
+      document.getElementById('filter-rasa').value = 'all';
+      document.getElementById('filter-virya').value = 'all';
+      document.getElementById('filter-part').value = 'all';
+      document.getElementById('filter-system').value = 'all';
+      applyFilters();
+    }
+
+    // Initial render on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFilteredPlants(botanicalDatabase);
+    });
+  </script>
+
+</body>
+</html>

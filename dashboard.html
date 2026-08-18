@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Gardens — Vatika Sanctuary</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core & Dashboard Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- PRESERVED TOP SITE HEADER -->
+  <header class="navbar-wrapper">
+    <div class="navbar-full" id="main-navbar">
+      <div class="nav-brand-container">
+        <a href="index.html" class="nav-brand" aria-label="Vatika Homepage">
+          <div class="brand-logo-wrap">
+            <svg class="vitaki-logo-svg" viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="vLeafAll2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2bb673"/>
+                  <stop offset="60%" stop-color="#14532d"/>
+                  <stop offset="100%" stop-color="#091e14"/>
+                </linearGradient>
+                <linearGradient id="vJadeAll2" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#2BB673"/>
+                  <stop offset="50%" stop-color="#6EE7B7"/>
+                  <stop offset="100%" stop-color="#10422B"/>
+                </linearGradient>
+              </defs>
+              <rect width="48" height="48" rx="14" fill="url(#vLeafAll2)" />
+              <path d="M13 14L24 34L35 14" stroke="url(#vJadeAll2)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 10C24 10 32 16 32 24C32 30 27 34 24 34C21 34 16 30 16 24C16 16 24 10 24 10Z" fill="url(#vJadeAll2)" fill-opacity="0.3" stroke="url(#vJadeAll2)" stroke-width="1.8"/>
+              <circle cx="24" cy="19" r="2.5" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <span class="brand-title">Vatika</span>
+            <span class="brand-tagline">Sanctuary Dashboard</span>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#herbarium-section" class="nav-link">Herbarium</a></li>
+          <li><a href="index.html#interactive-3d-section" class="nav-link">3D Anatomy</a></li>
+          <li><a href="index.html#ayush-section" class="nav-link">Ayurveda Wisdom</a></li>
+          <li><a href="index.html#studio-section" class="nav-link">Personal Notes</a></li>
+          <li><a href="dashboard.html" class="nav-link" style="color: var(--color-mint); font-weight: 700;">Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-right-action">
+        <a href="index.html" class="btn-nav-start">
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="dashboard-app-layout">
+
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="user-profile-widget">
+        <div class="avatar-circle">AS</div>
+        <div class="user-info-text">
+          <div class="user-name">Dr. Ananya Sharma</div>
+          <div class="user-role">AYUSH Herbologist</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav-menu">
+        <li>
+          <a href="dashboard.html" class="nav-item-btn active">
+            <span class="nav-left-content">All Gardens</span>
+            <span class="nav-item-badge">5</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-garden.html" class="nav-item-btn">
+            <span class="nav-left-content">My Garden (Favorites)</span>
+            <span class="nav-item-badge">4</span>
+          </a>
+        </li>
+        <li>
+          <a href="study-notes.html" class="nav-item-btn">
+            <span class="nav-left-content">Botanical Study Notes</span>
+            <span class="nav-item-badge">2</span>
+          </a>
+        </li>
+        <li>
+          <a href="advanced-filters.html" class="nav-item-btn">
+            <span class="nav-left-content">Advanced Filters</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item-btn">
+            <span class="nav-left-content">Sanctuary Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <a href="signin.html" class="nav-item-btn" style="color: #ef4444;">
+          <span class="nav-left-content">Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace: All Gardens -->
+    <main class="dashboard-main-content">
+
+      <!-- Welcome Hero Banner -->
+      <section class="welcome-hero-banner">
+        <div class="welcome-title-group">
+          <h2>All Botanical Gardens</h2>
+          <p>Explore the 5 themed medicinal plant beds of Vatika Sanctuary. Select any garden below to launch its interactive WebGL 3D plant models.</p>
+
+          <div class="banner-stats-pill-row">
+            <div class="stat-chip">5 Gardens Unlocked</div>
+            <div class="stat-chip">56 Total Medicinal Species</div>
+            <div class="stat-chip">4 Saved in My Garden</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE 5 GARDENS SHOWCASE (3 TOP + 2 CENTERED BOTTOM) -->
+      <section>
+        <div class="dash-section-header">
+          <div>
+            <h2 class="dash-section-title">The 5 Themed Botanical Gardens</h2>
+            <p class="dash-section-subtitle">Select any garden button below to dissect its active medicinal flora in 3D WebGL.</p>
+          </div>
+        </div>
+
+        <div class="gardens-flex-layout">
+          
+          <!-- Garden 1: Digestive & Metabolic (Amber Gold #F59E0B) -->
+          <article class="garden-card-themed theme-digestive-card">
+            <div class="garden-card-header" style="justify-content: flex-end;">
+              <span class="garden-species-count">12 Species</span>
+            </div>
+            
+            <div class="garden-image-portal">
+              <img src="assets/images/ginger_turmeric.jpg" alt="Digestive & Metabolic Garden" class="garden-img-thumb">
+            </div>
+
+            <div class="garden-card-body">
+              <h3>Digestive & Metabolic Garden</h3>
+              <p>Flora targeting <em>Agni Deepana</em> (digestive fire) and <em>Pachana</em> bio-energetics. Features Ginger, Pippali, Cinnamon, and Ajwain.</p>
+            </div>
+            <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d">
+              <span>Explore Digestive Garden 3D</span>
+            </a>
+          </article>
+
+          <!-- Garden 2: Immunity & Vitality (Emerald Mint #10B981) -->
+          <article class="garden-card-themed theme-immunity-card">
+            <div class="garden-card-header" style="justify-content: flex-end;">
+              <span class="garden-species-count">15 Species</span>
+            </div>
+
+            <div class="garden-image-portal">
+              <img src="assets/images/tulsi.jpg" alt="Immunity & Vitality Garden" class="garden-img-thumb">
+            </div>
+
+            <div class="garden-card-body">
+              <h3>Immunity & Vitality Garden</h3>
+              <p>Classical <em>Ojas</em> builders and adaptogenic <em>Rasayana</em> tonics. Features Holy Basil (Tulsi), Guduchi, and Amla.</p>
+            </div>
+            <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d">
+              <span>Explore Immunity Garden 3D</span>
+            </a>
+          </article>
+
+          <!-- Garden 3: Skincare & Radiance (Teal Cyan #2DD4BF) -->
+          <article class="garden-card-themed theme-skincare-card">
+            <div class="garden-card-header" style="justify-content: flex-end;">
+              <span class="garden-species-count">10 Species</span>
+            </div>
+
+            <div class="garden-image-portal">
+              <img src="assets/images/aloe_vera.jpg" alt="Skincare & Radiance Garden" class="garden-img-thumb">
+            </div>
+
+            <div class="garden-card-body">
+              <h3>Skincare & Radiance Garden</h3>
+              <p>Natural blood purifiers (<em>Raktashodhaka</em>) and skin complexion enhancers (<em>Varnya</em>). Features Neem, Turmeric, and Aloe Vera.</p>
+            </div>
+            <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d">
+              <span>Explore Skincare Garden 3D</span>
+            </a>
+          </article>
+
+          <!-- Garden 4: Neuro-Vitality & Sleep (Amethyst Purple #C084FC) -->
+          <article class="garden-card-themed theme-mental-card">
+            <div class="garden-card-header" style="justify-content: flex-end;">
+              <span class="garden-species-count">8 Species</span>
+            </div>
+
+            <div class="garden-image-portal">
+              <img src="assets/images/brahmi.jpg" alt="Neuro-Vitality & Sleep Garden" class="garden-img-thumb">
+            </div>
+
+            <div class="garden-card-body">
+              <h3>Neuro-Vitality & Sleep Garden</h3>
+              <p>Nootropic <em>Medhya Rasayana</em> herbs for cognitive focus, mental clarity, and restful sleep. Features Brahmi, Shankhpushpi, and Gotu Kola.</p>
+            </div>
+            <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d">
+              <span>Explore Neuro Garden 3D</span>
+            </a>
+          </article>
+
+          <!-- Garden 5: Respiratory & Prana (Sky Aquamarine #38BDF8) -->
+          <article class="garden-card-themed theme-respiratory-card">
+            <div class="garden-card-header" style="justify-content: flex-end;">
+              <span class="garden-species-count">11 Species</span>
+            </div>
+
+            <div class="garden-image-portal">
+              <img src="assets/images/ashwagandha.jpg" alt="Respiratory & Prana Garden" class="garden-img-thumb">
+            </div>
+
+            <div class="garden-card-body">
+              <h3>Respiratory & Prana Garden</h3>
+              <p>Expectorant and decongestant flora designed for <em>Pranavaha Srotas</em> (respiratory tract) health. Features Vasa, Liquorice, and Eucalyptus.</p>
+            </div>
+            <a href="index.html#interactive-3d-section" class="btn-explore-garden-3d">
+              <span>Explore Respiratory Garden 3D</span>
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

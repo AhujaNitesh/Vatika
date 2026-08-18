@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botanical Study Notes — Vatika Sanctuary</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Core & Dashboard Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- PRESERVED TOP SITE HEADER -->
+  <header class="navbar-wrapper">
+    <div class="navbar-full" id="main-navbar">
+      <div class="nav-brand-container">
+        <a href="index.html" class="nav-brand" aria-label="Vatika Homepage">
+          <div class="brand-logo-wrap">
+            <svg class="vitaki-logo-svg" viewBox="0 0 48 48" fill="none">
+              <defs>
+                <linearGradient id="vLeafSN3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#2bb673"/>
+                  <stop offset="60%" stop-color="#14532d"/>
+                  <stop offset="100%" stop-color="#091e14"/>
+                </linearGradient>
+                <linearGradient id="vJadeSN3" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#2BB673"/>
+                  <stop offset="50%" stop-color="#6EE7B7"/>
+                  <stop offset="100%" stop-color="#10422B"/>
+                </linearGradient>
+              </defs>
+              <rect width="48" height="48" rx="14" fill="url(#vLeafSN3)" />
+              <path d="M13 14L24 34L35 14" stroke="url(#vJadeSN3)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 10C24 10 32 16 32 24C32 30 27 34 24 34C21 34 16 30 16 24C16 16 24 10 24 10Z" fill="url(#vJadeSN3)" fill-opacity="0.3" stroke="url(#vJadeSN3)" stroke-width="1.8"/>
+              <circle cx="24" cy="19" r="2.5" fill="#FFFFFF"/>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <span class="brand-title">Vatika</span>
+            <span class="brand-tagline">Study Journal</span>
+          </div>
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#herbarium-section" class="nav-link">Herbarium</a></li>
+          <li><a href="index.html#interactive-3d-section" class="nav-link">3D Anatomy</a></li>
+          <li><a href="index.html#ayush-section" class="nav-link">Ayurveda Wisdom</a></li>
+          <li><a href="index.html#studio-section" class="nav-link">Personal Notes</a></li>
+          <li><a href="dashboard.html" class="nav-link" style="color: var(--color-mint); font-weight: 700;">Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-right-action">
+        <a href="index.html" class="btn-nav-start">
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-app-layout">
+    
+    <!-- Sidebar Navigation (Pure Text) -->
+    <aside class="dashboard-sidebar">
+      <div class="user-profile-widget">
+        <div class="avatar-circle">AS</div>
+        <div class="user-info-text">
+          <div class="user-name">Dr. Ananya Sharma</div>
+          <div class="user-role">AYUSH Herbologist</div>
+        </div>
+      </div>
+
+      <ul class="sidebar-nav-menu">
+        <li>
+          <a href="dashboard.html" class="nav-item-btn">
+            <span class="nav-left-content">All Gardens</span>
+            <span class="nav-item-badge">5</span>
+          </a>
+        </li>
+        <li>
+          <a href="my-garden.html" class="nav-item-btn">
+            <span class="nav-left-content">My Garden (Favorites)</span>
+            <span class="nav-item-badge">4</span>
+          </a>
+        </li>
+        <li>
+          <a href="study-notes.html" class="nav-item-btn active">
+            <span class="nav-left-content">Botanical Study Notes</span>
+            <span class="nav-item-badge">2</span>
+          </a>
+        </li>
+        <li>
+          <a href="advanced-filters.html" class="nav-item-btn">
+            <span class="nav-left-content">Advanced Filters</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item-btn">
+            <span class="nav-left-content">Sanctuary Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <a href="signin.html" class="nav-item-btn" style="color: #ef4444;">
+          <span class="nav-left-content">Sign Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Elevated Main Content -->
+    <main class="dashboard-main-content">
+      <div class="dash-section-header">
+        <div>
+          <h2 class="dash-section-title">Botanical Study Journal & Decoction Logs</h2>
+          <p class="dash-section-subtitle">Record research observations, Shloka commentaries, and herbal tea formulas attached to 3D plant anatomy.</p>
+        </div>
+      </div>
+
+      <div class="notes-journal-wrapper">
+        <!-- Editor Box -->
+        <div class="notes-editor-box" style="border: 1.8px solid var(--color-mint); box-shadow: 0 20px 50px rgba(0,0,0,0.7), var(--shadow-glow);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: #FFFFFF;">Create New Journal Entry</h3>
+            <span style="font-size: 0.76rem; background: rgba(43,182,115,0.2); color: var(--color-mint-light); padding: 0.2rem 0.6rem; border-radius: 6px; font-weight: 700;">Encrypted Local Journal</span>
+          </div>
+          
+          <div class="form-group-botanical">
+            <label for="sn-title">Journal Title</label>
+            <input type="text" id="sn-title" class="input-botanical" placeholder="e.g. Tulsi & Ginger Steam Inhalation Ratios" style="padding-left: 1rem;">
+          </div>
+
+          <div class="form-group-botanical">
+            <label for="sn-plant">Target Plant Specimen</label>
+            <select id="sn-plant" class="input-botanical" style="padding-left: 1rem; cursor: pointer;">
+              <option>Tulsi (Ocimum sanctum)</option>
+              <option>Ashwagandha (Withania somnifera)</option>
+              <option>Turmeric (Curcuma longa)</option>
+              <option>Brahmi (Bacopa monnieri)</option>
+              <option>Neem (Azadirachta indica)</option>
+            </select>
+          </div>
+
+          <div class="form-group-botanical">
+            <label for="sn-text">Observation Notes / Recipe Commentary</label>
+            <textarea id="sn-text" class="notes-input-textarea" placeholder="Detail active volatile constituents, decoction boiling times, lipid medium, or Sanskrit Shloka commentary..." style="height: 140px;"></textarea>
+          </div>
+
+          <button class="btn-save-note" onclick="addNote();">+ Save Entry to Journal</button>
+        </div>
+
+        <!-- History Container -->
+        <div class="notes-history-box" id="notes-list-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h3 style="font-family: var(--font-display); font-size: 1.25rem; color: #FFFFFF;">Saved Journal Entries</h3>
+            <span style="font-size: 0.8rem; color: var(--color-text-muted);">2 Entries</span>
+          </div>
+          
+          <div class="saved-note-item" style="border: 1px solid rgba(43,182,115,0.3); background: rgba(5,18,11,0.85);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div class="note-item-title">Tulsi-Ginger Respiratory Decoction</div>
+              <span style="font-size: 0.72rem; color: var(--color-mint-light); font-weight: 700; background: rgba(43,182,115,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">Decoction</span>
+            </div>
+            <div class="note-item-date">August 18, 2026 • Specimen: Tulsi (Ocimum sanctum)</div>
+            <div class="note-item-text">Steep 5 fresh Patra leaves with 2g crushed ginger rhizome in 200ml spring water. Volatile terpenes release optimum steam aroma within 7 minutes.</div>
+          </div>
+
+          <div class="saved-note-item" style="border: 1px solid rgba(43,182,115,0.3); background: rgba(5,18,11,0.85);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div class="note-item-title">Ashwagandha Warm Milk Infusion</div>
+              <span style="font-size: 0.72rem; color: var(--color-mint-light); font-weight: 700; background: rgba(43,182,115,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">Adaptogen Lipid</span>
+            </div>
+            <div class="note-item-date">August 15, 2026 • Specimen: Ashwagandha (Withania somnifera)</div>
+            <div class="note-item-text">Combine 3g Mula powder with warm A2 milk and raw honey. Lipid medium enhances lipophilic withanolide absorption into nervous tissue.</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function addNote() {
+      const title = document.getElementById('sn-title').value.trim();
+      const plant = document.getElementById('sn-plant').value;
+      const text = document.getElementById('sn-text').value.trim();
+      if (!title || !text) {
+        alert('Please enter a title and observation note text.');
+        return;
+      }
+      const box = document.getElementById('notes-list-box');
+      const html = `
+        <div class="saved-note-item" style="border: 1px solid rgba(43,182,115,0.3); background: rgba(5,18,11,0.85);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div class="note-item-title">${title}</div>
+            <span style="font-size: 0.72rem; color: var(--color-mint-light); font-weight: 700; background: rgba(43,182,115,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">Custom Entry</span>
+          </div>
+          <div class="note-item-date">Just Now • Specimen: ${plant}</div>
+          <div class="note-item-text">${text}</div>
+        </div>
+      `;
+      box.insertAdjacentHTML('afterbegin', html);
+      document.getElementById('sn-title').value = '';
+      document.getElementById('sn-text').value = '';
+      alert('Journal entry saved successfully!');
+    }
+  </script>
+
+</body>
+</html>

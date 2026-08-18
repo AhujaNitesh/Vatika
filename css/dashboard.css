@@ -1,0 +1,741 @@
+/* ==========================================================================
+   VATIKA BOTANICAL SANCTUARY — USER DASHBOARD STYLES (css/dashboard.css)
+   Luxury Glassmorphic Dashboard Layout & Theme Systems
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+
+  --color-mint: #2bb673;
+  --color-mint-light: #6ee7b7;
+  --color-jade: #15803d;
+  --color-bg-deep: #030d08;
+  --color-bg-card: rgba(8, 29, 19, 0.88);
+  --color-border: rgba(43, 182, 115, 0.3);
+
+  /* Themed Garden Accents */
+  --theme-digestive: #F59E0B;
+  --theme-immunity: #10B981;
+  --theme-skincare: #2DD4BF;
+  --theme-mental: #C084FC;
+  --theme-respiratory: #38BDF8;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-pill: 9999px;
+  --shadow-glow: 0 0 30px rgba(43, 182, 115, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.dashboard-body {
+  min-height: 100vh;
+  background: var(--color-bg-deep);
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(43, 182, 115, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(9, 30, 20, 0.95) 0%, #030d08 100%);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* App Layout Structure */
+.dashboard-app-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  padding-top: 5.2rem;
+}
+
+/* Sidebar Navigation */
+.dashboard-sidebar {
+  background: rgba(5, 18, 11, 0.95);
+  backdrop-filter: blur(20px);
+  border-right: 1.5px solid rgba(43, 182, 115, 0.25);
+  padding: 2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: fixed;
+  top: 5.2rem;
+  bottom: 0;
+  width: 280px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.user-profile-widget {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: rgba(43, 182, 115, 0.1);
+  border: 1px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-md);
+}
+
+.avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2bb673 0%, #15803d 100%);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #FFFFFF;
+  border: 2px solid #6ee7b7;
+  box-shadow: 0 0 12px rgba(110, 231, 183, 0.4);
+}
+
+.user-info-text .user-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: #FFFFFF;
+}
+
+.user-info-text .user-role {
+  font-size: 0.76rem;
+  color: var(--color-mint-light);
+  font-weight: 600;
+}
+
+.sidebar-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  list-style: none;
+}
+
+.nav-item-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.1rem;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.nav-item-btn .nav-left-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-item-btn:hover {
+  background: rgba(43, 182, 115, 0.12);
+  color: #FFFFFF;
+  border-color: rgba(43, 182, 115, 0.3);
+  transform: translateX(4px);
+}
+
+.nav-item-btn.active {
+  background: linear-gradient(135deg, rgba(43, 182, 115, 0.28) 0%, rgba(21, 128, 61, 0.4) 100%);
+  color: #FFFFFF;
+  border-color: var(--color-mint);
+  box-shadow: 0 0 15px rgba(43, 182, 115, 0.3);
+  font-weight: 700;
+}
+
+.nav-item-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-mint);
+  color: #05120B;
+}
+
+/* Main Dashboard Container */
+.dashboard-main-content {
+  grid-column: 2;
+  padding: 2.2rem 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+  max-width: 1300px;
+}
+
+/* Welcome Banner */
+.welcome-hero-banner {
+  background: radial-gradient(circle at 80% 20%, rgba(43, 182, 115, 0.25) 0%, rgba(8, 29, 19, 0.9) 70%);
+  border: 1.8px solid var(--color-mint);
+  border-radius: var(--radius-lg);
+  padding: 2.6rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-title-group h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.welcome-title-group p {
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
+
+.banner-stats-pill-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.95rem;
+  background: rgba(5, 18, 11, 0.8);
+  border: 1px solid rgba(43, 182, 115, 0.35);
+  border-radius: var(--radius-pill);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-mint-light);
+}
+
+/* Section Titles */
+.dash-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.dash-section-title {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dash-section-subtitle {
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.2rem;
+}
+
+/* Garden Cards Flex Layout (3 Top + 2 Centered Bottom) */
+.gardens-flex-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.8rem;
+}
+
+.gardens-flex-layout .garden-card-themed {
+  flex: 1 1 calc(33.333% - 1.2rem);
+  min-width: 310px;
+  max-width: 385px;
+}
+
+.garden-card-themed {
+  background: rgba(8, 29, 19, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  border: 1.8px solid var(--card-accent-border, rgba(43, 182, 115, 0.3));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.4rem;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.garden-card-themed::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--card-accent-color, var(--color-mint));
+}
+
+.garden-card-themed:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), var(--card-glow, var(--shadow-glow));
+  border-color: var(--card-accent-color, var(--color-mint));
+}
+
+.garden-image-portal {
+  width: 100%;
+  height: 160px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 1.5px solid var(--card-accent-border, rgba(43, 182, 115, 0.3));
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.2rem;
+}
+
+.garden-img-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.garden-card-themed:hover .garden-img-thumb {
+  transform: scale(1.08);
+}
+
+/* Distinct 5 Theme Classes */
+.theme-digestive-card {
+  --card-accent-color: #F59E0B;
+  --card-accent-border: rgba(245, 158, 11, 0.4);
+  --card-glow: 0 0 30px rgba(245, 158, 11, 0.35);
+}
+
+.theme-immunity-card {
+  --card-accent-color: #10B981;
+  --card-accent-border: rgba(16, 185, 129, 0.4);
+  --card-glow: 0 0 30px rgba(16, 185, 129, 0.35);
+}
+
+.theme-skincare-card {
+  --card-accent-color: #2DD4BF;
+  --card-accent-border: rgba(45, 212, 191, 0.4);
+  --card-glow: 0 0 30px rgba(45, 212, 191, 0.35);
+}
+
+.theme-mental-card {
+  --card-accent-color: #C084FC;
+  --card-accent-border: rgba(192, 132, 252, 0.4);
+  --card-glow: 0 0 30px rgba(192, 132, 252, 0.35);
+}
+
+.theme-respiratory-card {
+  --card-accent-color: #38BDF8;
+  --card-accent-border: rgba(56, 189, 248, 0.4);
+  --card-glow: 0 0 30px rgba(56, 189, 248, 0.35);
+}
+
+.garden-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.garden-icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-accent-border);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+}
+
+.garden-species-count {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--card-accent-color);
+  border: 1px solid var(--card-accent-border);
+}
+
+.garden-card-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.4rem;
+}
+
+.garden-card-body p {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.btn-explore-garden-3d {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius-pill);
+  background: rgba(5, 18, 11, 0.9);
+  color: var(--card-accent-color);
+  border: 1.5px solid var(--card-accent-border);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.btn-explore-garden-3d:hover {
+  background: var(--card-accent-color);
+  color: #05120B;
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* My Personal Sanctuary (Favorited Plants Grid) */
+.my-garden-plants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.plant-fav-card {
+  background: rgba(8, 29, 19, 0.88);
+  border: 1.5px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.plant-fav-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-mint);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), var(--shadow-glow);
+}
+
+.fav-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fav-plant-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-mint-light);
+  letter-spacing: 0.06em;
+}
+
+.btn-remove-fav {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.btn-remove-fav:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.fav-plant-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.fav-plant-sanskrit {
+  font-size: 0.84rem;
+  color: var(--color-mint-light);
+  font-style: italic;
+}
+
+.btn-view-3d-mini {
+  width: 100%;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: rgba(43, 182, 115, 0.15);
+  color: var(--color-mint-light);
+  border: 1px solid rgba(43, 182, 115, 0.35);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-view-3d-mini:hover {
+  background: var(--color-mint);
+  color: #05120B;
+  border-color: #6ee7b7;
+}
+
+/* Notes Section */
+.notes-journal-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+}
+
+.notes-editor-box, .notes-history-box {
+  background: rgba(8, 29, 19, 0.88);
+  border: 1.5px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.notes-input-textarea {
+  width: 100%;
+  height: 120px;
+  background: rgba(5, 18, 11, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 0.9rem;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  resize: vertical;
+  outline: none;
+}
+
+.notes-input-textarea:focus {
+  border-color: var(--color-mint);
+  box-shadow: 0 0 15px rgba(43, 182, 115, 0.35);
+}
+
+.btn-save-note {
+  align-self: flex-end;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-mint);
+  color: #05120B;
+  border: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save-note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(110, 231, 183, 0.5);
+}
+
+.saved-note-item {
+  padding: 1rem;
+  background: rgba(5, 18, 11, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.note-item-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-mint-light);
+}
+
+.note-item-date {
+  font-size: 0.74rem;
+  color: var(--color-text-muted);
+}
+
+.note-item-text {
+  font-size: 0.86rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* Settings Box */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.setting-card-item {
+  background: rgba(8, 29, 19, 0.88);
+  border: 1.5px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.setting-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.setting-desc {
+  font-size: 0.84rem;
+  color: var(--color-text-secondary);
+}
+
+.setting-control-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.setting-pill-opt {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background: rgba(5, 18, 11, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.setting-pill-opt.active, .setting-pill-opt:hover {
+  background: var(--color-mint);
+  color: #05120B;
+  border-color: #6ee7b7;
+  font-weight: 700;
+}
+
+/* Advanced Filters & Botanical Search Component */
+.advanced-filter-panel {
+  background: rgba(8, 29, 19, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1.8px solid var(--color-mint);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.filter-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-group label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-mint-light);
+}
+
+.select-botanical-filter {
+  background: rgba(5, 18, 11, 0.9);
+  border: 1.5px solid rgba(43, 182, 115, 0.35);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  color: #FFFFFF;
+  font-size: 0.88rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.select-botanical-filter:focus {
+  border-color: var(--color-mint);
+  box-shadow: 0 0 15px rgba(43, 182, 115, 0.3);
+}
+
+.select-botanical-filter option {
+  background: #081d13;
+  color: #FFFFFF;
+}
+
+.filtered-species-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.6rem;
+  margin-top: 1.5rem;
+}
+
+.specimen-card-filtered {
+  background: rgba(8, 29, 19, 0.88);
+  border: 1.5px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.specimen-card-filtered:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-mint);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+}
+
+@media (max-width: 992px) {
+  .dashboard-app-layout {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-sidebar {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: auto;
+  }
+  .dashboard-main-content {
+    grid-column: 1;
+    padding: 1.5rem;
+  }
+  .notes-journal-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
