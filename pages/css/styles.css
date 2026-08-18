@@ -1,0 +1,2050 @@
+/* ==========================================================================
+   VATIKA (वाटिका) — FRESH BOTANICAL & AYURVEDIC DESIGN SYSTEM
+   Full-Page Atmospheric Theme: Deep Obsidian Emerald + Mint & Jade Accents + Flatlay Hero
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap');
+
+:root {
+  --bg-deep: #05120B;
+  --bg-dark: #081B12;
+  --bg-forest: #0D281B;
+  --bg-card: rgba(13, 40, 27, 0.78);
+  --bg-card-hover: rgba(20, 60, 40, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  --color-emerald-deep: #0a291b;
+  --color-emerald: #10422b;
+  --color-emerald-bright: #1b7a4f;
+  --color-jade: #2bb673;
+  --color-jade-glow: rgba(43, 182, 115, 0.4);
+  --color-mint: #6EE7B7;
+  --color-mint-light: #A7F3D0;
+  --color-mint-glow: rgba(110, 231, 183, 0.35);
+  --color-sage: #8fa88a;
+
+  --color-accent: #34D399;
+  --color-accent-light: #6EE7B7;
+  --color-accent-glow: rgba(52, 211, 153, 0.35);
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #C8E3D4;
+  --color-text-muted: #8EAE9D;
+  --color-text-accent: #6EE7B7;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sanskrit: 'Noto Serif Devanagari', 'Mangal', Georgia, serif;
+
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 25px 70px rgba(0, 0, 0, 0.8);
+  --shadow-glow-jade: 0 0 35px rgba(43, 182, 115, 0.35);
+  --shadow-glow-mint: 0 0 35px rgba(110, 231, 183, 0.35);
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 9999px;
+
+  --transition-fast: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-deep);
+  color: var(--color-text-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #05120B;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(5, 18, 11, 0.35) 0%, rgba(5, 18, 11, 0.75) 100%),
+    url('../assets/images/hero_flatlay_bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   FULL-PAGE LIVING HERBAL GARDEN BACKGROUND (Sticky Hero Flatlay)
+   ========================================================================== */
+.fullpage-bg-wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-living-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/hero_flatlay_bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.95;
+}
+
+.bg-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(180deg, 
+      rgba(4, 13, 7, 0.4) 0%, 
+      rgba(6, 22, 14, 0.55) 30%, 
+      rgba(8, 27, 18, 0.7) 65%, 
+      rgba(4, 13, 7, 0.85) 100%);
+}
+
+#ambient-spores-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(3.2rem, 6.5vw, 5.4rem); }
+h2 { font-size: clamp(2.3rem, 4.4vw, 3.6rem); }
+h3 { font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+
+p {
+  font-size: 1.08rem;
+  color: var(--color-text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-sans);
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-padding {
+  padding: 8rem 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4.5rem;
+}
+
+.section-header-left {
+  text-align: left;
+  margin-bottom: 3.5rem;
+  max-width: 780px;
+}
+
+.section-header-left .section-title {
+  margin-bottom: 0.8rem;
+}
+
+.section-header-left .section-subtitle {
+  margin: 0;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(9, 30, 20, 0.82);
+  color: var(--color-mint);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.4rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(43, 182, 115, 0.4);
+  margin-bottom: 1.3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), var(--shadow-glow-jade);
+}
+
+.section-title {
+  margin-bottom: 1.1rem;
+  color: #FFFFFF;
+}
+
+.section-subtitle {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   REUSABLE UTILITY CLASSES & LABEL HIERARCHY
+   ========================================================================== */
+.label-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-sage);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.anatomy-field-group {
+  margin-bottom: 1.1rem;
+}
+
+.anatomy-extraction-tags {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.btn-fullwidth {
+  width: 100%;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.search-action-wrap {
+  margin-top: 1.8rem;
+  text-align: left;
+}
+
+/* ==========================================================================
+   BOTANICAL LINE-ART ICON SYSTEM (Matching Leaf Logo Geometry)
+   ========================================================================== */
+.botanical-icon {
+  width: 1.25em;
+  height: 1.25em;
+  display: inline-block;
+  vertical-align: -0.22em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.studio-icon-emblem .botanical-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  stroke-width: 1.6;
+  stroke: var(--color-mint);
+}
+
+.dim-icon .botanical-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  stroke-width: 1.6;
+  stroke: var(--color-mint);
+}
+
+.disclaimer-icon .botanical-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  stroke: var(--color-sage);
+}
+
+/* ==========================================================================
+   FULL-WIDTH GLASS NAVBAR
+   ========================================================================== */
+.navbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0;
+}
+
+.navbar-full {
+  width: 100%;
+  background: rgba(5, 18, 11, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1.5px solid rgba(43, 182, 115, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  padding: 0.95rem 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.navbar-full::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px;
+  left: -50%;
+  width: 45%;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #ffffff, var(--color-mint), var(--color-jade), transparent);
+  animation: navbarShimmer 5s infinite linear;
+}
+
+@keyframes navbarShimmer {
+  0% { left: -45%; }
+  100% { left: 120%; }
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.brand-logo-wrap {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  transition: transform var(--transition-bounce);
+}
+
+.vitaki-logo-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(43, 182, 115, 0.5));
+}
+
+.nav-brand:hover .brand-logo-wrap {
+  transform: rotate(8deg) scale(1.08);
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #FFFFFF 0%, #6EE7B7 60%, #2BB673 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-tagline {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  margin-top: 0.2rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.6rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-smooth), transform var(--transition-smooth);
+  position: relative;
+  padding: 0.4rem 0.4rem 0.4rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: var(--color-mint);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   OLD MOVING BAR UNDERLINE ANIMATION (COMMENTED OUT FOR REVERTABILITY)
+   ==========================================================================
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--color-mint), var(--color-jade));
+  transition: width var(--transition-smooth);
+  border-radius: 2px;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+========================================================================== */
+
+/* NEW EXPERIMENTAL: BOTANICAL LEAF SPROUT HOVER ANIMATION */
+.nav-link::before {
+  content: '🌿';
+  position: absolute;
+  left: -0.2rem;
+  top: 50%;
+  transform: translateY(-50%) scale(0.3) rotate(-45deg);
+  opacity: 0;
+  font-size: 0.95rem;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.25s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(110, 231, 183, 0.4));
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+  transform: translateY(-50%) scale(1) rotate(0deg);
+}
+
+/* Nav Action Button with Smooth Transitions */
+.btn-nav-start {
+  background: linear-gradient(135deg, var(--color-emerald-bright) 0%, var(--bg-deep) 100%);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  font-weight: 700;
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), var(--shadow-glow-jade);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid var(--color-mint);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-nav-start span:last-child {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-nav-start:hover {
+  background: linear-gradient(135deg, #2bb673 0%, #103827 100%);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), var(--shadow-glow-mint);
+  border-color: #FFFFFF;
+}
+
+.btn-nav-start:hover span:last-child {
+  transform: translateX(5px);
+}
+
+.btn-nav-start:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.mobile-menu-toggle {
+  display: none;
+  color: #FFFFFF;
+  font-size: 1.6rem;
+}
+
+/* ==========================================================================
+   BUTTON ARCHITECTURE (3-Tier Visual Hierarchy)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+/* Silky Light Sheen Animation across buttons on hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn:hover::before {
+  left: 140%;
+}
+
+.btn span:last-child {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover span:last-child {
+  transform: translateX(6px);
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.98) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* TIER 1: GRAND CONVERSION CTA (.btn-emerald / .btn-final-cta) — Climax Conversion Point */
+.btn-emerald,
+.btn-gold,
+.btn-final-cta {
+  font-size: 1.22rem;
+  font-weight: 800;
+  padding: 1.2rem 3.2rem;
+  background: linear-gradient(135deg, #6EE7B7 0%, #2BB673 55%, #10422B 100%);
+  color: #030f08;
+  letter-spacing: 0.02em;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.7), 0 0 45px rgba(110, 231, 183, 0.55);
+}
+
+.btn-emerald:hover,
+.btn-gold:hover,
+.btn-final-cta:hover {
+  background: linear-gradient(135deg, #FFFFFF 0%, #6EE7B7 50%, #2BB673 100%);
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.8), 0 0 65px rgba(110, 231, 183, 0.75);
+  color: #020b06;
+}
+
+/* TIER 2: PRIMARY SECTION BUTTONS (.btn-primary) — Key Feature Anchors */
+.btn-primary {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.95rem 2.4rem;
+  background: linear-gradient(135deg, #1b7a4f 0%, #0d281b 100%);
+  color: #FFFFFF;
+  border: 1.5px solid var(--color-mint);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--shadow-glow-jade);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2bb673 0%, #14532d 100%);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7), var(--shadow-glow-mint);
+  border-color: #FFFFFF;
+}
+
+/* TIER 3: SECONDARY INSPECTION BUTTONS (.btn-outline) — Browsing Actions */
+.btn-outline {
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.72rem 1.65rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================================================
+   HERO SECTION (Featuring User-Uploaded Botanical Flatlay Image)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11rem 0 7.5rem;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1.5px solid rgba(43, 182, 115, 0.25);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #081d13;
+  color: var(--color-mint);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.6rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-title {
+  color: #FFFFFF;
+  font-size: clamp(3.4rem, 7vw, 5.8rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 1.8rem;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
+}
+
+.hero-title em {
+  font-style: italic;
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, #A7F3D0 0%, #2BB673 50%, #FFFFFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  max-width: 820px;
+  margin: 0 auto 3.2rem;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 4.5rem;
+}
+
+.hero-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.2rem 2.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #081d13;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: var(--color-mint);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-desc {
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   LIVING HERBARIUM SPECIMEN PLATES
+   ========================================================================== */
+.herbarium-exhibition-section {
+  position: relative;
+}
+
+/* Herbarium Asymmetric Lead Header */
+.herbarium-asymmetric-header {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 3.5rem;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  padding-bottom: 2.2rem;
+  border-bottom: 1.5px solid rgba(43, 182, 115, 0.25);
+}
+
+.herbarium-folio-tag {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.herbarium-editorial-aside {
+  background: #081d13;
+  border-left: 3.5px solid var(--color-jade);
+  padding: 1.4rem 1.6rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.herbarium-shloka-text {
+  font-family: var(--font-sanskrit), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-mint);
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
+}
+
+.herbarium-shloka-sub {
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.herbarium-flow-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+  margin-top: 1rem;
+}
+
+/* ==========================================================================
+   BOTANICAL SPECIMEN COLOR THEMES (Sampled from Real Flora Photography)
+   ========================================================================== */
+/* ==========================================================================
+   THEMED BOTANICAL GARDENS COLOR ACCENTS (5 Wellness Dimensions)
+   ========================================================================== */
+.specimen-plate.theme-digestive {
+  --specimen-accent: #F59E0B;
+  --specimen-glow: rgba(245, 158, 11, 0.4);
+  --specimen-border: rgba(245, 158, 11, 0.3);
+}
+
+.specimen-plate.theme-immunity {
+  --specimen-accent: #6EE7B7;
+  --specimen-glow: rgba(110, 231, 183, 0.4);
+  --specimen-border: rgba(110, 231, 183, 0.3);
+}
+
+.specimen-plate.theme-skincare {
+  --specimen-accent: #2DD4BF;
+  --specimen-glow: rgba(45, 212, 191, 0.4);
+  --specimen-border: rgba(45, 212, 191, 0.3);
+}
+
+.specimen-plate.theme-mental {
+  --specimen-accent: #C084FC;
+  --specimen-glow: rgba(192, 132, 252, 0.4);
+  --specimen-border: rgba(192, 132, 252, 0.3);
+}
+
+.specimen-plate.theme-respiratory {
+  --specimen-accent: #38BDF8;
+  --specimen-glow: rgba(56, 189, 248, 0.4);
+  --specimen-border: rgba(56, 189, 248, 0.3);
+}
+
+.specimen-plate {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+  background: #081d13;
+  border-radius: var(--radius-lg);
+  padding: 3.5rem;
+  border: 1.5px solid var(--specimen-border, rgba(255, 255, 255, 0.12));
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: transform var(--transition-smooth),
+              box-shadow var(--transition-smooth),
+              border-color var(--transition-smooth),
+              background var(--transition-smooth);
+}
+
+.specimen-plate:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), var(--specimen-glow, var(--shadow-glow-mint));
+  border-color: var(--specimen-accent, var(--color-mint));
+  background: rgba(14, 45, 30, 0.92);
+}
+
+.specimen-plate .specimen-sanskrit-title {
+  color: var(--specimen-accent, var(--color-mint-light));
+  border-color: var(--specimen-border, rgba(43, 182, 115, 0.3));
+}
+
+.specimen-plate .specimen-binomial i,
+.specimen-plate .specimen-binomial em {
+  color: var(--specimen-accent, var(--color-mint));
+}
+
+.specimen-plate.plate-reversed {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.specimen-plate.plate-reversed .specimen-visual-portal {
+  order: 2;
+}
+
+.specimen-visual-portal {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+}
+
+.specimen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth);
+}
+
+.specimen-plate:hover .specimen-img {
+  transform: scale(1.08);
+}
+
+.specimen-badge-3d {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  background: rgba(5, 18, 11, 0.92);
+  backdrop-filter: blur(10px);
+  color: #e5f5e2;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.specimen-intel-sheet {
+  display: flex;
+  flex-direction: column;
+}
+
+.specimen-sanskrit-title {
+  font-family: var(--font-sanskrit), Georgia, serif;
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--color-mint-light);
+  margin-bottom: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.3rem 0.85rem;
+  background: rgba(43, 182, 115, 0.14);
+  border: 1px solid rgba(43, 182, 115, 0.3);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+}
+
+.specimen-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.specimen-binomial {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.4rem;
+}
+
+.specimen-binomial i,
+.specimen-binomial em {
+  font-style: italic;
+  color: var(--color-mint);
+  font-weight: 600;
+}
+
+.specimen-binomial .authority-family {
+  font-style: normal;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-left: 0.5rem;
+}
+
+.specimen-narrative {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.8rem;
+}
+
+.specimen-tags-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-bottom: 2rem;
+}
+
+.specimen-pill {
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 0.42rem 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  cursor: pointer;
+}
+
+.specimen-pill:hover {
+  background: var(--color-jade);
+  color: #05120B;
+  border-color: var(--color-mint);
+  transform: translateY(-2px);
+}
+
+.specimen-action-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   INTERACTIVE 3D ANATOMY SECTION
+   ========================================================================== */
+.interactive-3d-section {
+  position: relative;
+}
+
+.anatomy-layout-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 3rem;
+  align-items: stretch;
+  margin-top: 2rem;
+}
+
+.anatomy-stage-box {
+  position: relative;
+  background: radial-gradient(circle at center, rgba(34, 139, 90, 0.35) 0%, rgba(9, 30, 20, 0.9) 70%);
+  border: 1.8px solid var(--color-jade);
+  border-radius: var(--radius-lg);
+  height: 600px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), var(--shadow-glow-jade);
+}
+
+#plant-3d-canvas-container {
+  width: 100%;
+  height: 100%;
+}
+
+.hotspot-cloud-popup {
+  position: absolute;
+  z-index: 25;
+  background: rgba(5, 18, 11, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.8px solid var(--color-mint);
+  border-radius: 22px;
+  padding: 1.4rem 1.6rem;
+  max-width: 320px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), var(--shadow-glow-mint);
+  pointer-events: auto;
+  transform: translate(-50%, -100%) translateY(-18px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.hotspot-cloud-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -100%) translateY(-24px);
+}
+
+.hotspot-cloud-popup::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--color-mint);
+}
+
+.cloud-popup-badge {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cloud-popup-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.cloud-popup-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.cloud-popup-compounds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+
+.cloud-compound-tag {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(43, 182, 115, 0.25);
+  color: #FFFFFF;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.cloud-popup-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cloud-popup-close:hover {
+  background: var(--color-jade);
+  transform: scale(1.15);
+}
+
+.hotspot-interactive-dot {
+  position: absolute;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform var(--transition-bounce);
+}
+
+.hotspot-interactive-dot:hover {
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.dot-beacon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--color-mint);
+  background: rgba(110, 231, 183, 0.3);
+  animation: beaconPulse 2s infinite ease-out;
+}
+
+.dot-core-circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, var(--color-mint) 60%, #2bb673 100%);
+  box-shadow: 0 0 15px rgba(110, 231, 183, 0.95);
+  border: 1.8px solid #ffffff;
+}
+
+.dot-label-pill {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+  background: rgba(5, 18, 11, 0.95);
+  backdrop-filter: blur(8px);
+  color: var(--color-mint);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(43, 182, 115, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+.stage-overlay-controls {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: flex;
+  gap: 0.55rem;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.control-pill {
+  background: rgba(5, 18, 11, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(43, 182, 115, 0.35);
+  color: #e5f5e2;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.control-pill:hover,
+.control-pill.active {
+  background: var(--color-jade);
+  color: #05120B;
+  border-color: var(--color-mint);
+  box-shadow: 0 0 15px rgba(43, 182, 115, 0.5);
+  transform: translateY(-2px);
+}
+
+.stage-instructions-hint {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5, 18, 11, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--color-mint);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 1.1rem;
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  border: 1px solid rgba(43, 182, 115, 0.4);
+  white-space: nowrap;
+}
+
+.anatomy-inspector-panel {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+}
+
+.anatomy-details-box {
+  background: #081d13;
+  border: 1.8px solid var(--color-jade);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2bb673 rgba(5, 18, 11, 0.5);
+}
+
+.anatomy-details-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.anatomy-details-box::-webkit-scrollbar-track {
+  background: rgba(5, 18, 11, 0.6);
+  border-radius: 9999px;
+  margin: 12px 0;
+}
+
+.anatomy-details-box::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6ee7b7 0%, #2bb673 60%, #15803d 100%);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgba(110, 231, 183, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.anatomy-details-box::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a7f3d0 0%, #6ee7b7 100%);
+  box-shadow: 0 0 14px rgba(110, 231, 183, 0.8);
+}
+
+.anatomy-details-box h4 {
+  color: var(--color-mint);
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.anatomy-details-box p {
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+}
+
+.anatomy-details-box ul {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.anatomy-details-box li {
+  font-size: 0.88rem;
+  color: #ebfae8;
+  margin-bottom: 0.45rem;
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.anatomy-details-box li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--color-mint);
+}
+
+/* ==========================================================================
+   PERSONAL SANCTUARY & STUDY JOURNAL
+   ========================================================================== */
+.studio-section {
+  position: relative;
+}
+
+.studio-desk-spread {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.4rem;
+}
+
+.studio-folio-card.card-featured-wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  background: #092418;
+  border: 1.5px solid var(--color-mint);
+  box-shadow: var(--shadow-md), var(--shadow-glow-mint);
+}
+
+.studio-folio-card {
+  background: #081d13;
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-smooth),
+              box-shadow var(--transition-smooth),
+              border-color var(--transition-smooth),
+              background var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-folio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-mint);
+  border-color: var(--color-mint);
+  background: #0e3020;
+}
+
+.studio-icon-emblem {
+  width: 68px;
+  height: 68px;
+  border-radius: 22px;
+  background: rgba(43, 182, 115, 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 2.2rem;
+  margin-bottom: 1.6rem;
+  color: var(--color-jade);
+  transition: transform var(--transition-bounce), background var(--transition-fast), color var(--transition-fast);
+  border: 1px solid rgba(43, 182, 115, 0.3);
+}
+
+.studio-folio-card:hover .studio-icon-emblem {
+  background: var(--color-jade);
+  color: #05120B;
+  transform: scale(1.1) rotate(6deg);
+}
+
+.studio-folio-title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.7rem;
+}
+
+.studio-folio-desc {
+  font-size: 1.02rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.8rem;
+  flex-grow: 1;
+}
+
+.studio-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.studio-pill {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================================================
+   INTELLIGENT BOTANICAL SEARCH
+   ========================================================================== */
+.search-showcase-section {
+  position: relative;
+}
+
+.search-showcase-card {
+  background: #081d13;
+  border-radius: var(--radius-lg);
+  padding: 4.5rem 3.5rem;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-mint);
+  border: 1.5px solid var(--color-jade);
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.6rem;
+  margin: 3.2rem 0 2.6rem;
+  text-align: left;
+}
+
+.dim-box {
+  background: rgba(5, 18, 11, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 1.8rem 1.5rem;
+  transition: transform var(--transition-bounce), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.dim-box:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-mint);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), var(--shadow-glow-jade);
+}
+
+.dim-icon {
+  font-size: 2rem;
+  margin-bottom: 0.9rem;
+}
+
+.dim-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.45rem;
+}
+
+.dim-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+}
+
+.showcase-searchbar-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(5, 18, 11, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  padding: 0.9rem 1.5rem 0.9rem 2.2rem;
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  color: var(--color-text-secondary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mock-search-text {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.mock-badge-tag {
+  background: var(--color-emerald-bright);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 1.1rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   AYUSH TRADITIONAL KNOWLEDGE SECTION
+   ========================================================================== */
+.ayush-section {
+  position: relative;
+}
+
+/* AYUSH Asymmetric 2-Column Split Layout */
+.ayush-asymmetric-layout {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 4.5rem;
+  align-items: flex-start;
+}
+
+.ayush-editorial-aside {
+  position: sticky;
+  top: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.ayush-sanskrit-quote {
+  position: relative;
+  background: #081d13;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 1.8rem 2rem 1.8rem 2.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.ayush-sanskrit-quote .quote-symbol {
+  position: absolute;
+  top: -0.2rem;
+  left: 0.8rem;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  color: var(--color-mint);
+  opacity: 0.4;
+  line-height: 1;
+}
+
+.ayush-sanskrit-quote p {
+  font-family: var(--font-sanskrit), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.ayush-sanskrit-quote cite {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-style: normal;
+  color: var(--color-mint);
+  font-weight: 600;
+}
+
+.ayush-systems-asymmetric-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.ayush-systems-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.2rem;
+  margin-bottom: 4rem;
+}
+
+/* AYUSH System Theme Accents */
+.ayush-card.ayush-theme-ayurveda {
+  --ayush-accent: #6EE7B7;
+  --ayush-border: rgba(110, 231, 183, 0.3);
+  --ayush-glow: rgba(110, 231, 183, 0.35);
+}
+.ayush-card.ayush-theme-yoga-naturopathy {
+  --ayush-accent: #FCD34D;
+  --ayush-border: rgba(252, 211, 77, 0.3);
+  --ayush-glow: rgba(252, 211, 77, 0.35);
+}
+.ayush-card.ayush-theme-unani {
+  --ayush-accent: #5EEAD4;
+  --ayush-border: rgba(94, 234, 212, 0.3);
+  --ayush-glow: rgba(94, 234, 212, 0.35);
+}
+.ayush-card.ayush-theme-siddha {
+  --ayush-accent: #38BDF8;
+  --ayush-border: rgba(56, 189, 248, 0.3);
+  --ayush-glow: rgba(56, 189, 248, 0.35);
+}
+.ayush-card.ayush-theme-homoeopathy {
+  --ayush-accent: #C084FC;
+  --ayush-border: rgba(192, 132, 252, 0.3);
+  --ayush-glow: rgba(192, 132, 252, 0.35);
+}
+
+.ayush-card {
+  background: #081d13;
+  border-radius: var(--radius-lg);
+  padding: 2.6rem 2.2rem;
+  border: 1.5px solid var(--ayush-border, rgba(255, 255, 255, 0.12));
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-smooth),
+              box-shadow var(--transition-smooth),
+              border-color var(--transition-smooth),
+              background var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.ayush-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--ayush-accent, var(--color-mint));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), var(--ayush-glow, var(--shadow-glow-mint));
+}
+
+.ayush-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-mint);
+  border-color: var(--color-mint);
+  background: rgba(14, 45, 30, 0.92);
+}
+
+.ayush-card-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  margin-bottom: 0.6rem;
+}
+
+.ayush-card-title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: #FFFFFF;
+}
+
+.ayush-card-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-jade);
+  margin-bottom: 1.2rem;
+}
+
+.ayush-card-concept {
+  background: rgba(43, 182, 115, 0.12);
+  border-left: 3.5px solid var(--color-jade);
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 1.2rem;
+}
+
+.ayush-card-desc {
+  font-size: 0.96rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.ayush-card-texts {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid rgba(43, 182, 115, 0.2);
+  padding-top: 1rem;
+}
+
+.ayush-disclaimer-box {
+  background: rgba(43, 182, 115, 0.1);
+  border: 1.5px solid rgba(43, 182, 115, 0.35);
+  border-radius: var(--radius-md);
+  padding: 1.6rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  max-width: 940px;
+  margin: 0 auto;
+  backdrop-filter: blur(12px);
+}
+
+.disclaimer-icon {
+  font-size: 1.6rem;
+  color: var(--color-mint);
+  flex-shrink: 0;
+}
+
+.disclaimer-text {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   FINAL CTA SECTION
+   ========================================================================== */
+.final-cta-section {
+  position: relative;
+  padding: 9rem 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-content-wrap {
+  position: relative;
+  z-index: 3;
+  max-width: 840px;
+  margin: 0 auto;
+  background: rgba(9, 30, 20, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 2px solid var(--color-jade);
+  border-radius: var(--radius-lg);
+  padding: 4.5rem 3.5rem;
+  box-shadow: var(--shadow-lg), var(--shadow-glow-mint);
+}
+
+.final-cta-title {
+  color: #FFFFFF;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  margin-bottom: 1.5rem;
+}
+
+.final-cta-subtitle {
+  font-size: 1.3rem;
+  color: var(--color-text-secondary);
+  max-width: 660px;
+  margin: 0 auto 2.8rem;
+  font-family: var(--font-sans);
+}
+
+/* ==========================================================================
+   FLOATING AUDIO DOCK WITH TRANSITIONS
+   ========================================================================== */
+.floating-atmosphere-dock {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 990;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(5, 18, 11, 0.9);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.8px solid rgba(43, 182, 115, 0.45);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+}
+
+.floating-atmosphere-dock:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-mint);
+}
+
+.dock-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-mint);
+  background: rgba(43, 182, 115, 0.12);
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.dock-btn:hover {
+  background: rgba(43, 182, 115, 0.28);
+  transform: scale(1.04);
+}
+
+.dock-btn.playing {
+  background: var(--color-emerald-bright);
+  color: #ffffff;
+}
+
+.audio-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-mint);
+  display: inline-block;
+}
+
+.dock-btn.playing .audio-pulse-dot {
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.5; }
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+  background-color: #030a05;
+  color: #c5dcc0;
+  padding: 5.5rem 0 2.8rem;
+  border-top: 1.5px solid rgba(43, 182, 115, 0.3);
+  position: relative;
+}
+
+.footer h4 {
+  color: #FFFFFF;
+  font-size: 1.25rem;
+  margin-bottom: 1.3rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3.5rem;
+  margin-bottom: 4.5rem;
+}
+
+.footer-brand .nav-brand {
+  color: #FFFFFF;
+  margin-bottom: 1.1rem;
+}
+
+.footer-brand p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  max-width: 340px;
+  line-height: 1.65;
+}
+
+.footer-links-list {
+  list-style: none;
+}
+
+.footer-links-list li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links-list a {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-links-list a:hover {
+  color: var(--color-mint);
+}
+
+.footer-bottom-bar {
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: #8fa88a;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+/* Dossier Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--color-jade);
+  color: #05120B;
+  transform: scale(1.15) rotate(90deg);
+}
+
+.plant-modal-card {
+  background: #081B12;
+  border: 1.8px solid var(--color-jade);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2.8rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), var(--shadow-glow-mint);
+  position: relative;
+  transform: translateY(20px) scale(0.96);
+  transition: transform var(--transition-smooth);
+  color: #FFFFFF;
+}
+
+.modal-backdrop.open .plant-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-plant-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 2.4rem;
+}
+
+.modal-plant-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(43, 182, 115, 0.4);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .herbarium-asymmetric-header {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  .ayush-asymmetric-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .ayush-editorial-aside {
+    position: static;
+  }
+  .studio-folio-card.card-featured-wide {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .specimen-plate,
+  .specimen-plate.plate-reversed {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .specimen-plate.plate-reversed .specimen-visual-portal {
+    order: 1;
+  }
+  .studio-desk-spread {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ayush-systems-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .search-dimensions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .anatomy-layout-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-full {
+    padding: 0.85rem 1.4rem;
+  }
+  .nav-links {
+    display: none;
+  }
+  .mobile-menu-toggle {
+    display: block;
+  }
+  .hero-stats-row {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .studio-desk-spread {
+    grid-template-columns: 1fr;
+  }
+  .ayush-systems-grid {
+    grid-template-columns: 1fr;
+  }
+  .search-dimensions-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-plant-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
