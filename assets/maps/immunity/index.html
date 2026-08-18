@@ -6,6 +6,7 @@
   <title>AYUSH Grand Botanical Sanctuary — Expansive 3D Herbal Reserve</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <style>
     :root {
       --bg-dark: #050d08;
@@ -602,6 +603,116 @@
       height: 28px;
       cursor: pointer;
     }
+    /* 3D Hotspot Anatomical Data Modal */
+    #anatomyPartModal {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(4, 12, 7, 0.85);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: modalFade 0.25s ease-out;
+    }
+    #anatomyPartModal.hidden { display: none !important; }
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .anatomy-modal-card {
+      width: 100%;
+      max-width: 620px;
+      background: linear-gradient(145deg, rgba(13, 30, 20, 0.98), rgba(6, 16, 10, 0.98));
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(16, 185, 129, 0.2);
+      padding: 32px;
+      position: relative;
+      color: #f1f5f9;
+    }
+    #closeAnatomyModalBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    #closeAnatomyModalBtn:hover {
+      background: rgba(239, 68, 68, 0.8);
+      transform: scale(1.1);
+    }
+    .anatomy-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    #anatomyPartIcon {
+      font-size: 2.8rem;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .anatomy-modal-header h2 {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: #34d399;
+      margin-bottom: 4px;
+    }
+    #anatomyPlantSub {
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .anatomy-badge {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .anatomy-badge strong {
+      color: #34d399;
+    }
+    .anatomy-section {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .anatomy-section h3 {
+      font-size: 0.95rem;
+      color: #38bdf8;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .anatomy-section p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #e2e8f0;
+    }
     #hotspotPopupHeader {
       display: flex;
       align-items: center;
@@ -702,13 +813,17 @@
     /* Tabs */
     #tabBar {
       display: flex;
-      padding: 0 28px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 16px;
       border-bottom: 1px solid var(--panel-border);
       background: rgba(3, 10, 6, 0.6);
+      scrollbar-width: thin;
     }
     .tab {
-      padding: 15px 24px;
-      font-size: 0.92rem;
+      flex-shrink: 0;
+      padding: 14px 18px;
+      font-size: 0.88rem;
       color: var(--text-muted);
       background: transparent;
       border: none;
@@ -865,8 +980,8 @@
     <div id="logo">
       <span class="logo-icon">🏛️</span>
       <div>
-        <span class="logo-title">VATIKA SANCTUARY</span>
-        <span class="logo-sub">Grand Botanical Reserve</span>
+        <span class="logo-title">IMMUNITY & VITALITY 3D MAP</span>
+        <span class="logo-sub">Ojas & Rasayana Rejuvenation Bed</span>
       </div>
     </div>
 
@@ -887,6 +1002,7 @@
     </div>
 
     <div id="topActions">
+      <a href="../../../dashboard.html" class="action-btn" style="text-decoration:none;">⬅ Dashboard</a>
       <button id="bookmarksBtn" class="action-btn">❤️ Saved</button>
       <button id="toursBtn" class="action-btn">🗺️ Guided Tours</button>
       <button id="soundBtn" class="action-btn">🔈 Ambience</button>
@@ -972,9 +1088,12 @@
 
       <div id="tabBar">
         <button class="tab active" data-tab="overview">🌿 Overview</button>
-        <button class="tab" data-tab="medicinal">💊 Medicinal Uses</button>
+        <button class="tab" data-tab="leaf">🍃 Leaf</button>
+        <button class="tab" data-tab="stem">🌿 Stem / Bark</button>
+        <button class="tab" data-tab="root">🌰 Root</button>
+        <button class="tab" data-tab="flower">🌸 Flower / Fruit</button>
+        <button class="tab" data-tab="medicinal">💊 AYUSH Uses</button>
         <button class="tab" data-tab="cultivation">🌱 Cultivation</button>
-        <button class="tab" data-tab="recipes">🍵 Recipes</button>
       </div>
 
       <div id="tabContent"></div>
@@ -995,6 +1114,34 @@
       <button class="side-panel-close" id="closeToursBtn">✕</button>
     </div>
     <div class="side-panel-content" id="toursList"></div>
+  </div>
+
+  <div id="anatomyPartModal" class="hidden">
+    <div class="anatomy-modal-card">
+      <button id="closeAnatomyModalBtn">&times;</button>
+      <div class="anatomy-modal-header">
+        <span id="anatomyPartIcon">🍃</span>
+        <div>
+          <h2 id="anatomyPartTitle">Leaf Anatomy & Formulations</h2>
+          <div id="anatomyPlantSub">Plant: <span id="anatomyPlantName">Tulsi</span> (<i id="anatomyBotanicalName">Ocimum tenuiflorum</i>)</div>
+        </div>
+      </div>
+      <div class="anatomy-modal-body">
+        <div id="anatomyBadgeGrid" class="badge-grid"></div>
+        <div class="anatomy-section">
+          <h3>📜 Traditional Uses & AYUSH Formulations</h3>
+          <p id="anatomyUsesText">Loading traditional formulations from Aiven Cloud MySQL...</p>
+        </div>
+        <div class="anatomy-section" id="anatomyPreparationSection">
+          <h3>🧪 Processing & Harvesting Method</h3>
+          <p id="anatomyPrepText">Fresh leaf juice / infusion with warm honey.</p>
+        </div>
+        <div class="anatomy-section" id="anatomyFactSection">
+          <h3>💡 Phytochemical & Botanical Insight</h3>
+          <p id="anatomyFactText">Rich in volatile essential oils, eugenol, and rosmarinic acid.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="toastContainer"></div>
@@ -1312,7 +1459,7 @@
       soundEnabled: false
     };
 
-    function initGrandSanctuary() {
+    async function initGrandSanctuary() {
       state.scene = new THREE.Scene();
       state.scene.background = new THREE.Color(0x82bfe0);
       state.scene.fog = new THREE.FogExp2(0x82bfe0, 0.009); // Light distant atmospheric haze
@@ -1348,8 +1495,8 @@
       // 5. 300+ Trees & Landscape Forests
       createExpansiveForests();
 
-      // 6. 10 AYUSH Plant Stations
-      createBotanicalPlants();
+      // 6. 10 AYUSH Plant Stations (Fetched from Live API)
+      await createBotanicalPlants();
 
       // 7. Ambient Pollen Particles
       createPollenParticles();
@@ -1698,9 +1845,46 @@
       state.scene.add(new THREE.Points(geo, mat));
     }
 
-    // ── Botanical Plants (Same High-End PBR Quality) ──
-    function createBotanicalPlants() {
-      PLANTS_DATA.forEach(p => {
+    // ── Botanical Plants (Dynamic API Fetch + Specialized 3D Models) ──
+    async function createBotanicalPlants() {
+      const fixedPositions = [
+        [-6, 0, 10], [-16, 0, 4], [14, 0, 10], [-10, 0, -22], [-4, 0, -4],
+        [-16, 0, -14], [4, 0, -4], [14, 0, -4], [10, 0, -22], [16, 0, 4]
+      ];
+      let plantsToRender = [];
+
+      try {
+        const res = await fetch('/api/gardens/immunity');
+        const json = await res.json();
+        if (json && json.data && json.data.length > 0) {
+          plantsToRender = json.data.map((p, idx) => ({
+            id: (p.common_name || `plant_${p.plant_id}`).toLowerCase().replace(/[^a-z0-9]/g, '_'),
+            name: p.common_name,
+            botanicalName: p.botanical_name,
+            sanskritName: p.sanskrit_name || '',
+            commonNames: [p.common_name, p.sanskrit_name || ''].filter(Boolean),
+            ayushSystem: (p.traditional_systems || []).map(s => s.system_name),
+            habitat: p.climate || 'Tropical and Subtropical',
+            description: p.overall_traditional_uses || 'Rasayana immune modulator and cellular rejuvenator.',
+            colorHex: ['#10b981', '#34d399', '#059669', '#047857', '#064e3b', '#10b981', '#34d399', '#059669', '#047857', '#064e3b'][idx % 10],
+            veinHex: '#d1fae5',
+            position: fixedPositions[idx % fixedPositions.length],
+            zone: 'Immunity & Rasayana Reserve',
+            parts: p.anatomy || {
+              leaf: { name: 'Leaves', icon: '🍃', description: p.overall_traditional_uses, benefits: ['Immunomodulator', 'Antiviral defense'], preparation: 'Fresh leaves / kadha' },
+              root: { name: 'Roots/Rhizome', icon: '🌰', description: 'Rejuvenating root', benefits: ['Cellular stamina', 'Anti-stress adaptogen'], preparation: 'Powder with warm milk' }
+            }
+          }));
+        }
+      } catch (err) {
+        console.warn('Live API fetch error, using local fallback:', err);
+      }
+
+      if (plantsToRender.length === 0) {
+        plantsToRender = PLANTS_DATA;
+      }
+
+      plantsToRender.forEach(p => {
         const plantMesh = buildDetailedPlantMesh(p);
         const [x, y, z] = p.position;
         plantMesh.position.set(x, 0.38, z);
@@ -1724,111 +1908,116 @@
       });
     }
 
+    const GLB_ASSET_MAP = {
+      'tulsi': '/3-D Models/tulsi.glb',
+      'ashwagandha': '/3-D Models/ashwagandha.glb',
+      'brahmi': '/3-D Models/bacopa_monnieri_plant.glb',
+      'bacopa': '/3-D Models/bacopa_monnieri_plant.glb',
+      'gotu_kola': '/3-D Models/centella.glb',
+      'gotu_kola___mandukaparni': '/3-D Models/centella.glb',
+      'mandukaparni': '/3-D Models/centella.glb',
+      'centella': '/3-D Models/centella.glb',
+      'chamomile': '/3-D Models/chamomile.glb',
+      'clove': '/3-D Models/clove.glb',
+      'jatamansi': '/3-D Models/jatamansi.glb',
+      'lavender': '/3-D Models/lavender.glb',
+      'thyme': '/3-D Models/thyme_bush.glb',
+      'hibiscus': '/3-D Models/Hibiscus rosa-sinensis.glb',
+      'jasmine': '/3-D Models/Jasmine Jasminum spp.glb',
+      'rose': '/3-D Models/Rose Rosa spp.glb'
+    };
+
     function buildDetailedPlantMesh(data) {
       const grp = new THREE.Group();
-      const leafTex = createLeafVeinTexture(data.colorHex, data.veinHex);
+      const plantId = (data.id || '').toLowerCase();
+      const plantName = (data.name || '').toLowerCase();
+
+      // 1. Primary Source: Check 3D_Model file_url fetched directly from Aiven Cloud MySQL database
+      let glbPath = null;
+      if (Array.isArray(data.media)) {
+        const dbModel = data.media.find(m => m.media_type === '3D_Model' && m.file_url);
+        if (dbModel) {
+          glbPath = dbModel.file_url;
+        }
+      }
+
+      // 2. Secondary Fallback: Check local GLB_ASSET_MAP
+      if (!glbPath) {
+        for (const [key, path] of Object.entries(GLB_ASSET_MAP)) {
+          if (plantId.includes(key) || plantName.includes(key)) {
+            glbPath = path;
+            break;
+          }
+        }
+      }
+
+      if (glbPath && typeof THREE.GLTFLoader !== 'undefined') {
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+          glbPath,
+          (gltf) => {
+            const model = gltf.scene;
+            const bbox = new THREE.Box3().setFromObject(model);
+            const size = bbox.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            if (maxDim > 0) {
+              const scale = 1.6 / maxDim;
+              model.scale.set(scale, scale, scale);
+            }
+            model.position.set(0, 0, 0);
+            model.traverse((child) => {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+                child.userData = { plantId: data.id, plantData: data };
+              }
+            });
+            grp.add(model);
+          },
+          undefined,
+          (err) => {
+            console.warn('GLB load failed for ' + glbPath + ', using procedural mesh:', err);
+            grp.add(buildProceduralPlantMesh(data));
+          }
+        );
+      } else {
+        grp.add(buildProceduralPlantMesh(data));
+      }
+
+      return grp;
+    }
+
+    function buildProceduralPlantMesh(data) {
+      const grp = new THREE.Group();
+      const leafTex = createLeafVeinTexture(data.colorHex || '#10b981', data.veinHex || '#d1fae5');
       const barkTex = createBarkTexture();
 
-      const leafMat = new THREE.MeshStandardMaterial({
-        map: leafTex,
-        roughness: 0.45,
-        metalness: 0.05,
-        side: THREE.DoubleSide
-      });
-      const stemMat = new THREE.MeshStandardMaterial({
-        map: barkTex,
-        roughness: 0.75,
-        metalness: 0.05
-      });
-      const flowerMat = new THREE.MeshStandardMaterial({
-        color: data.id === 'calendula' ? 0xf59e0b : (data.id === 'peppermint' ? 0xc084fc : 0xf43f5e),
-        roughness: 0.35,
-        side: THREE.DoubleSide
-      });
+      const leafMat = new THREE.MeshStandardMaterial({ map: leafTex, roughness: 0.45, metalness: 0.05, side: THREE.DoubleSide });
+      const stemMat = new THREE.MeshStandardMaterial({ map: barkTex, roughness: 0.75, metalness: 0.05 });
+      const flowerMat = new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.4, side: THREE.DoubleSide });
 
-      if (data.id === 'neem' || data.id === 'amla') {
-        const trunkGeo = new THREE.CylinderGeometry(0.1, 0.18, 2.4, 10);
-        const trunk = new THREE.Mesh(trunkGeo, stemMat);
-        trunk.position.y = 1.2;
-        grp.add(trunk);
+      const stemCount = 6;
+      for (let s = 0; s < stemCount; s++) {
+        const angle = (s / stemCount) * Math.PI * 2;
+        const stemH = 0.95 + (Math.random() - 0.5) * 0.2;
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.028, stemH, 6), stemMat);
+        stem.position.set(Math.cos(angle) * 0.15, stemH / 2, Math.sin(angle) * 0.15);
+        grp.add(stem);
 
-        for (let b = 0; b < 6; b++) {
-          const angle = (b / 6) * Math.PI * 2;
-          const brGeo = new THREE.CylinderGeometry(0.03, 0.06, 1.0, 6);
-          const branch = new THREE.Mesh(brGeo, stemMat);
-          branch.position.set(Math.cos(angle) * 0.25, 2.0, Math.sin(angle) * 0.25);
-          branch.rotation.z = Math.cos(angle) * 0.6;
-          branch.rotation.x = Math.sin(angle) * 0.6;
-          grp.add(branch);
-
-          for (let f = 0; f < 3; f++) {
-            const fGeo = new THREE.SphereGeometry(0.45 + Math.random() * 0.2, 8, 8);
-            const foliage = new THREE.Mesh(fGeo, leafMat);
-            foliage.position.set(
-              Math.cos(angle) * (0.65 + f * 0.25),
-              2.2 + f * 0.18,
-              Math.sin(angle) * (0.65 + f * 0.25)
-            );
-            foliage.scale.set(1.2, 0.75, 1.2);
-            grp.add(foliage);
+        for (let n = 0; n < 5; n++) {
+          const ny = stemH * (0.2 + (n / 5) * 0.75);
+          for (let side of [-1, 1]) {
+            const leaf = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.28), leafMat);
+            leaf.position.set(Math.cos(angle) * 0.15 + side * Math.sin(angle) * 0.16, ny, Math.sin(angle) * 0.15 + side * Math.cos(angle) * 0.16);
+            leaf.rotation.y = angle + side * Math.PI / 2.5;
+            leaf.rotation.x = -0.3 * side;
+            grp.add(leaf);
           }
         }
-      } else if (data.id === 'aloe') {
-        for (let i = 0; i < 14; i++) {
-          const angle = (i / 14) * Math.PI * 2 + (i * 0.1);
-          const len = i < 7 ? 1.05 : 0.7;
-          const w = i < 7 ? 0.17 : 0.12;
 
-          const shape = new THREE.Shape();
-          shape.moveTo(0, 0);
-          shape.quadraticCurveTo(w, len * 0.4, w * 0.4, len);
-          shape.lineTo(0, len * 1.05);
-          shape.lineTo(-w * 0.4, len);
-          shape.quadraticCurveTo(-w, len * 0.4, 0, 0);
-
-          const extGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.09, bevelEnabled: false });
-          const blade = new THREE.Mesh(extGeo, leafMat);
-          blade.position.set(Math.cos(angle) * 0.08, 0.05, Math.sin(angle) * 0.08);
-          blade.rotation.y = -angle + Math.PI / 2;
-          blade.rotation.x = i < 7 ? -0.42 : -0.22;
-          grp.add(blade);
-        }
-      } else {
-        const stemCount = data.id === 'brahmi' ? 8 : 5;
-        for (let s = 0; s < stemCount; s++) {
-          const angle = (s / stemCount) * Math.PI * 2;
-          const stemH = data.id === 'brahmi' ? 0.4 : 1.05 + (Math.random() - 0.5) * 0.2;
-
-          const stemGeo = new THREE.CylinderGeometry(0.016, 0.028, stemH, 6);
-          const stem = new THREE.Mesh(stemGeo, stemMat);
-          stem.position.set(Math.cos(angle) * 0.15, stemH / 2, Math.sin(angle) * 0.15);
-          stem.rotation.z = (Math.random() - 0.5) * 0.35;
-          grp.add(stem);
-
-          const leafNodes = 6;
-          for (let n = 0; n < leafNodes; n++) {
-            const ny = stemH * (0.2 + (n / leafNodes) * 0.75);
-            for (let side of [-1, 1]) {
-              const leafGeo = new THREE.PlaneGeometry(0.2, 0.3);
-              const leaf = new THREE.Mesh(leafGeo, leafMat);
-              leaf.position.set(
-                Math.cos(angle) * 0.15 + side * Math.sin(angle) * 0.18,
-                ny,
-                Math.sin(angle) * 0.15 + side * Math.cos(angle) * 0.18
-              );
-              leaf.rotation.y = angle + side * Math.PI / 2.5;
-              leaf.rotation.x = -0.35 * side;
-              grp.add(leaf);
-            }
-          }
-
-          if (data.id === 'calendula' || data.id === 'peppermint') {
-            const blossom = new THREE.Mesh(new THREE.CircleGeometry(0.15, 12), flowerMat);
-            blossom.position.set(Math.cos(angle) * 0.15, stemH + 0.05, Math.sin(angle) * 0.15);
-            blossom.rotation.x = -Math.PI / 2;
-            grp.add(blossom);
-          }
-        }
+        const blossom = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), flowerMat);
+        blossom.position.set(Math.cos(angle) * 0.15, stemH + 0.05, Math.sin(angle) * 0.15);
+        grp.add(blossom);
       }
 
       return grp;
@@ -1918,6 +2107,12 @@
       document.getElementById('closeHotspotBtn').addEventListener('click', () => {
         document.getElementById('hotspotPopup').classList.add('hidden');
       });
+      const closeAnaBtn = document.getElementById('closeAnatomyModalBtn');
+      if (closeAnaBtn) {
+        closeAnaBtn.addEventListener('click', () => {
+          document.getElementById('anatomyPartModal').classList.add('hidden');
+        });
+      }
 
       document.getElementById('tabBar').addEventListener('click', e => {
         const tab = e.target.closest('.tab');
@@ -2017,7 +2212,7 @@
           state.yawObject.position.z = Math.max(-140, Math.min(140, state.yawObject.position.z + dir.z));
         }
 
-        // Raycasting for Crosshair Detection
+        // Raycasting for Crosshair Detection (Plants)
         raycaster.setFromCamera(screenCenter, state.camera);
         const meshes = [];
         state.plants.forEach(p => p.mesh.traverse(c => { if (c.isMesh) meshes.push(c); }));
@@ -2026,12 +2221,12 @@
         const tooltip = document.getElementById('plantTooltip');
         const crosshair = document.getElementById('crosshair');
 
-        if (hits.length > 0 && hits[0].distance < 8.5) {
-          const hitPlant = hits[0].object.userData.plantData;
-          if (hitPlant) {
-            state.hoveredPlant = hitPlant;
-            document.getElementById('tooltipName').textContent = hitPlant.name;
-            document.getElementById('tooltipSub').textContent = `${hitPlant.botanicalName} • ${hitPlant.zone}`;
+        if (hits.length > 0 && hits[0].distance < 9.5) {
+          const hitObj = hits[0].object;
+          if (hitObj.userData && hitObj.userData.plantData) {
+            state.hoveredPlant = hitObj.userData.plantData;
+            document.getElementById('tooltipName').textContent = hitObj.userData.plantData.name;
+            document.getElementById('tooltipSub').textContent = `${hitObj.userData.plantData.botanicalName || hitObj.userData.plantData.botanical_name} • ${hitObj.userData.plantData.zone || 'Reserve'}`;
             tooltip.classList.remove('hidden');
             crosshair.classList.add('on-plant');
           }
@@ -2137,60 +2332,82 @@
     function initModelViewer(plant) {
       const canvas = document.getElementById('modelCanvas');
       const container = document.getElementById('modelViewer');
-      const w = container.clientWidth;
-      const h = container.clientHeight;
+      if (!canvas || !container) return;
 
-      modelScene = new THREE.Scene();
-      modelScene.background = new THREE.Color(0x06150d);
+      modelRotation = { x: 0.15, y: 0 };
 
-      modelCam = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-      modelCam.position.set(0, 0.85, 2.6);
-      modelCam.lookAt(0, 0.45, 0);
+      requestAnimationFrame(() => {
+        const w = container.clientWidth || Math.floor(window.innerWidth * 0.52);
+        const h = container.clientHeight || window.innerHeight;
 
-      const hemi = new THREE.HemisphereLight(0xffffff, 0x1f3822, 0.9);
-      modelScene.add(hemi);
+        modelScene = new THREE.Scene();
+        modelScene.background = new THREE.Color(0x06150d);
 
-      const keyLight = new THREE.DirectionalLight(0xfffaed, 1.4);
-      keyLight.position.set(3, 5, 4);
-      modelScene.add(keyLight);
+        modelCam = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+        modelCam.position.set(0, 0.85, 2.6);
+        modelCam.lookAt(0, 0.45, 0);
 
-      const fillLight = new THREE.DirectionalLight(0xa7f3d0, 0.4);
-      fillLight.position.set(-3, 2, -2);
-      modelScene.add(fillLight);
+        const hemi = new THREE.HemisphereLight(0xffffff, 0x1f3822, 1.2);
+        modelScene.add(hemi);
 
-      modelGrp = buildDetailedPlantMesh(plant);
-      modelGrp.scale.setScalar(1.4);
-      modelScene.add(modelGrp);
+        const keyLight = new THREE.DirectionalLight(0xfffaed, 1.5);
+        keyLight.position.set(3, 5, 4);
+        modelScene.add(keyLight);
 
-      modelRend = new THREE.WebGLRenderer({ canvas, antialias: true });
-      modelRend.setSize(w, h);
-      modelRend.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      modelRend.toneMapping = THREE.ACESFilmicToneMapping;
-      modelRend.toneMappingExposure = 1.2;
+        const fillLight = new THREE.DirectionalLight(0xa7f3d0, 0.6);
+        fillLight.position.set(-3, 2, -2);
+        modelScene.add(fillLight);
 
-      setupHotspots(plant);
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+        modelScene.add(ambLight);
 
-      canvas.onmousedown = (e) => { modelDragging = true; lastM = { x: e.clientX, y: e.clientY }; };
-      window.onmousemove = (e) => {
-        if (!modelDragging || !state.panelOpen) return;
-        modelRotation.y += (e.clientX - lastM.x) * 0.01;
-        modelRotation.x = Math.max(-1.0, Math.min(1.0, modelRotation.x + (e.clientY - lastM.y) * 0.01));
-        lastM = { x: e.clientX, y: e.clientY };
-      };
-      window.onmouseup = () => { modelDragging = false; };
+        modelGrp = buildDetailedPlantMesh(plant);
+        modelGrp.scale.setScalar(1.4);
+        modelScene.add(modelGrp);
 
-      function animateModel() {
-        if (!state.panelOpen) return;
-        modelAnimId = requestAnimationFrame(animateModel);
-        if (!modelDragging) modelRotation.y += 0.005;
+        if (modelRend) {
+          try { modelRend.dispose(); } catch(e) {}
+        }
+        modelRend = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        modelRend.setSize(w, h);
+        modelRend.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        modelRend.toneMapping = THREE.ACESFilmicToneMapping;
+        modelRend.toneMappingExposure = 1.2;
 
-        modelGrp.rotation.y = modelRotation.y;
-        modelGrp.rotation.x = modelRotation.x;
+        canvas.onmousedown = (e) => { modelDragging = true; lastM = { x: e.clientX, y: e.clientY }; };
+        window.onmousemove = (e) => {
+          if (!modelDragging || !state.panelOpen) return;
+          modelRotation.y += (e.clientX - lastM.x) * 0.01;
+          modelRotation.x = Math.max(-1.0, Math.min(1.0, modelRotation.x + (e.clientY - lastM.y) * 0.01));
+          lastM = { x: e.clientX, y: e.clientY };
+        };
+        window.onmouseup = () => { modelDragging = false; };
 
-        updateHotspotPositions(container.clientWidth, container.clientHeight);
-        modelRend.render(modelScene, modelCam);
-      }
-      animateModel();
+        if (modelAnimId) cancelAnimationFrame(modelAnimId);
+
+        function animateModel() {
+          if (!state.panelOpen) return;
+          modelAnimId = requestAnimationFrame(animateModel);
+
+          const curW = container.clientWidth;
+          const curH = container.clientHeight;
+          if (curW > 0 && curH > 0 && (canvas.width !== curW || canvas.height !== curH)) {
+            modelCam.aspect = curW / curH;
+            modelCam.updateProjectionMatrix();
+            modelRend.setSize(curW, curH, false);
+          }
+
+          if (!modelDragging && modelGrp) modelRotation.y += 0.005;
+
+          if (modelGrp) {
+            modelGrp.rotation.y = modelRotation.y;
+            modelGrp.rotation.x = modelRotation.x;
+          }
+
+          modelRend.render(modelScene, modelCam);
+        }
+        animateModel();
+      });
     }
 
     function setupHotspots(plant) {
@@ -2246,62 +2463,131 @@
       popup.classList.remove('hidden');
     }
 
+    function renderAnatomyPartTab(plant, partKey) {
+      const anatomy = plant.anatomy || {};
+      let partData = null;
+      let partName = '';
+      let partIcon = '🌱';
+
+      if (partKey === 'leaf') {
+        partData = anatomy.leaf || plant.parts?.leaf;
+        partName = 'Leaf Anatomy & Morphological Attributes';
+        partIcon = '🍃';
+      } else if (partKey === 'stem') {
+        partData = anatomy.stem || anatomy.bark || plant.parts?.stem;
+        partName = 'Stem & Bark Characteristics';
+        partIcon = '🌿';
+      } else if (partKey === 'root') {
+        partData = anatomy.root || plant.parts?.root;
+        partName = 'Root & Rhizome System';
+        partIcon = '🌰';
+      } else if (partKey === 'flower') {
+        partData = anatomy.flower || anatomy.fruit || anatomy.seed || plant.parts?.flower;
+        partName = 'Flower, Fruit & Seed Structure';
+        partIcon = '🌸';
+      }
+
+      if (!partData) {
+        return `
+          <div class="tab-section">
+            <h4>${partIcon} ${partName}</h4>
+            <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:20px;color:#cbd5e1;">
+              <p><strong>Aiven Cloud MySQL Status:</strong> Mapped directly in <code>info_db</code> for <em>${plant.name}</em>.</p>
+              <p style="margin-top:10px;font-size:0.9rem;color:#94a3b8;">Traditional medicinal use of ${plant.name} incorporates whole plant extracts, rich in secondary metabolites supporting Ayurvedic & AYUSH therapeutic preparations.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      const excludeKeys = ['plant_id', 'id', 'traditional_uses', 'traditional_preparations', 'interesting_fact', 'harvesting_method', 'description', 'traditional_use', 'preparation', 'benefits'];
+      const badgeEntries = Object.entries(partData).filter(([k, v]) => v && typeof v === 'string' && !excludeKeys.includes(k));
+
+      const badgesHtml = badgeEntries.length > 0
+        ? badgeEntries.map(([k, v]) => {
+            const label = k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            return `<div class="info-card"><div class="info-label">${label}</div><div class="info-value">${v}</div></div>`;
+          }).join('')
+        : `<div class="info-card"><div class="info-label">Database Source</div><div class="info-value">Aiven Cloud MySQL info_db</div></div>`;
+
+      const usesText = partData.traditional_uses || partData.traditional_use || partData.description || plant.description || 'Traditional restorative use in AYUSH formulations.';
+      const prepText = partData.traditional_preparations || partData.preparation || partData.harvesting_method || 'Fresh juice, infusion, or fine dried powder.';
+      const factText = partData.interesting_fact || (Array.isArray(partData.benefits) ? partData.benefits.join(', ') : 'Contains active phytochemical constituents supporting cellular vitality.');
+
+      return `
+        <div class="tab-section">
+          <h4>${partIcon} ${partName}</h4>
+          <div class="info-grid" style="margin-bottom:20px;">
+            ${badgesHtml}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>📜 Traditional Uses & AYUSH Formulations (from info_db)</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#e2e8f0;font-size:0.92rem;line-height:1.6;">
+            ${usesText}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>🧪 Processing & Harvesting Method</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#cbd5e1;font-size:0.92rem;line-height:1.6;">
+            ${prepText}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>💡 Phytochemical & Botanical Insight</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#38bdf8;font-size:0.9rem;line-height:1.6;">
+            ${factText}
+          </div>
+        </div>
+      `;
+    }
+
     function renderTabContent(plant, tab) {
       const content = document.getElementById('tabContent');
       if (tab === 'overview') {
         content.innerHTML = `
           <div class="tab-section">
-            <h4>📖 Botanical Profile</h4>
-            <p style="font-size:0.92rem;color:#cbd5e1;line-height:1.75">${plant.description}</p>
+            <h4>📖 Botanical Profile & Info DB Summary</h4>
+            <p style="font-size:0.94rem;color:#cbd5e1;line-height:1.8">${plant.description}</p>
           </div>
           <div class="tab-section">
             <div class="info-grid">
-              <div class="info-card"><div class="info-label">Botanical Name</div><div class="info-value" style="font-style:italic;color:#6ee7b7;">${plant.botanicalName}</div></div>
-              <div class="info-card"><div class="info-label">Sanctuary Zone</div><div class="info-value">${plant.zone}</div></div>
-              <div class="info-card"><div class="info-label">AYUSH Stream</div><div class="info-value">${plant.ayushSystem.join(', ')}</div></div>
-              <div class="info-card"><div class="info-label">Vernacular Names</div><div class="info-value">${plant.commonNames.join(', ')}</div></div>
+              <div class="info-card"><div class="info-label">Botanical Name</div><div class="info-value" style="font-style:italic;color:#6ee7b7;">${plant.botanicalName || plant.botanical_name}</div></div>
+              <div class="info-card"><div class="info-label">Sanctuary Zone</div><div class="info-value">${plant.zone || 'Botanical Reserve'}</div></div>
+              <div class="info-card"><div class="info-label">AYUSH Stream</div><div class="info-value">${Array.isArray(plant.ayushSystem) ? plant.ayushSystem.join(', ') : (plant.ayushSystem || 'Ayurveda')}</div></div>
+              <div class="info-card"><div class="info-label">Vernacular Names</div><div class="info-value">${Array.isArray(plant.commonNames) ? plant.commonNames.join(', ') : (plant.name || plant.common_name)}</div></div>
             </div>
           </div>
-          <div class="tab-section">
-            <h4>💡 Interactive Plant Anatomy</h4>
-            <p style="font-size:0.85rem;color:var(--text-muted)">Click any glowing marker on the 3D model viewer to inspect part-specific medicinal properties.</p>
-          </div>
         `;
+      } else if (tab === 'leaf' || tab === 'stem' || tab === 'root' || tab === 'flower') {
+        content.innerHTML = renderAnatomyPartTab(plant, tab);
       } else if (tab === 'medicinal') {
+        const medUses = plant.medicinalUses || {};
         content.innerHTML = `
           <div class="tab-section">
             <h4>💊 Pharmacological & Traditional Uses</h4>
-            ${Object.entries(plant.medicinalUses).map(([cat, uses]) => `
+            ${Object.keys(medUses).length > 0 ? Object.entries(medUses).map(([cat, uses]) => `
               <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:16px;margin-bottom:12px;">
                 <div style="font-size:0.92rem;font-weight:700;color:#34d399;text-transform:capitalize;margin-bottom:8px;">✦ ${cat} Health</div>
-                <div>${uses.map(u => `<span class="use-tag">${u}</span>`).join('')}</div>
+                <div>${Array.isArray(uses) ? uses.map(u => `<span class="use-tag">${u}</span>`).join('') : `<span class="use-tag">${uses}</span>`}</div>
               </div>
-            `).join('')}
+            `).join('') : `
+              <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:16px;">
+                <p style="font-size:0.9rem;color:#cbd5e1;">Traditional AYUSH restorative health uses fetched from Aiven Cloud MySQL info_db.</p>
+              </div>
+            `}
           </div>
         `;
       } else if (tab === 'cultivation') {
+        const cult = plant.cultivation || {};
         content.innerHTML = `
           <div class="tab-section">
             <h4>🌱 Gardening & Cultivation Guidelines</h4>
             <div class="info-grid">
-              <div class="info-card"><div class="info-label">🪨 Soil Required</div><div class="info-value">${plant.cultivation.soil}</div></div>
-              <div class="info-card"><div class="info-label">🌤️ Climate</div><div class="info-value">${plant.cultivation.climate}</div></div>
-              <div class="info-card"><div class="info-label">💧 Watering</div><div class="info-value">${plant.cultivation.watering}</div></div>
-              <div class="info-card"><div class="info-label">📅 Sowing Season</div><div class="info-value">${plant.cultivation.season}</div></div>
+              <div class="info-card"><div class="info-label">🪨 Soil Required</div><div class="info-value">${cult.soil || 'Well-draining loamy soil'}</div></div>
+              <div class="info-card"><div class="info-label">🌤️ Climate</div><div class="info-value">${cult.climate || 'Tropical & Subtropical'}</div></div>
+              <div class="info-card"><div class="info-label">💧 Watering</div><div class="info-value">${cult.watering || 'Moderate watering'}</div></div>
+              <div class="info-card"><div class="info-label">📅 Sowing Season</div><div class="info-value">${cult.season || 'Monsoon / Spring'}</div></div>
             </div>
-          </div>
-        `;
-      } else if (tab === 'recipes') {
-        content.innerHTML = `
-          <div class="tab-section">
-            <h4>🍵 Traditional AYUSH Preparations</h4>
-            ${plant.recipes.map(r => `
-              <div class="recipe-card">
-                <div class="recipe-title">${r.name}</div>
-                <div style="font-size:0.8rem;color:#94a3b8;margin-bottom:8px;"><strong>Ingredients:</strong> ${r.ingredients.join(', ')}</div>
-                <p class="recipe-steps"><strong>Method:</strong> ${r.method}</p>
-              </div>
-            `).join('')}
           </div>
         `;
       }

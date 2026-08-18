@@ -1,0 +1,2822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AYUSH Grand Botanical Sanctuary — Expansive 3D Herbal Reserve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <style>
+    :root {
+      --bg-dark: #050d08;
+      --panel-bg: rgba(8, 18, 12, 0.94);
+      --panel-border: rgba(52, 211, 153, 0.25);
+      --accent: #10b981;
+      --accent-gold: #fbbf24;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-title: 'Cinzel', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-serif: 'Lora', Georgia, serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-dark);
+      color: var(--text-main);
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #gardenCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      transition: filter 0.4s ease;
+    }
+    #gardenCanvas.blurred {
+      filter: blur(10px) brightness(0.3) saturate(0.9);
+    }
+
+    .hidden { display: none !important; }
+
+    /* Crosshair */
+    #crosshair {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      pointer-events: none;
+      z-index: 50;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    #crosshair.visible { opacity: 0.9; }
+    .ch-ring {
+      position: absolute;
+      inset: 0;
+      border: 1.5px solid rgba(255,255,255,0.75);
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .ch-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #crosshair.on-plant {
+      transform: translate(-50%, -50%) scale(1.3);
+    }
+    #crosshair.on-plant .ch-ring {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px var(--accent);
+    }
+    #crosshair.on-plant .ch-dot {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* Top Bar */
+    #topBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: linear-gradient(180deg, rgba(3, 10, 6, 0.96) 0%, rgba(3, 10, 6, 0.5) 75%, transparent 100%);
+      z-index: 40;
+      backdrop-filter: blur(10px);
+    }
+    #logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 0 16px rgba(52, 211, 153, 0.9));
+    }
+    .logo-title {
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #6ee7b7;
+      text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+    }
+    .logo-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Zone Quick Travel Bar */
+    #zoneTravelBar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(10, 24, 16, 0.85);
+      border: 1px solid var(--panel-border);
+      border-radius: 9999px;
+      padding: 4px 8px;
+      backdrop-filter: blur(12px);
+    }
+    .zone-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .zone-btn:hover {
+      background: rgba(16, 185, 129, 0.25);
+      color: #fff;
+    }
+    .zone-btn.active {
+      background: var(--accent);
+      color: #042f1d;
+    }
+
+    #searchContainer {
+      position: relative;
+      width: 280px;
+    }
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(12, 26, 18, 0.85);
+      border: 1px solid var(--panel-border);
+      border-radius: 9999px;
+      padding: 8px 16px;
+      gap: 8px;
+      backdrop-filter: blur(12px);
+    }
+    .search-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+    }
+    #searchInput {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    #searchResults {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: rgba(8, 20, 13, 0.98);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      max-height: 280px;
+      overflow-y: auto;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+    }
+    .search-result-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+      transition: background 0.15s;
+    }
+    .search-result-item:hover { background: rgba(16, 185, 129, 0.2); }
+    .search-result-name { font-weight: 600; color: #fff; font-size: 0.88rem; }
+    .search-result-sub { font-size: 0.74rem; color: #6ee7b7; font-style: italic; }
+
+    #topActions {
+      display: flex;
+      gap: 8px;
+    }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(12, 26, 18, 0.85);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      border-radius: 9999px;
+      padding: 7px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Bottom Bar */
+    #bottomBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: linear-gradient(0deg, rgba(3, 10, 6, 0.96) 0%, rgba(3, 10, 6, 0.5) 75%, transparent 100%);
+      pointer-events: none;
+      z-index: 40;
+    }
+    #controlsHint {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(8, 20, 13, 0.85);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+    }
+    kbd {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 5px;
+      padding: 2px 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    #minimap {
+      width: 150px;
+      height: 150px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1.5px solid var(--panel-border);
+      background: rgba(4, 10, 6, 0.95);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      position: relative;
+      pointer-events: none;
+    }
+    #minimapCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #minimapLabel {
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #6ee7b7;
+    }
+
+    /* Plant Hover Tooltip */
+    #plantTooltip {
+      position: fixed;
+      bottom: 95px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 50;
+      text-align: center;
+      background: rgba(6, 16, 10, 0.96);
+      border: 1.5px solid var(--accent);
+      border-radius: 18px;
+      padding: 14px 28px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.85), 0 0 25px rgba(16, 185, 129, 0.3);
+      animation: tooltipPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes tooltipPop {
+      from { opacity: 0; transform: translateX(-50%) translateY(12px) scale(0.94); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+    #tooltipName {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      display: block;
+    }
+    #tooltipSub {
+      font-size: 0.84rem;
+      color: #6ee7b7;
+      font-style: italic;
+      display: block;
+      margin-top: 2px;
+    }
+    #tooltipHint {
+      font-size: 0.74rem;
+      color: var(--accent-gold);
+      margin-top: 6px;
+      display: block;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Start Overlay */
+    #startOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(10, 30, 18, 0.94) 0%, rgba(3, 8, 5, 0.98) 100%);
+      backdrop-filter: blur(18px);
+    }
+    #startContent {
+      text-align: center;
+      max-width: 760px;
+      padding: 50px 44px;
+      background: rgba(8, 20, 13, 0.8);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 32px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.9), 0 0 50px rgba(16, 185, 129, 0.2);
+    }
+    #startEmoji {
+      font-size: 5rem;
+      display: block;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 25px rgba(52, 211, 153, 0.8));
+    }
+    #startTitle {
+      font-family: var(--font-title);
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    #startTagline {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: #a7f3d0;
+      margin-bottom: 34px;
+      font-style: italic;
+    }
+    #startFeatures {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 38px;
+    }
+    .start-feature {
+      background: rgba(14, 34, 22, 0.75);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+    .start-feature span { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+    #enterBtn {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: #fff;
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 18px 52px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(16, 185, 129, 0.55);
+      transition: all 0.3s;
+    }
+    #enterBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(16, 185, 129, 0.75);
+    }
+    #startHint {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Split-Screen 3D Explorer Panel */
+    #plantPanel {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      background: var(--bg-dark);
+      animation: panelSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes panelSlideIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #closePanelBtn {
+      position: absolute;
+      top: 20px;
+      right: 26px;
+      z-index: 600;
+      background: rgba(8, 18, 12, 0.9);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s;
+    }
+    #closePanelBtn:hover {
+      background: rgba(220, 38, 38, 0.9);
+      border-color: #ef4444;
+      transform: scale(1.04);
+    }
+
+    #modelViewer {
+      width: 52%;
+      height: 100%;
+      position: relative;
+      background: radial-gradient(circle at 50% 40%, #0d2b1b 0%, #041008 100%);
+      border-right: 1px solid var(--panel-border);
+      overflow: hidden;
+    }
+    #modelHeader {
+      position: absolute;
+      top: 26px;
+      left: 32px;
+      z-index: 10;
+    }
+    #modelPlantName {
+      font-family: var(--font-title);
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.85);
+    }
+    #modelBotanicalName {
+      font-size: 1rem;
+      color: #6ee7b7;
+      font-style: italic;
+      display: block;
+    }
+    #modelCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #modelCanvas:active { cursor: grabbing; }
+    #modelFooter {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      background: rgba(4, 10, 6, 0.8);
+      padding: 7px 20px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    #hotspotContainer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .hotspot {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2.5px solid #fff;
+      cursor: pointer;
+      pointer-events: all;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 0 0 22px rgba(52, 211, 153, 0.85);
+      animation: hotspotPulse 2s infinite ease-in-out;
+      transition: transform 0.2s;
+    }
+    @keyframes hotspotPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 16px rgba(52, 211, 153, 0.7); }
+      50% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 32px rgba(52, 211, 153, 0.95); }
+    }
+    .hotspot:hover {
+      transform: translate(-50%, -50%) scale(1.38) !important;
+      z-index: 30;
+      border-color: #fbbf24;
+    }
+    .hotspot-tag {
+      position: absolute;
+      left: 44px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(4, 10, 6, 0.94);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      border: 1px solid var(--accent);
+      transition: opacity 0.2s;
+    }
+    .hotspot:hover .hotspot-tag { opacity: 1; }
+
+    #hotspotPopup {
+      position: absolute;
+      bottom: 80px;
+      left: 32px;
+      right: 32px;
+      background: rgba(6, 18, 11, 0.97);
+      border: 1.5px solid var(--accent);
+      border-radius: 20px;
+      padding: 22px 26px;
+      backdrop-filter: blur(22px);
+      z-index: 50;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 35px rgba(16, 185, 129, 0.35);
+      animation: popupSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* 3D Hotspot Anatomical Data Modal */
+    #anatomyPartModal {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(4, 12, 7, 0.85);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: modalFade 0.25s ease-out;
+    }
+    #anatomyPartModal.hidden { display: none !important; }
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .anatomy-modal-card {
+      width: 100%;
+      max-width: 620px;
+      background: linear-gradient(145deg, rgba(13, 30, 20, 0.98), rgba(6, 16, 10, 0.98));
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(16, 185, 129, 0.2);
+      padding: 32px;
+      position: relative;
+      color: #f1f5f9;
+    }
+    #closeAnatomyModalBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    #closeAnatomyModalBtn:hover {
+      background: rgba(239, 68, 68, 0.8);
+      transform: scale(1.1);
+    }
+    .anatomy-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    #anatomyPartIcon {
+      font-size: 2.8rem;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .anatomy-modal-header h2 {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: #34d399;
+      margin-bottom: 4px;
+    }
+    #anatomyPlantSub {
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .anatomy-badge {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .anatomy-badge strong {
+      color: #34d399;
+    }
+    .anatomy-section {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .anatomy-section h3 {
+      font-size: 0.95rem;
+      color: #38bdf8;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .anatomy-section p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #e2e8f0;
+    }
+    #closeHotspotBtn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+    }
+    #hotspotPopupHeader {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    #hotspotTitle {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      color: #6ee7b7;
+    }
+    .hotspot-desc { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 14px; line-height: 1.65; }
+    .hotspot-benefits { list-style: none; margin-bottom: 14px; }
+    .hotspot-benefits li {
+      font-size: 0.85rem;
+      color: #f1f5f9;
+      padding: 4px 0;
+      display: flex;
+      gap: 8px;
+    }
+    .hotspot-benefits li::before { content: '✦'; color: var(--accent); }
+    .hotspot-prep {
+      background: rgba(251, 191, 36, 0.12);
+      border-left: 3.5px solid var(--accent-gold);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      color: #fef08a;
+      line-height: 1.55;
+    }
+
+    #infoPanel {
+      width: 48%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel-bg);
+      backdrop-filter: blur(24px);
+    }
+    #infoPanelHeader {
+      padding: 30px 38px 20px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    #plantSystemBadge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #34d399;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      margin-bottom: 12px;
+    }
+    #plantCommonName {
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    #plantBotanicalNameInfo {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    #plantActionBtns {
+      display: flex;
+      gap: 10px;
+    }
+    .plant-action-btn {
+      background: rgba(16, 36, 24, 0.85);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 9px 20px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .plant-action-btn:hover {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.3);
+      color: #fff;
+    }
+    .plant-action-btn.active {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #fca5a5;
+    }
+
+    /* Tabs */
+    #tabBar {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--panel-border);
+      background: rgba(3, 10, 6, 0.6);
+      scrollbar-width: thin;
+    }
+    .tab {
+      flex-shrink: 0;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      border-bottom: 2.5px solid transparent;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: #fff; }
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    #tabContent {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px 38px;
+      line-height: 1.75;
+    }
+    .tab-section { margin-bottom: 30px; }
+    .tab-section h4 {
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.06em;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .info-card {
+      background: rgba(14, 32, 22, 0.75);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+    }
+    .info-label { font-size: 0.74rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .info-value { font-size: 0.95rem; color: #f8fafc; font-weight: 600; }
+    .use-tag {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      color: #6ee7b7;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      margin: 4px;
+    }
+    .recipe-card {
+      background: rgba(14, 32, 22, 0.85);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .recipe-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--accent-gold); margin-bottom: 8px; }
+    .recipe-steps { font-size: 0.88rem; color: #cbd5e1; margin-bottom: 8px; }
+
+    /* Side Panels */
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 380px;
+      background: rgba(6, 16, 10, 0.98);
+      border-left: 1px solid var(--panel-border);
+      z-index: 800;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -15px 0 60px rgba(0,0,0,0.9);
+    }
+    .side-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 26px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    .side-panel-header h3 { font-family: var(--font-title); color: #fff; font-size: 1.35rem; }
+    .side-panel-close {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .side-panel-content { flex: 1; overflow-y: auto; padding: 22px; }
+    .tour-card {
+      background: rgba(16, 36, 24, 0.75);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .tour-card:hover {
+      border-color: var(--accent);
+      transform: translateX(-4px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+    .tour-card h4 { font-family: var(--font-title); color: #fff; margin-bottom: 6px; font-size: 1.1rem; }
+    .tour-card p { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px; }
+    .tour-start-btn {
+      background: var(--accent);
+      color: #042f1d;
+      font-weight: 700;
+      border: none;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+
+    #toastContainer {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .toast {
+      background: rgba(6, 18, 11, 0.98);
+      border: 1.5px solid var(--accent);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.85);
+      animation: toastIn 0.3s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="gardenCanvas"></canvas>
+
+  <div id="crosshair">
+    <div class="ch-ring"></div>
+    <div class="ch-dot"></div>
+  </div>
+
+  <div id="topBar">
+    <div id="logo">
+      <span class="logo-icon">🏛️</span>
+      <div>
+        <span class="logo-title">NEURO-VITALITY & SLEEP 3D MAP</span>
+        <span class="logo-sub">Medhya Rasayana & Nootropic Bed</span>
+      </div>
+    </div>
+
+    <!-- Fast Zone Teleport -->
+    <div id="zoneTravelBar">
+      <button class="zone-btn active" onclick="travelToZone('ayurveda')">🌿 Central Court</button>
+      <button class="zone-btn" onclick="travelToZone('conservatory')">🌺 North Gardens</button>
+      <button class="zone-btn" onclick="travelToZone('terrace')">🌱 East Terraces</button>
+      <button class="zone-btn" onclick="travelToZone('forest')">🌲 West Healing Woods</button>
+    </div>
+
+    <div id="searchContainer">
+      <div class="search-wrap">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Search 10 AYUSH plants, remedies..." autocomplete="off">
+      </div>
+      <div id="searchResults" class="hidden"></div>
+    </div>
+
+    <div id="topActions">
+      <a href="../../../dashboard.html" class="action-btn" style="text-decoration:none;">⬅ Dashboard</a>
+      <button id="bookmarksBtn" class="action-btn">❤️ Saved</button>
+      <button id="toursBtn" class="action-btn">🗺️ Guided Tours</button>
+      <button id="soundBtn" class="action-btn">🔈 Ambience</button>
+    </div>
+  </div>
+
+  <div id="bottomBar">
+    <div id="controlsHint">
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Walk
+      <span>·</span>
+      <kbd>Shift</kbd> Sprint
+      <span>·</span>
+      <span>🖱️ Look Around</span>
+      <span>·</span>
+      <span>🖱️ Left-Click to Inspect Plant</span>
+      <span>·</span>
+      <kbd>ESC</kbd> Unlock
+    </div>
+    <div id="minimap">
+      <div id="minimapLabel">SANCTUARY MAP (400m²)</div>
+      <canvas id="minimapCanvas" width="150" height="150"></canvas>
+    </div>
+  </div>
+
+  <div id="plantTooltip" class="hidden">
+    <span id="tooltipName">Plant</span>
+    <span id="tooltipSub">Botanical name</span>
+    <span id="tooltipHint">🖱️ Left-Click to open split-screen 3D model</span>
+  </div>
+
+  <div id="startOverlay">
+    <div id="startContent">
+      <span id="startEmoji">🏛️</span>
+      <h1 id="startTitle">AYUSH Grand<br>Botanical Reserve</h1>
+      <p id="startTagline">Step into an expansive 400m² medicinal sanctuary featuring grand conservatories, reflection canals, and ancient healing flora</p>
+      <div id="startFeatures">
+        <div class="start-feature"><span>🏛️</span>Expansive 4-Zone Sanctuary</div>
+        <div class="start-feature"><span>🌱</span>10 Botanical 3D Species</div>
+        <div class="start-feature"><span>⛲</span>Reflection Canals & Colonnades</div>
+        <div class="start-feature"><span>💡</span>Interactive Anatomical Hotspots</div>
+        <div class="start-feature"><span>📖</span>AYUSH Pharmacopoeia</div>
+        <div class="start-feature"><span>🗺️</span>5 Thematic Virtual Tours</div>
+      </div>
+      <button id="enterBtn">Enter Sanctuary Grounds →</button>
+      <div id="startHint">WASD to walk · Hold Shift to sprint · Fast-travel zones in top bar</div>
+    </div>
+  </div>
+
+  <div id="plantPanel" class="hidden">
+    <button id="closePanelBtn">✕ Close (ESC)</button>
+
+    <div id="modelViewer">
+      <div id="modelHeader">
+        <div id="modelPlantName">Tulsi</div>
+        <div id="modelBotanicalName">Ocimum tenuiflorum</div>
+      </div>
+      <canvas id="modelCanvas"></canvas>
+      <div id="modelFooter">🖱️ Drag to rotate 360° · Scroll to zoom · Click glowing nodes for part benefits</div>
+      <div id="hotspotContainer"></div>
+
+      <div id="hotspotPopup" class="hidden">
+        <button id="closeHotspotBtn">✕</button>
+        <div id="hotspotPopupHeader">
+          <span id="hotspotIcon">🌿</span>
+          <span id="hotspotTitle">Stem Properties</span>
+        </div>
+        <p class="hotspot-desc" id="hotspotDesc"></p>
+        <ul class="hotspot-benefits" id="hotspotBenefitsList"></ul>
+        <div class="hotspot-prep" id="hotspotPrep"></div>
+      </div>
+    </div>
+
+    <div id="infoPanel">
+      <div id="infoPanelHeader">
+        <div id="plantSystemBadge">Ayurveda</div>
+        <h2 id="plantCommonName">Tulsi</h2>
+        <div id="plantBotanicalNameInfo">Ocimum tenuiflorum</div>
+        <div id="plantActionBtns">
+          <button id="bookmarkBtn" class="plant-action-btn"><span>🤍</span> Bookmark</button>
+          <button id="shareBtn" class="plant-action-btn"><span>📤</span> Share</button>
+        </div>
+      </div>
+
+      <div id="tabBar">
+        <button class="tab active" data-tab="overview">🌿 Overview</button>
+        <button class="tab" data-tab="leaf">🍃 Leaf</button>
+        <button class="tab" data-tab="stem">🌿 Stem / Bark</button>
+        <button class="tab" data-tab="root">🌰 Root</button>
+        <button class="tab" data-tab="flower">🌸 Flower / Fruit</button>
+        <button class="tab" data-tab="medicinal">💊 AYUSH Uses</button>
+        <button class="tab" data-tab="cultivation">🌱 Cultivation</button>
+      </div>
+
+      <div id="tabContent"></div>
+    </div>
+  </div>
+
+  <div id="bookmarksPanel" class="side-panel hidden">
+    <div class="side-panel-header">
+      <h3>❤️ Bookmarked Plants</h3>
+      <button class="side-panel-close" id="closeBookmarksBtn">✕</button>
+    </div>
+    <div class="side-panel-content" id="bookmarksList"></div>
+  </div>
+
+  <div id="toursPanel" class="side-panel hidden">
+    <div class="side-panel-header">
+      <h3>🗺️ Guided Virtual Tours</h3>
+      <button class="side-panel-close" id="closeToursBtn">✕</button>
+    </div>
+    <div class="side-panel-content" id="toursList"></div>
+  </div>
+
+  <div id="anatomyPartModal" class="hidden">
+    <div class="anatomy-modal-card">
+      <button id="closeAnatomyModalBtn">&times;</button>
+      <div class="anatomy-modal-header">
+        <span id="anatomyPartIcon">🍃</span>
+        <div>
+          <h2 id="anatomyPartTitle">Leaf Anatomy & Formulations</h2>
+          <div id="anatomyPlantSub">Plant: <span id="anatomyPlantName">Tulsi</span> (<i id="anatomyBotanicalName">Ocimum tenuiflorum</i>)</div>
+        </div>
+      </div>
+      <div class="anatomy-modal-body">
+        <div id="anatomyBadgeGrid" class="badge-grid"></div>
+        <div class="anatomy-section">
+          <h3>📜 Traditional Uses & AYUSH Formulations</h3>
+          <p id="anatomyUsesText">Loading traditional formulations from Aiven Cloud MySQL...</p>
+        </div>
+        <div class="anatomy-section" id="anatomyPreparationSection">
+          <h3>🧪 Processing & Harvesting Method</h3>
+          <p id="anatomyPrepText">Fresh leaf juice / infusion with warm honey.</p>
+        </div>
+        <div class="anatomy-section" id="anatomyFactSection">
+          <h3>💡 Phytochemical & Botanical Insight</h3>
+          <p id="anatomyFactText">Rich in volatile essential oils, eugenol, and rosmarinic acid.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer"></div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════
+    // PROCEDURAL TEXTURE GENERATORS
+    // ══════════════════════════════════════════════════════════
+    function createCobbleTexture() {
+      const c = document.createElement('canvas');
+      c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#3a342b';
+      ctx.fillRect(0, 0, 512, 512);
+
+      const rows = 16, cols = 8;
+      const rh = 512 / rows, cw = 512 / cols;
+      for (let r = 0; r < rows; r++) {
+        const offset = (r % 2) * (cw / 2);
+        for (let col = -1; col < cols + 1; col++) {
+          const x = col * cw + offset;
+          const y = r * rh;
+          const w = cw - 5, h = rh - 5;
+          const shade = Math.floor(110 + Math.random() * 45);
+          ctx.fillStyle = `rgb(${shade}, ${shade - 8}, ${shade - 20})`;
+          ctx.fillRect(x, y, w, h);
+        }
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(4, 16);
+      return tex;
+    }
+
+    function createSoilTexture() {
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 256;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#22150c';
+      ctx.fillRect(0, 0, 256, 256);
+      for (let i = 0; i < 3000; i++) {
+        const tone = Math.floor(25 + Math.random() * 35);
+        ctx.fillStyle = `rgb(${tone + 12}, ${tone}, ${tone - 8})`;
+        ctx.fillRect(Math.random() * 256, Math.random() * 256, 2, 2);
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(2, 2);
+      return tex;
+    }
+
+    function createLeafVeinTexture(baseColorHex, veinColorHex) {
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = baseColorHex;
+      ctx.fillRect(0, 0, 256, 512);
+
+      ctx.strokeStyle = veinColorHex;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(128, 512);
+      ctx.lineTo(128, 20);
+      ctx.stroke();
+
+      ctx.lineWidth = 2.5;
+      for (let y = 460; y > 60; y -= 35) {
+        ctx.beginPath();
+        ctx.moveTo(128, y);
+        ctx.quadraticCurveTo(170, y - 20, 230, y - 40);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(128, y);
+        ctx.quadraticCurveTo(86, y - 20, 26, y - 40);
+        ctx.stroke();
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    function createBarkTexture() {
+      const c = document.createElement('canvas');
+      c.width = 256; c.height = 512;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#3e2a1d';
+      ctx.fillRect(0, 0, 256, 512);
+
+      for (let i = 0; i < 120; i++) {
+        ctx.fillStyle = Math.random() > 0.5 ? '#24170d' : '#4f3726';
+        ctx.fillRect(Math.random() * 256, Math.random() * 512, 6 + Math.random() * 10, 30 + Math.random() * 100);
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(2, 2);
+      return tex;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // PLANT DATA ACROSS EXPANSIVE SECTORS
+    // ══════════════════════════════════════════════════════════
+    const PLANTS_DATA = [
+      {
+        id: "tulsi",
+        name: "Tulsi (Holy Basil)",
+        botanicalName: "Ocimum tenuiflorum",
+        commonNames: ["Holy Basil", "Sacred Basil", "Vrinda", "Tulasi"],
+        ayushSystem: ["Ayurveda"],
+        habitat: "Central Rasayana Courtyard; thrives in bright sunlight.",
+        description: "Revered as the 'Queen of Herbs' in Ayurveda. Tulsi acts as a premier adaptogen, balancing physiological stress, clearing respiratory mucus, and fortifying cellular immunity.",
+        colorHex: "#2d7a46", veinHex: "#4ade80",
+        position: [-6, 0, 10],
+        zone: "Central Courtyard",
+        parts: {
+          stem: { name: "Stem & Branches", icon: "🌿", description: "Quadrangular purple-green pubescent stem packed with eugenol.", benefits: ["Eugenol-rich volatile oils relieve airway spasms", "Stem decoction soothes chronic sore throat", "Antimicrobial defense against Streptococcus pathogens"], preparation: "Crush 10 fresh stems, boil in 2 cups water for 8 minutes; drink with honey." },
+          leaf: { name: "Aromatic Leaves", icon: "🍃", description: "Rich green serrated leaves with high rosmarinic acid.", benefits: ["Increases T-helper cells and natural killer (NK) cells", "Reduces stress cortisol biomarkers by up to 39%", "Normalizes fasting blood glucose"], preparation: "Chew 5–7 fresh leaves every morning on empty stomach or infuse as tea." },
+          flower: { name: "Flower Racemes", icon: "🌸", description: "Elongated purplish flower spikes rich in flavonoid antioxidants.", benefits: ["Traditional migraine and headache relief", "Aromatic relaxant for deeper sleep cycles"], preparation: "Steep fresh flower racemes in hot water for 5 minutes with cinnamon." },
+          root: { name: "Fibrous Roots", icon: "🌰", description: "Dense roots containing bitter alkaloids.", benefits: ["Antipyretic support for recurrent fevers", "Anti-rheumatic support for aching joints"], preparation: "Grind dried root powder with warm milk twice daily." }
+        },
+        medicinalUses: { immunity: ["Elevates Natural Killer (NK) cell count", "Broad-spectrum antiviral against influenza"], respiratory: ["Liquefies phlegm in bronchitis and asthma"], adaptogen: ["Counters psychological and physical stress"] },
+        cultivation: { soil: "Rich, well-drained loamy soil, pH 6.2–7.5", climate: "Sunny tropical/subtropical, 20°C–35°C", watering: "Moderate every 2 days", season: "Sow seeds with onset of monsoon" },
+        recipes: [{ name: "Tulsi-Ginger Immunity Kadha", ingredients: ["10 fresh Tulsi leaves", "1 inch crushed ginger", "4 black peppercorns", "1 tsp honey", "2 cups water"], method: "Boil ingredients until reduced by half. Strain, add honey, and sip warm twice daily." }]
+      },
+      {
+        id: "ashwagandha",
+        name: "Ashwagandha",
+        botanicalName: "Withania somnifera",
+        commonNames: ["Indian Ginseng", "Winter Cherry", "Asgandh"],
+        ayushSystem: ["Ayurveda"],
+        habitat: "Arid Western Zone; semi-arid sandy loam.",
+        description: "Known as the 'King of Ayurvedic Herbs', Ashwagandha provides supreme vitality and stamina. It rejuvenates the nervous system and optimizes endocrine balance.",
+        colorHex: "#527a29", veinHex: "#86efac",
+        position: [-16, 0, 4],
+        zone: "West Healing Woods",
+        parts: {
+          stem: { name: "Stem Bark", icon: "🌿", description: "Grayish tomentose branching stem rich in withanolide alkaloids.", benefits: ["Mitigates chronic systemic inflammation", "Antimicrobial against gram-positive colonies"], preparation: "Bark decoction: 5g dried bark boiled in 200ml water." },
+          leaf: { name: "Velvety Leaves", icon: "🍃", description: "Simple oval leaves rich in withaferin-A.", benefits: ["Induces targeted cellular autophagy", "Warm poultice reduces swollen arthritic joints"], preparation: "Crush fresh leaves into a warm poultice." },
+          root: { name: "Tuberous Taproot", icon: "🌰", description: "Fleshy brownish-white root — crown jewel of Ayurvedic stamina.", benefits: ["Clinically proven 40%+ reduction in anxiety", "Increases testosterone & muscle strength", "Enhances neuroplasticity & sleep quality"], preparation: "Mix 1 tsp (3–5g) root powder in warm milk with nutmeg nightly." }
+        },
+        medicinalUses: { vitality: ["Accelerates muscle mass and recovery"], neuro: ["Promotes deep restorative sleep (somnifera)"] },
+        cultivation: { soil: "Sandy loam, well-draining, pH 7.5–8.0", climate: "Dry, semi-arid, 20°C–38°C", watering: "Minimal; once weekly", season: "Late monsoon sowing; roots mature in 160 days" },
+        recipes: [{ name: "Golden Ashwagandha Moon Milk", ingredients: ["1 tsp Ashwagandha powder", "1 cup warm milk", "1/2 tsp turmeric", "Pinch nutmeg", "1 tsp honey"], method: "Whisk spices into simmering milk for 4 mins. Drink 30 mins before sleep." }]
+      },
+      {
+        id: "neem",
+        name: "Neem (Indian Lilac)",
+        botanicalName: "Azadirachta indica",
+        commonNames: ["Indian Lilac", "Nimba", "Sarva Roga Nivarani"],
+        ayushSystem: ["Ayurveda", "Siddha", "Unani"],
+        habitat: "East Arboretum Terrace; large perennial canopy.",
+        description: "Known as 'Sarva Roga Nivarani' (curer of all sicknesses), Neem is the world's premier botanical blood purifier, powerful antifungal, and dental guardian.",
+        colorHex: "#1b6324", veinHex: "#4ade80",
+        position: [14, 0, 10],
+        zone: "East Terraces",
+        parts: {
+          stem: { name: "Rough Bark", icon: "🌳", description: "Deeply fissured bitter bark rich in nimbin and nimbidin.", benefits: ["Ancient antipyretic fever reducer", "Gastroprotective defense against ulcers", "Treats severe eczema and psoriasis"], preparation: "Boil 10g bark in 400ml water down to 100ml." },
+          leaf: { name: "Compound Leaflets", icon: "🍃", description: "Pinnate serrated leaflets rich in azadirachtin.", benefits: ["Eradicates acne-causing bacteria", "Regulates blood glucose sensitivity", "Clears blood toxins"], preparation: "Make smooth paste of fresh leaves for skin lesions." },
+          flower: { name: "Fragrant Blossoms", icon: "🌸", description: "White blossoms blooming in springtime.", benefits: ["Balances digestive bile", "Cooling springtime tonic"], preparation: "Sauteed lightly with jaggery in traditional wellness diets." }
+        },
+        medicinalUses: { dermatology: ["Treats acne, ringworm, and psoriasis"], dental: ["Prevents gingivitis and plaque"] },
+        cultivation: { soil: "Adaptable to all soils", climate: "Tropical, 22°C–48°C", watering: "Very low once established", season: "Plant seeds in monsoon" },
+        recipes: [{ name: "Neem Purifying Pack", ingredients: ["20 fresh Neem leaves", "1 tsp turmeric", "1 tbsp multani mitti clay", "Rose water"], method: "Blend into smooth paste. Apply for 15 mins to clear skin." }]
+      },
+      {
+        id: "turmeric",
+        name: "Turmeric (Haldi)",
+        botanicalName: "Curcuma longa",
+        commonNames: ["Haldi", "Golden Spice", "Haridra"],
+        ayushSystem: ["Ayurveda", "Unani", "Siddha"],
+        habitat: "North Conservatory Terrace; warm shaded parterre.",
+        description: "With over 12,000 published research papers, Turmeric's curcuminoids constitute nature's premier cellular anti-inflammatory, antioxidant, and tissue-reparative agent.",
+        colorHex: "#287038", veinHex: "#facc15",
+        position: [-10, 0, -22],
+        zone: "Great Conservatory",
+        parts: {
+          leaf: { name: "Broad Leaves", icon: "🍃", description: "Large oblong leaves rich in turmerone oils.", benefits: ["Antimicrobial food wrapping", "Sinus decongestion vapor"], preparation: "Used to wrap and steam herbal cakes." },
+          root: { name: "Golden Rhizome", icon: "🟡", description: "Underground rhizome boasting high curcumin.", benefits: ["Blocks master inflammatory enzyme NF-kB", "Superior arthritis joint mobility", "Accelerates wound healing by 300%"], preparation: "Golden Milk: 1 tsp turmeric + pinch black pepper in warm milk." }
+        },
+        medicinalUses: { joint: ["Clinically proven for osteoarthritis"], cellular: ["Potent cellular antioxidant"] },
+        cultivation: { soil: "Loose, organic-rich loam, pH 5.5–7.0", climate: "Tropical humid, 20°C–35°C", watering: "Regular irrigation every 7 days", season: "Sow rhizomes in May–June" },
+        recipes: [{ name: "Ayurvedic Golden Turmeric Elixir", ingredients: ["1 tsp turmeric", "Pinch black pepper", "1/2 tsp ginger", "1 cup milk", "1 tsp honey"], method: "Simmer spices in milk for 4 mins. Add honey and drink warm." }]
+      },
+      {
+        id: "brahmi",
+        name: "Brahmi (Herb of Grace)",
+        botanicalName: "Bacopa monnieri",
+        commonNames: ["Water Hyssop", "Herb of Grace", "Jalanimba"],
+        ayushSystem: ["Ayurveda"],
+        habitat: "Water Reflection Canal Edge; marshy embankment.",
+        description: "Ayurveda's ultimate brain tonic (Medhya Rasayana), clinically verified to enhance dendritic arborization, focus, and synaptic transmission speed.",
+        colorHex: "#38a169", veinHex: "#bbf7d0",
+        position: [-4, 0, -4],
+        zone: "Central Courtyard",
+        parts: {
+          stem: { name: "Succulent Runner", icon: "🌿", description: "Creeping succulent stem.", benefits: ["Infused in coconut oil for hair growth", "Rich in bacosides"], preparation: "Juice extracted for herbal hair oils." },
+          leaf: { name: "Oblong Fleshy Leaves", icon: "🍃", description: "Succulent notched leaves containing bacosides A & B.", benefits: ["Increases BDNF (Brain-Derived Neurotrophic Factor)", "Significantly enhances memory recall", "Eliminates mental brain fog"], preparation: "Chew 4 fresh leaves daily or take with ghee." }
+        },
+        medicinalUses: { cognition: ["Clinically improves memory retention and reaction time"], nervous: ["Mitigates mental fatigue"] },
+        cultivation: { soil: "Moist marshy soil, pH 6.0–7.5", climate: "Warm humid tropical, 18°C–38°C", watering: "Perpetual dampness", season: "Propagate cuttings in wet soil" },
+        recipes: [{ name: "Brahmi Medhya Ghee", ingredients: ["Handful fresh Brahmi leaves", "4 tbsp cow's ghee"], method: "Gently simmer Brahmi in ghee on low heat until water evaporates. Take 1 tsp daily." }]
+      },
+      {
+        id: "aloe",
+        name: "Aloe Vera (Ghritkumari)",
+        botanicalName: "Aloe barbadensis miller",
+        commonNames: ["Ghritkumari", "Burn Plant", "First Aid Plant"],
+        ayushSystem: ["Ayurveda", "Homeopathy", "Unani"],
+        habitat: "West Healing Woods; sunny arid slope.",
+        description: "Boasting over 75 bioactive nutrients, enzymes, minerals, and healing acemannan polysaccharides, Aloe Vera is nature's supreme topical healer and gastrointestinal soothing miracle.",
+        colorHex: "#4ade80", veinHex: "#86efac",
+        position: [-16, 0, -14],
+        zone: "West Healing Woods",
+        parts: {
+          leaf: { name: "Inner Parenchyma Gel", icon: "🌵", description: "Clear mucilaginous gel packed with acemannan.", benefits: ["Stimulates fibroblast collagen synthesis in burns", "Soothes acid reflux and gastritis ulcers", "Deep epidermal hydration"], preparation: "Apply clear gel directly or blend 2 tbsp in water." },
+          stem: { name: "Basal Latex", icon: "🌿", description: "Yellow bitter latex beneath outer rind.", benefits: ["Traditional stimulant laxative", "Promotes bile secretion"], preparation: "Used strictly under clinical guidance." }
+        },
+        medicinalUses: { skin: ["Treats burns, cuts, acne, and psoriasis"], gut: ["Heals inflammatory bowel lining"] },
+        cultivation: { soil: "Gritty, well-draining sandy mix, pH 7.0–8.0", climate: "Dry sunny climate, 15°C–42°C", watering: "Minimal; allow complete drying", season: "Separate root pups in spring" },
+        recipes: [{ name: "Aloe Gut-Healing Cooler", ingredients: ["2 tbsp fresh Aloe gel", "1 cup coconut water", "Juice of 1/2 lime"], method: "Rinse gel, blend with coconut water and lime. Drink on empty stomach." }]
+      },
+      {
+        id: "giloy",
+        name: "Giloy (Guduchi)",
+        botanicalName: "Tinospora cordifolia",
+        commonNames: ["Guduchi", "Amrita", "Heart-Leaved Moonseed"],
+        ayushSystem: ["Ayurveda"],
+        habitat: "Central Pergola Colonnade; climbing on wooden trellis.",
+        description: "Known as 'Amrita' (the nectar of immortality) in Sanskrit. Giloy gained global acclaim for its unmatched ability to protect blood platelets, reduce recurrent fevers, and optimize immune surveillance.",
+        colorHex: "#2e8540", veinHex: "#86efac",
+        position: [4, 0, -4],
+        zone: "Central Courtyard",
+        parts: {
+          stem: { name: "Woody Twining Stem", icon: "🌿", description: "Succulent climbing vine with tinosporin and berberine.", benefits: ["Reverses platelet destruction in dengue & viral fevers", "Flushes excess uric acid in gout arthritis", "Potent liver hepatoprotective"], preparation: "Crush 6-inch fresh stem, boil in 1 cup water until half remains." },
+          leaf: { name: "Heart-Shaped Leaves", icon: "🍃", description: "Cordate smooth leaves rich in immunomodulatory alkaloids.", benefits: ["Calms inflammatory cytokine cascades", "Potent free radical scavenger"], preparation: "Blend 5 fresh leaves with water and honey." }
+        },
+        medicinalUses: { fever: ["Gold-standard therapy for viral fevers", "Stabilizes blood platelets"], metabolic: ["Lowers uric acid in gout"] },
+        cultivation: { soil: "Well-drained soil with trellis support", climate: "Tropical warm, 22°C–40°C", watering: "Moderate", season: "Plant 15cm stem cuttings in monsoon" },
+        recipes: [{ name: "Giloy Platelet Kadha", ingredients: ["6-inch crushed Giloy stem", "5 Tulsi leaves", "1 inch ginger", "2 cups water"], method: "Boil ingredients until reduced to 1 cup. Drink warm twice daily." }]
+      },
+      {
+        id: "amla",
+        name: "Amla (Indian Gooseberry)",
+        botanicalName: "Phyllanthus emblica",
+        commonNames: ["Indian Gooseberry", "Amalaki", "Dhatri"],
+        ayushSystem: ["Ayurveda", "Siddha", "Unani"],
+        habitat: "East Arboretum; majestic fruit-bearing grove.",
+        description: "Containing 20 times more Vitamin C than oranges in a heat-stable tannin complex. Amla is the cornerstone of Chyawanprash and Triphala, nourishing all seven bodily tissues (dhatus).",
+        colorHex: "#3e8c46", veinHex: "#bbf7d0",
+        position: [14, 0, -4],
+        zone: "East Terraces",
+        parts: {
+          fruit: { name: "Gooseberry Fruit", icon: "🟢", description: "Greenish globular fruit with heat-stable natural Vitamin C.", benefits: ["Boosts dietary iron absorption by 67%", "Cornerstone of Triphala for gut microbiota rejuvenation", "Inhibits 5-alpha reductase to stop hair thinning", "Shields arterial walls from LDL oxidation"], preparation: "Eat 1–2 fresh fruits daily or drink 30ml cold-pressed juice with honey." },
+          leaf: { name: "Feathery Leaves", icon: "🍃", description: "Fern-like pinnate leaves rich in astringent gallic acid.", benefits: ["Cooling eyewash for conjunctivitis", "Astringent mouthwash for bleeding gums"], preparation: "Boil leaves in pure water for cooling rinses." }
+        },
+        medicinalUses: { longevity: ["Supreme free radical scavenger", "Stimulates pro-collagen synthesis"], hair: ["Prevents premature greying and hair loss"] },
+        cultivation: { soil: "Tolerates sandy to heavy clay, pH 6.5–9.5", climate: "Subtropical/tropical, 10°C–46°C", watering: "Low once established", season: "Plant saplings in monsoon" },
+        recipes: [{ name: "Amla Rasayana Juice", ingredients: ["2 fresh Amlas", "1/2 inch ginger", "1 glass water", "1 tbsp honey"], method: "Blend Amla and ginger with water. Strain, add honey, drink fresh every morning." }]
+      },
+      {
+        id: "peppermint",
+        name: "Peppermint (Pudina)",
+        botanicalName: "Mentha × piperita",
+        commonNames: ["Pudina", "Brandy Mint"],
+        ayushSystem: ["Unani", "Homeopathy", "Ayurveda"],
+        habitat: "North Conservatory Courtyard; cool water-fed bed.",
+        description: "Its high menthol concentration activates TRPM8 cold-sensing receptors without changing temperature, offering immediate gastrointestinal anti-spasmodic relief and tension headache soothing.",
+        colorHex: "#10b981", veinHex: "#a7f3d0",
+        position: [10, 0, -22],
+        zone: "Great Conservatory",
+        parts: {
+          leaf: { name: "Aromatic Serrated Leaves", icon: "🍃", description: "Dark green toothed leaves with 50%+ menthol oil.", benefits: ["Reduces Irritable Bowel (IBS) spasms by 40%", "Topical temple massage relieves tension headaches", "Vaporizes sinus congestion"], preparation: "Steep 10 fresh leaves in boiling water for 5 mins." },
+          stem: { name: "Square Purplish Stem", icon: "🌿", description: "Distinctive quadrangular stem rich in cooling volatiles.", benefits: ["Steam inhalation clears broncho-nasal congestion"], preparation: "Boil stems in covered pot and inhale steam." }
+        },
+        medicinalUses: { digestive: ["Rapid relief from gas, bloating, and IBS cramping"], migraine: ["Topical menthol relieves tension headaches"] },
+        cultivation: { soil: "Moist, rich humus soil, pH 6.0–7.0", climate: "Cool to warm, 15°C–28°C", watering: "High; keep soil damp", season: "Spreads rapidly via root runners" },
+        recipes: [{ name: "Pudina Digestive Infusion", ingredients: ["12 fresh peppermint leaves", "1 cup hot water", "1 tsp lemon juice", "1 tsp honey"], method: "Pour boiling water over bruised leaves. Cover for 5 mins. Add lemon and honey; drink after meals." }]
+      },
+      {
+        id: "calendula",
+        name: "Calendula (Pot Marigold)",
+        botanicalName: "Calendula officinalis",
+        commonNames: ["Pot Marigold", "Zergul", "Garden Marigold"],
+        ayushSystem: ["Homeopathy", "Unani"],
+        habitat: "East Terraces; sunny flower garden border.",
+        description: "Homeopathy's greatest antiseptic and surgical healing remedy (Calendula 30c), clinically proven to accelerate wound granulation, heal burns, and soothe mucosal inflammation.",
+        colorHex: "#f59e0b", veinHex: "#fef08a",
+        position: [16, 0, -18],
+        zone: "East Terraces",
+        parts: {
+          flower: { name: "Vibrant Orange Blossoms", icon: "🌼", description: "Radiant ray florets packed with triterpenes and carotenoids.", benefits: ["Accelerates surgical and burn wound granulation", "Suppresses MRSA and antibiotic-resistant bacteria", "Clears acute eczema and dermatitis"], preparation: "Infuse dried petals in warm coconut or olive oil for topical balm." },
+          leaf: { name: "Oblong Green Leaves", icon: "🍃", description: "Aromatic leaves with mild antiseptic properties.", benefits: ["Antiseptic wash for cuts", "Soothes insect bites"], preparation: "Crushed leaf poultice applied directly to minor cuts." }
+        },
+        medicinalUses: { granulation: ["Rapidly heals surgical incisions and burns"], antifungal: ["Broad-spectrum antifungal against Candida"] },
+        cultivation: { soil: "Well-drained soil, pH 6.0–7.0", climate: "Temperate/cool, 10°C–25°C in full sun", watering: "Moderate", season: "Direct seed sowing in spring" },
+        recipes: [{ name: "Calendula Rescue Salve", ingredients: ["1 cup dried Calendula petals", "1.5 cups coconut oil", "2 tbsp beeswax"], method: "Warm oil and petals on low heat for 2 hours. Strain, stir in beeswax, and pour into jars to set." }]
+      }
+    ];
+
+    const TOURS_DATA = [
+      { id: "immunity", name: "Grand Immunity Shield Tour", icon: "🛡️", desc: "Walk through the sanctuary exploring master herbs that boost T-cells and natural killer defenses.", plants: ["tulsi", "giloy", "amla", "neem"] },
+      { id: "skin", name: "Dermatological Radiance Tour", icon: "✨", desc: "Discover ancient remedies for blemish-free skin, burns, collagen boost, and cellular regeneration.", plants: ["neem", "turmeric", "aloe", "calendula"] },
+      { id: "brain", name: "Mind, Memory & Neurogenesis", icon: "🧠", desc: "Neuroprotective adaptogens that elevate BDNF, verbal recall speed, and restful deep sleep.", plants: ["brahmi", "ashwagandha", "peppermint"] },
+      { id: "digestive", name: "Digestive & Gut Health Tour", icon: "🌿", desc: "Natural therapies for soothing IBS, acid reflux, gastritis, and ulcers.", plants: ["peppermint", "turmeric", "aloe", "giloy"] },
+      { id: "rasayana", name: "Rasayana (Longevity) Journey", icon: "⏳", desc: "Ayurvedic cellular rejuvenators that nourish all bodily tissue layers.", plants: ["amla", "ashwagandha", "tulsi", "brahmi"] }
+    ];
+
+    // ══════════════════════════════════════════════════════════
+    // THREE.JS VAST EXPANSIVE SCENE SETUP
+    // ══════════════════════════════════════════════════════════
+    const state = {
+      scene: null, camera: null, renderer: null, clock: new THREE.Clock(),
+      yawObject: null, isLocked: false, panelOpen: false, activePlant: null,
+      hoveredPlant: null, plants: [],
+      bookmarks: JSON.parse(localStorage.getItem('v_garden_bookmarks') || '["tulsi", "amla", "ashwagandha"]'),
+      keys: { w: false, a: false, s: false, d: false, shift: false },
+      soundEnabled: false
+    };
+
+    async function initGrandSanctuary() {
+      state.scene = new THREE.Scene();
+      state.scene.background = new THREE.Color(0x82bfe0);
+      state.scene.fog = new THREE.FogExp2(0x82bfe0, 0.009); // Light distant atmospheric haze
+
+      state.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 800);
+      state.yawObject = new THREE.Object3D();
+      state.yawObject.position.set(0, 1.7, 18);
+      state.yawObject.add(state.camera);
+      state.scene.add(state.yawObject);
+
+      const canvas = document.getElementById('gardenCanvas');
+      state.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+      state.renderer.setSize(window.innerWidth, window.innerHeight);
+      state.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      state.renderer.shadowMap.enabled = true;
+      state.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      state.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      state.renderer.toneMappingExposure = 1.15;
+
+      // 1. Sky & Sun
+      createExpansiveSkyDome();
+      setupSanctuaryLighting();
+
+      // 2. Distant Mountains & Horizon Landscape (Gives sense of massive scale)
+      createDistantMountainHorizon();
+
+      // 3. Terrain & Grand Architectural Network
+      createVastTerrainAndPathways();
+
+      // 4. Landmarks: Great Glasshouse Conservatory, Colonnades, Reflection Canals, Pergolas
+      createGrandArchitecturalLandmarks();
+
+      // 5. 300+ Trees & Landscape Forests
+      createExpansiveForests();
+
+      // 6. 10 AYUSH Plant Stations (Fetched from Live API)
+      await createBotanicalPlants();
+
+      // 7. Ambient Pollen Particles
+      createPollenParticles();
+
+      // 8. Event Listeners
+      setupInputEvents();
+
+      window.addEventListener('resize', () => {
+        state.camera.aspect = window.innerWidth / window.innerHeight;
+        state.camera.updateProjectionMatrix();
+        state.renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      animate();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // CLEAN CRISP SKY DOME & SUN (PREVIOUS VERSION)
+    // ══════════════════════════════════════════════════════════
+    function createExpansiveSkyDome() {
+      const skyGeo = new THREE.SphereGeometry(600, 32, 16);
+      skyGeo.scale(-1, 1, 1);
+
+      const colors = [];
+      const pos = skyGeo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const y = pos.getY(i);
+        const t = (y + 600) / 1200;
+        const r = THREE.MathUtils.lerp(0.85, 0.25, t);
+        const g = THREE.MathUtils.lerp(0.92, 0.55, t);
+        const b = THREE.MathUtils.lerp(0.98, 0.88, t);
+        colors.push(r, g, b);
+      }
+      skyGeo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      const sky = new THREE.Mesh(skyGeo, new THREE.MeshBasicMaterial({ vertexColors: true }));
+      state.scene.add(sky);
+
+      // Clean Sun Disc & Glow
+      const sunGeo = new THREE.CircleGeometry(16, 32);
+      const sunMat = new THREE.MeshBasicMaterial({ color: 0xfffae0, transparent: true, opacity: 0.95 });
+      const sun = new THREE.Mesh(sunGeo, sunMat);
+      sun.position.set(120, 220, -320);
+      sun.lookAt(0, 0, 0);
+      state.scene.add(sun);
+    }
+
+    function setupSanctuaryLighting() {
+      const hemi = new THREE.HemisphereLight(0xe0f2fe, 0x224018, 0.75);
+      state.scene.add(hemi);
+
+      const sun = new THREE.DirectionalLight(0xfff7e6, 1.4);
+      sun.position.set(80, 120, 60);
+      sun.castShadow = true;
+      sun.shadow.mapSize.set(2048, 2048);
+      sun.shadow.camera.left = -70;
+      sun.shadow.camera.right = 70;
+      sun.shadow.camera.top = 70;
+      sun.shadow.camera.bottom = -70;
+      sun.shadow.camera.near = 1;
+      sun.shadow.camera.far = 300;
+      sun.shadow.bias = -0.0004;
+      state.scene.add(sun);
+
+      const fill = new THREE.DirectionalLight(0xa7f3d0, 0.35);
+      fill.position.set(-60, 50, -60);
+      state.scene.add(fill);
+    }
+
+    // ── Distant Mountains for Horizon Depth ──
+    function createDistantMountainHorizon() {
+      const mountainMat = new THREE.MeshStandardMaterial({
+        color: 0x3b664d,
+        roughness: 0.95,
+        flatShading: true
+      });
+
+      // Mountain Ring
+      const angles = 16;
+      for (let i = 0; i < angles; i++) {
+        const a = (i / angles) * Math.PI * 2;
+        const dist = 280 + Math.random() * 60;
+        const w = 90 + Math.random() * 50;
+        const h = 45 + Math.random() * 35;
+        const mGeo = new THREE.ConeGeometry(w, h, 6);
+        const m = new THREE.Mesh(mGeo, mountainMat);
+        m.position.set(Math.cos(a) * dist, h / 2 - 10, Math.sin(a) * dist);
+        m.scale.set(1.4, 1, 0.8);
+        state.scene.add(m);
+      }
+    }
+
+    // ── Vast Terrain and Roadways ──
+    function createVastTerrainAndPathways() {
+      const cobbleTex = createCobbleTexture();
+
+      // Expansive Ground (400m x 400m)
+      const groundGeo = new THREE.PlaneGeometry(450, 450, 64, 64);
+      const groundMat = new THREE.MeshStandardMaterial({
+        color: 0x2d632b,
+        roughness: 0.85,
+        metalness: 0.05
+      });
+      const ground = new THREE.Mesh(groundGeo, groundMat);
+      ground.rotation.x = -Math.PI / 2;
+      ground.receiveShadow = true;
+      state.scene.add(ground);
+
+      // Cobblestone Main Avenues
+      const pathMat = new THREE.MeshStandardMaterial({
+        map: cobbleTex,
+        roughness: 0.7,
+        metalness: 0.1
+      });
+
+      // 1. Grand Royal Promenade (North-South Avenue)
+      const nPath = new THREE.Mesh(new THREE.PlaneGeometry(4.5, 120), pathMat);
+      nPath.rotation.x = -Math.PI / 2;
+      nPath.position.set(0, 0.02, -8);
+      nPath.receiveShadow = true;
+      state.scene.add(nPath);
+
+      // 2. Grand East-West Colonnade Avenue
+      const ePath = new THREE.Mesh(new THREE.PlaneGeometry(90, 4.0), pathMat);
+      ePath.rotation.x = -Math.PI / 2;
+      ePath.position.set(0, 0.022, 0);
+      ePath.receiveShadow = true;
+      state.scene.add(ePath);
+
+      // 3. Secondary Conservatory Loop
+      const cPath = new THREE.Mesh(new THREE.PlaneGeometry(80, 3.5), pathMat);
+      cPath.rotation.x = -Math.PI / 2;
+      cPath.position.set(0, 0.022, -22);
+      cPath.receiveShadow = true;
+      state.scene.add(cPath);
+
+      // Stone Planter Beds with Soil
+      const bedStoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7f72, roughness: 0.65 });
+      const soilMat = new THREE.MeshStandardMaterial({ map: createSoilTexture(), roughness: 0.95 });
+
+      const planterPositions = [
+        [-6, 0, 10], [-16, 0, 4], [14, 0, 10], [-10, 0, -22], [-4, 0, -4],
+        [-16, 0, -14], [4, 0, -4], [14, 0, -4], [10, 0, -22], [16, 0, 4]
+      ];
+      planterPositions.forEach(([x, , z]) => {
+        const bedGeo = new THREE.CylinderGeometry(1.8, 1.9, 0.35, 18);
+        const bedCurb = new THREE.Mesh(bedGeo, bedStoneMat);
+        bedCurb.position.set(x, 0.17, z);
+        bedCurb.receiveShadow = true;
+        bedCurb.castShadow = true;
+        state.scene.add(bedCurb);
+
+        const soil = new THREE.Mesh(new THREE.CylinderGeometry(1.65, 1.65, 0.1, 18), soilMat);
+        soil.position.set(x, 0.35, z);
+        soil.receiveShadow = true;
+        state.scene.add(soil);
+      });
+    }
+
+    // ── Grand Architectural Landmarks ──
+    function createGrandArchitecturalLandmarks() {
+      const marbleMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.3, metalness: 0.1 });
+      const pillarMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, roughness: 0.4 });
+      const glassMat = new THREE.MeshStandardMaterial({
+        color: 0x67e8f9,
+        roughness: 0.1,
+        metalness: 0.2,
+        transparent: true,
+        opacity: 0.55
+      });
+      const waterMat = new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        roughness: 0.08,
+        metalness: 0.15,
+        transparent: true,
+        opacity: 0.85
+      });
+
+      // (North platform structure removed for completely open, natural landscape)
+
+      // ══════════════════════════════════════════
+      // LANDMARK 2: Grand Reflection Canal (Central Avenue)
+      // ══════════════════════════════════════════
+      const canalGrp = new THREE.Group();
+      const canalBorder = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.4, 28), marbleMat);
+      canalBorder.position.y = 0.2;
+      canalBorder.castShadow = true;
+      canalBorder.receiveShadow = true;
+      canalGrp.add(canalBorder);
+
+      const waterPool = new THREE.Mesh(new THREE.PlaneGeometry(5.6, 27), waterMat);
+      waterPool.rotation.x = -Math.PI / 2;
+      waterPool.position.y = 0.35;
+      canalGrp.add(waterPool);
+
+      // Fountains in canal
+      [-9, 0, 9].forEach(z => {
+        const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 0.8, 8), marbleMat);
+        nozzle.position.set(0, 0.4, z);
+        canalGrp.add(nozzle);
+      });
+
+      canalGrp.position.set(0, 0, 18);
+      state.scene.add(canalGrp);
+
+      // ══════════════════════════════════════════
+      // LANDMARK 3: Classical Colonnade Pavilions (East & West)
+      // ══════════════════════════════════════════
+      createPavilion(26, 0, -4, marbleMat, pillarMat);
+      createPavilion(-26, 0, -4, marbleMat, pillarMat);
+
+      // ══════════════════════════════════════════
+      // LANDMARK 4: Wooden Pergola Trellis (Central Walkway)
+      // ══════════════════════════════════════════
+      const woodMat = new THREE.MeshStandardMaterial({ color: 0x4a2e18, roughness: 0.8 });
+      for (let z = -2; z <= 6; z += 2.5) {
+        // Left & Right posts
+        const postL = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 3.6, 6), woodMat);
+        postL.position.set(-2.2, 1.8, z);
+        postL.castShadow = true;
+        state.scene.add(postL);
+
+        const postR = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.12, 3.6, 6), woodMat);
+        postR.position.set(2.2, 1.8, z);
+        postR.castShadow = true;
+        state.scene.add(postR);
+
+        // Beam
+        const beam = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.16, 0.2), woodMat);
+        beam.position.set(0, 3.6, z);
+        beam.castShadow = true;
+        state.scene.add(beam);
+      }
+
+      // ══════════════════════════════════════════
+      // LANDMARK 5: Illuminated Pathway Lanterns
+      // ══════════════════════════════════════════
+      const lampMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.8, roughness: 0.3 });
+      const glassGlowMat = new THREE.MeshBasicMaterial({ color: 0xfef08a });
+
+      [
+        [-2.5, 12], [2.5, 12], [-2.5, 2], [2.5, 2],
+        [-2.5, -12], [2.5, -12], [-2.5, -24], [2.5, -24],
+        [-14, 2], [14, 2], [-24, 2], [24, 2]
+      ].forEach(([x, z]) => {
+        const lamp = new THREE.Group();
+        const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 2.6, 6), lampMat);
+        pole.position.y = 1.3;
+        pole.castShadow = true;
+        lamp.add(pole);
+
+        const lightBox = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.45, 0.35), glassGlowMat);
+        lightBox.position.y = 2.6;
+        lamp.add(lightBox);
+
+        lamp.position.set(x, 0, z);
+        state.scene.add(lamp);
+      });
+    }
+
+    function createPavilion(x, y, z, marbleMat, pillarMat) {
+      const pav = new THREE.Group();
+
+      // Platform
+      const plat = new THREE.Mesh(new THREE.CylinderGeometry(6, 6.5, 0.5, 16), marbleMat);
+      plat.position.y = 0.25;
+      plat.receiveShadow = true;
+      plat.castShadow = true;
+      pav.add(plat);
+
+      // Pillars
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2;
+        const pil = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.25, 3.8, 8), pillarMat);
+        pil.position.set(Math.cos(a) * 4.8, 2.15, Math.sin(a) * 4.8);
+        pil.castShadow = true;
+        pav.add(pil);
+      }
+
+      // Domed Roof
+      const roof = new THREE.Mesh(new THREE.ConeGeometry(5.8, 2.4, 16), marbleMat);
+      roof.position.y = 5.2;
+      roof.castShadow = true;
+      pav.add(roof);
+
+      pav.position.set(x, y, z);
+      state.scene.add(pav);
+    }
+
+    // ── Dense Forest Reserves (300+ Trees Across Vast Area) ──
+    function createExpansiveForests() {
+      const barkTex = createBarkTexture();
+      const trunkMat = new THREE.MeshStandardMaterial({ map: barkTex, roughness: 0.85 });
+
+      const foliageMat1 = new THREE.MeshStandardMaterial({ color: 0x1b4322, roughness: 0.65 });
+      const foliageMat2 = new THREE.MeshStandardMaterial({ color: 0x25582c, roughness: 0.6 });
+      const foliageMat3 = new THREE.MeshStandardMaterial({ color: 0x143419, roughness: 0.7 });
+
+      // Generate 220 background and perimeter trees
+      for (let i = 0; i < 220; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 32 + Math.random() * 120; // Spread out to 150m radius
+        const x = Math.cos(angle) * dist;
+        const z = Math.sin(angle) * dist;
+
+        // Skip central path corridors
+        if (Math.abs(x) < 4 && z > -35 && z < 35) continue;
+
+        const tree = new THREE.Group();
+        const trunkH = 3.2 + Math.random() * 2.0;
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.38, trunkH, 7), trunkMat);
+        trunk.position.y = trunkH / 2;
+        trunk.castShadow = true;
+        tree.add(trunk);
+
+        const mat = i % 3 === 0 ? foliageMat1 : (i % 3 === 1 ? foliageMat2 : foliageMat3);
+        const layers = 3 + Math.floor(Math.random() * 2);
+        for (let l = 0; l < layers; l++) {
+          const r = (2.6 - l * 0.45) * (trunkH / 4);
+          const h = 2.2;
+          const cone = new THREE.Mesh(new THREE.ConeGeometry(r, h, 8), mat);
+          cone.position.y = trunkH * 0.65 + l * 1.3;
+          cone.castShadow = true;
+          tree.add(cone);
+        }
+
+        tree.position.set(x, 0, z);
+        state.scene.add(tree);
+      }
+    }
+
+    function createPollenParticles() {
+      const count = 300;
+      const geo = new THREE.BufferGeometry();
+      const pos = [];
+      for (let i = 0; i < count; i++) {
+        pos.push(
+          (Math.random() - 0.5) * 120,
+          0.5 + Math.random() * 6,
+          (Math.random() - 0.5) * 120
+        );
+      }
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0xfef08a,
+        size: 0.08,
+        transparent: true,
+        opacity: 0.65
+      });
+      state.scene.add(new THREE.Points(geo, mat));
+    }
+
+    // ── Botanical Plants (Dynamic API Fetch + Specialized 3D Models) ──
+    async function createBotanicalPlants() {
+      const fixedPositions = [
+        [-6, 0, 10], [-16, 0, 4], [14, 0, 10], [-10, 0, -22], [-4, 0, -4],
+        [-16, 0, -14], [4, 0, -4], [14, 0, -4], [10, 0, -22], [16, 0, 4]
+      ];
+      let plantsToRender = [];
+
+      try {
+        const res = await fetch('/api/gardens/neuro');
+        const json = await res.json();
+        if (json && json.data && json.data.length > 0) {
+          plantsToRender = json.data.map((p, idx) => ({
+            id: (p.common_name || `plant_${p.plant_id}`).toLowerCase().replace(/[^a-z0-9]/g, '_'),
+            name: p.common_name,
+            botanicalName: p.botanical_name,
+            sanskritName: p.sanskrit_name || '',
+            commonNames: [p.common_name, p.sanskrit_name || ''].filter(Boolean),
+            ayushSystem: (p.traditional_systems || []).map(s => s.system_name),
+            habitat: p.climate || 'Subtropical / Temperate',
+            description: p.overall_traditional_uses || 'Medhya Rasayana herb for neural wellness and stress relief.',
+            colorHex: ['#8b5cf6', '#a855f7', '#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#84cc16', '#f43f5e', '#06b6d4'][idx % 10],
+            veinHex: '#f3e8ff',
+            position: fixedPositions[idx % fixedPositions.length],
+            zone: 'Mental Wellness & Sleep Sanctuary',
+            parts: p.anatomy || {
+              leaf: { name: 'Leaves', icon: '🍃', description: p.overall_traditional_uses, benefits: ['Calms nervous system', 'Enhances memory recall'], preparation: 'Infuse as warm herbal tea' },
+              root: { name: 'Roots/Rhizome', icon: '🌰', description: 'Deep grounding medicinal root', benefits: ['Promotes restful sleep', 'Reduces cortisol'], preparation: 'Decoction with warm milk' }
+            }
+          }));
+        }
+      } catch (err) {
+        console.warn('Live API fetch error, using local fallback:', err);
+      }
+
+      if (plantsToRender.length === 0) {
+        plantsToRender = PLANTS_DATA;
+      }
+
+      // Update global PLANTS_DATA reference for path/planter rendering
+      window.ACTIVE_GARDEN_PLANTS = plantsToRender;
+
+      plantsToRender.forEach(p => {
+        const plantMesh = buildDetailedPlantMesh(p);
+        const [x, y, z] = p.position;
+        plantMesh.position.set(x, 0.38, z);
+
+        plantMesh.userData = { plantId: p.id, plantData: p };
+        plantMesh.traverse(child => {
+          if (child.isMesh) {
+            child.userData = { plantId: p.id, plantData: p };
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+
+        // Slate Plaque
+        const plaque = createBotanicalSlatePlaque(p.name, p.botanicalName);
+        plaque.position.set(0, 0.1, 1.25);
+        plantMesh.add(plaque);
+
+        state.plants.push({ mesh: plantMesh, data: p });
+        state.scene.add(plantMesh);
+      });
+    }
+
+    const GLB_ASSET_MAP = {
+      'tulsi': '/3-D Models/tulsi.glb',
+      'ashwagandha': '/3-D Models/ashwagandha.glb',
+      'brahmi': '/3-D Models/bacopa_monnieri_plant.glb',
+      'bacopa': '/3-D Models/bacopa_monnieri_plant.glb',
+      'gotu_kola': '/3-D Models/centella.glb',
+      'gotu_kola___mandukaparni': '/3-D Models/centella.glb',
+      'mandukaparni': '/3-D Models/centella.glb',
+      'centella': '/3-D Models/centella.glb',
+      'chamomile': '/3-D Models/chamomile.glb',
+      'clove': '/3-D Models/clove.glb',
+      'jatamansi': '/3-D Models/jatamansi.glb',
+      'lavender': '/3-D Models/lavender.glb',
+      'thyme': '/3-D Models/thyme_bush.glb',
+      'hibiscus': '/3-D Models/Hibiscus rosa-sinensis.glb',
+      'jasmine': '/3-D Models/Jasmine Jasminum spp.glb',
+      'rose': '/3-D Models/Rose Rosa spp.glb'
+    };
+
+    function buildDetailedPlantMesh(data) {
+      const grp = new THREE.Group();
+      const plantId = (data.id || '').toLowerCase();
+      const plantName = (data.name || '').toLowerCase();
+
+      // 1. Primary Source: Check 3D_Model file_url fetched directly from Aiven Cloud MySQL database
+      let glbPath = null;
+      if (Array.isArray(data.media)) {
+        const dbModel = data.media.find(m => m.media_type === '3D_Model' && m.file_url);
+        if (dbModel) {
+          glbPath = dbModel.file_url;
+        }
+      }
+
+      // 2. Secondary Fallback: Check local GLB_ASSET_MAP
+      if (!glbPath) {
+        for (const [key, path] of Object.entries(GLB_ASSET_MAP)) {
+          if (plantId.includes(key) || plantName.includes(key)) {
+            glbPath = path;
+            break;
+          }
+        }
+      }
+
+      if (glbPath && typeof THREE.GLTFLoader !== 'undefined') {
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+          glbPath,
+          (gltf) => {
+            const model = gltf.scene;
+            const bbox = new THREE.Box3().setFromObject(model);
+            const size = bbox.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            if (maxDim > 0) {
+              const scale = 1.6 / maxDim;
+              model.scale.set(scale, scale, scale);
+            }
+            model.position.set(0, 0, 0);
+            model.traverse((child) => {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+                child.userData = { plantId: data.id, plantData: data };
+              }
+            });
+            grp.add(model);
+          },
+          undefined,
+          (err) => {
+            console.warn('GLB load failed for ' + glbPath + ', using procedural mesh:', err);
+            grp.add(buildProceduralPlantMesh(data));
+          }
+        );
+      } else {
+        grp.add(buildProceduralPlantMesh(data));
+      }
+
+      return grp;
+    }
+
+    function buildProceduralPlantMesh(data) {
+      const grp = new THREE.Group();
+      const leafTex = createLeafVeinTexture(data.colorHex || '#8b5cf6', data.veinHex || '#f3e8ff');
+      const barkTex = createBarkTexture();
+
+      const leafMat = new THREE.MeshStandardMaterial({ map: leafTex, roughness: 0.45, metalness: 0.05, side: THREE.DoubleSide });
+      const stemMat = new THREE.MeshStandardMaterial({ map: barkTex, roughness: 0.75, metalness: 0.05 });
+      const flowerMat = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, roughness: 0.4, side: THREE.DoubleSide });
+
+      const stemCount = 6;
+      for (let s = 0; s < stemCount; s++) {
+        const angle = (s / stemCount) * Math.PI * 2;
+        const stemH = 0.95 + (Math.random() - 0.5) * 0.2;
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.028, stemH, 6), stemMat);
+        stem.position.set(Math.cos(angle) * 0.15, stemH / 2, Math.sin(angle) * 0.15);
+        grp.add(stem);
+
+        for (let n = 0; n < 5; n++) {
+          const ny = stemH * (0.2 + (n / 5) * 0.75);
+          for (let side of [-1, 1]) {
+            const leaf = new THREE.Mesh(new THREE.PlaneGeometry(0.18, 0.28), leafMat);
+            leaf.position.set(Math.cos(angle) * 0.15 + side * Math.sin(angle) * 0.16, ny, Math.sin(angle) * 0.15 + side * Math.cos(angle) * 0.16);
+            leaf.rotation.y = angle + side * Math.PI / 2.5;
+            leaf.rotation.x = -0.3 * side;
+            grp.add(leaf);
+          }
+        }
+
+        const blossom = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), flowerMat);
+        blossom.position.set(Math.cos(angle) * 0.15, stemH + 0.05, Math.sin(angle) * 0.15);
+        grp.add(blossom);
+      }
+
+      return grp;
+    }
+
+    function createBotanicalSlatePlaque(name, botName) {
+      const c = document.createElement('canvas');
+      c.width = 300; c.height = 120;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#0a140d';
+      ctx.fillRect(0, 0, 300, 120);
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(4, 4, 292, 112);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 24px Cinzel, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(name, 150, 48);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'italic 16px Lora, Georgia, serif';
+      ctx.fillText(botName, 150, 84);
+
+      const tex = new THREE.CanvasTexture(c);
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.4), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.4 }));
+      mesh.rotation.x = -Math.PI / 3.5;
+      return mesh;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // INTERACTION & VAST MOVEMENT LOOP
+    // ══════════════════════════════════════════════════════════
+    const raycaster = new THREE.Raycaster();
+    const screenCenter = new THREE.Vector2(0, 0);
+
+    function setupInputEvents() {
+      const canvas = document.getElementById('gardenCanvas');
+
+      document.getElementById('enterBtn').addEventListener('click', () => {
+        document.getElementById('startOverlay').classList.add('hidden');
+        canvas.requestPointerLock();
+        initAudioEngine();
+      });
+
+      canvas.addEventListener('click', () => {
+        if (!state.panelOpen && !state.isLocked) {
+          canvas.requestPointerLock();
+        } else if (!state.panelOpen && state.hoveredPlant) {
+          openPlantPanel(state.hoveredPlant);
+        }
+      });
+
+      document.addEventListener('pointerlockchange', () => {
+        state.isLocked = (document.pointerLockElement === canvas);
+        document.getElementById('crosshair').classList.toggle('visible', state.isLocked);
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!state.isLocked || state.panelOpen) return;
+        state.yawObject.rotation.y -= e.movementX * 0.0024;
+        state.camera.rotation.x = Math.max(-1.35, Math.min(1.35, state.camera.rotation.x - e.movementY * 0.0024));
+      });
+
+      document.addEventListener('keydown', e => {
+        if (state.panelOpen) {
+          if (e.code === 'Escape') closePlantPanel();
+          return;
+        }
+        if (e.code === 'KeyW' || e.code === 'ArrowUp') state.keys.w = true;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown') state.keys.s = true;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft') state.keys.a = true;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') state.keys.d = true;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') state.keys.shift = true;
+        if (e.code === 'Escape' && state.panelOpen) closePlantPanel();
+      });
+
+      document.addEventListener('keyup', e => {
+        if (e.code === 'KeyW' || e.code === 'ArrowUp') state.keys.w = false;
+        if (e.code === 'KeyS' || e.code === 'ArrowDown') state.keys.s = false;
+        if (e.code === 'KeyA' || e.code === 'ArrowLeft') state.keys.a = false;
+        if (e.code === 'KeyD' || e.code === 'ArrowRight') state.keys.d = false;
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') state.keys.shift = false;
+      });
+
+      document.getElementById('closePanelBtn').addEventListener('click', closePlantPanel);
+      document.getElementById('closeHotspotBtn').addEventListener('click', () => {
+        document.getElementById('hotspotPopup').classList.add('hidden');
+      });
+      const closeAnaBtn = document.getElementById('closeAnatomyModalBtn');
+      if (closeAnaBtn) {
+        closeAnaBtn.addEventListener('click', () => {
+          document.getElementById('anatomyPartModal').classList.add('hidden');
+        });
+      }
+
+      document.getElementById('tabBar').addEventListener('click', e => {
+        const tab = e.target.closest('.tab');
+        if (!tab) return;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        renderTabContent(state.activePlant, tab.dataset.tab);
+      });
+
+      document.getElementById('bookmarksBtn').addEventListener('click', toggleBookmarksPanel);
+      document.getElementById('closeBookmarksBtn').addEventListener('click', () => document.getElementById('bookmarksPanel').classList.add('hidden'));
+      document.getElementById('toursBtn').addEventListener('click', toggleToursPanel);
+      document.getElementById('closeToursBtn').addEventListener('click', () => document.getElementById('toursPanel').classList.add('hidden'));
+      document.getElementById('bookmarkBtn').addEventListener('click', toggleActiveBookmark);
+      document.getElementById('shareBtn').addEventListener('click', shareActivePlant);
+      document.getElementById('soundBtn').addEventListener('click', toggleAmbience);
+
+      setupSearch();
+    }
+
+    // Fast Zone Travel
+    window.travelToZone = function(zoneKey) {
+      const zoneCoords = {
+        ayurveda: [0, 1.7, 16],
+        conservatory: [0, 1.7, -32],
+        terrace: [15, 1.7, 2],
+        forest: [-15, 1.7, 0]
+      };
+      const pos = zoneCoords[zoneKey] || [0, 1.7, 16];
+      state.yawObject.position.set(pos[0], pos[1], pos[2]);
+
+      document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      showToast(`Teleported to ${event.target.textContent}`);
+    };
+
+    function setupSearch() {
+      const input = document.getElementById('searchInput');
+      const results = document.getElementById('searchResults');
+
+      input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        if (!q) { results.classList.add('hidden'); return; }
+
+        const matches = PLANTS_DATA.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.botanicalName.toLowerCase().includes(q) ||
+          p.commonNames.some(c => c.toLowerCase().includes(q))
+        );
+
+        if (matches.length === 0) {
+          results.innerHTML = '<div style="padding:14px;font-size:0.85rem;color:#888;">No plants found</div>';
+        } else {
+          results.innerHTML = matches.map(p => `
+            <div class="search-result-item" data-id="${p.id}">
+              <span style="font-size:1.2rem;">🌿</span>
+              <div>
+                <div class="search-result-name">${p.name}</div>
+                <div class="search-result-sub">${p.botanicalName} (${p.zone})</div>
+              </div>
+            </div>
+          `).join('');
+
+          results.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', () => {
+              const plant = PLANTS_DATA.find(p => p.id === item.dataset.id);
+              if (plant) {
+                state.yawObject.position.set(plant.position[0], 1.7, plant.position[2] + 3.2);
+                openPlantPanel(plant);
+                results.classList.add('hidden');
+                input.value = '';
+              }
+            });
+          });
+        }
+        results.classList.remove('hidden');
+      });
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = state.clock.getDelta();
+
+      if (!state.panelOpen && state.isLocked) {
+        // Fast Walking & Sprinting through the big world
+        const speed = (state.keys.shift ? 14.0 : 6.5) * delta;
+        const dir = new THREE.Vector3();
+        if (state.keys.w) dir.z -= 1;
+        if (state.keys.s) dir.z += 1;
+        if (state.keys.a) dir.x -= 1;
+        if (state.keys.d) dir.x += 1;
+
+        if (dir.lengthSq() > 0) {
+          dir.normalize().applyEuler(state.yawObject.rotation).multiplyScalar(speed);
+          // Huge 300m boundary bounds
+          state.yawObject.position.x = Math.max(-140, Math.min(140, state.yawObject.position.x + dir.x));
+          state.yawObject.position.z = Math.max(-140, Math.min(140, state.yawObject.position.z + dir.z));
+        }
+
+        // Raycasting for Crosshair Detection (Plants)
+        raycaster.setFromCamera(screenCenter, state.camera);
+        const meshes = [];
+        state.plants.forEach(p => p.mesh.traverse(c => { if (c.isMesh) meshes.push(c); }));
+        const hits = raycaster.intersectObjects(meshes, false);
+
+        const tooltip = document.getElementById('plantTooltip');
+        const crosshair = document.getElementById('crosshair');
+
+        if (hits.length > 0 && hits[0].distance < 9.5) {
+          const hitObj = hits[0].object;
+          if (hitObj.userData && hitObj.userData.plantData) {
+            state.hoveredPlant = hitObj.userData.plantData;
+            document.getElementById('tooltipName').textContent = hitObj.userData.plantData.name;
+            document.getElementById('tooltipSub').textContent = `${hitObj.userData.plantData.botanicalName || hitObj.userData.plantData.botanical_name} • ${hitObj.userData.plantData.zone || 'Reserve'}`;
+            tooltip.classList.remove('hidden');
+            crosshair.classList.add('on-plant');
+          }
+        } else {
+          state.hoveredPlant = null;
+          tooltip.classList.add('hidden');
+          crosshair.classList.remove('on-plant');
+        }
+
+        updateMinimapCanvas();
+      }
+
+      state.renderer.render(state.scene, state.camera);
+    }
+
+    function updateMinimapCanvas() {
+      const cvs = document.getElementById('minimapCanvas');
+      const ctx = cvs.getContext('2d');
+      const w = cvs.width, h = cvs.height;
+
+      ctx.fillStyle = '#040d07';
+      ctx.fillRect(0, 0, w, h);
+
+      // Sanctuary boundary (maps -100m to 100m)
+      const toMap = (val) => ((val + 80) / 160) * w;
+
+      // Roads
+      ctx.strokeStyle = 'rgba(160, 140, 110, 0.4)';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(w/2, toMap(-50)); ctx.lineTo(w/2, toMap(50));
+      ctx.moveTo(toMap(-40), toMap(0)); ctx.lineTo(toMap(40), toMap(0));
+      ctx.stroke();
+
+      // Canal
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.6)';
+      ctx.fillRect(w/2 - 3, toMap(5), 6, 20);
+
+      // Plants
+      PLANTS_DATA.forEach(p => {
+        const mx = toMap(p.position[0]);
+        const my = toMap(p.position[2]);
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        ctx.arc(mx, my, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Player with viewing direction arrow
+      const px = toMap(state.yawObject.position.x);
+      const py = toMap(state.yawObject.position.z);
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // SPLIT SCREEN 3D MODEL VIEWER & HOTSPOTS
+    // ══════════════════════════════════════════════════════════
+    let modelScene, modelCam, modelRend, modelGrp, modelAnimId;
+    let modelDragging = false, lastM = { x: 0, y: 0 }, modelRotation = { x: 0.15, y: 0 };
+    let activeHotspotList = [];
+
+    function openPlantPanel(plant) {
+      state.panelOpen = true;
+      state.activePlant = plant;
+      if (document.pointerLockElement) document.exitPointerLock();
+
+      document.getElementById('gardenCanvas').classList.add('blurred');
+      document.getElementById('plantPanel').classList.remove('hidden');
+
+      document.getElementById('modelPlantName').textContent = plant.name;
+      document.getElementById('modelBotanicalName').textContent = `${plant.botanicalName} (${plant.zone})`;
+      document.getElementById('plantSystemBadge').textContent = '🌿 ' + plant.ayushSystem.join(' · ');
+      document.getElementById('plantCommonName').textContent = plant.name;
+      document.getElementById('plantBotanicalNameInfo').textContent = plant.botanicalName;
+
+      updateBookmarkButtonUI();
+
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.tab[data-tab="overview"]').classList.add('active');
+      renderTabContent(plant, 'overview');
+
+      initModelViewer(plant);
+    }
+
+    function closePlantPanel() {
+      state.panelOpen = false;
+      document.getElementById('gardenCanvas').classList.remove('blurred');
+      document.getElementById('plantPanel').classList.add('hidden');
+      document.getElementById('hotspotPopup').classList.add('hidden');
+
+      if (modelAnimId) cancelAnimationFrame(modelAnimId);
+      if (modelRend) {
+        modelRend.dispose();
+        modelRend = null;
+      }
+      activeHotspotList = [];
+      document.getElementById('hotspotContainer').innerHTML = '';
+    }
+
+    function initModelViewer(plant) {
+      const canvas = document.getElementById('modelCanvas');
+      const container = document.getElementById('modelViewer');
+      if (!canvas || !container) return;
+
+      modelRotation = { x: 0.15, y: 0 };
+
+      requestAnimationFrame(() => {
+        const w = container.clientWidth || Math.floor(window.innerWidth * 0.52);
+        const h = container.clientHeight || window.innerHeight;
+
+        modelScene = new THREE.Scene();
+        modelScene.background = new THREE.Color(0x06150d);
+
+        modelCam = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+        modelCam.position.set(0, 0.85, 2.6);
+        modelCam.lookAt(0, 0.45, 0);
+
+        const hemi = new THREE.HemisphereLight(0xffffff, 0x1f3822, 1.2);
+        modelScene.add(hemi);
+
+        const keyLight = new THREE.DirectionalLight(0xfffaed, 1.5);
+        keyLight.position.set(3, 5, 4);
+        modelScene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0xa7f3d0, 0.6);
+        fillLight.position.set(-3, 2, -2);
+        modelScene.add(fillLight);
+
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+        modelScene.add(ambLight);
+
+        modelGrp = buildDetailedPlantMesh(plant);
+        modelGrp.scale.setScalar(1.4);
+        modelScene.add(modelGrp);
+
+        if (modelRend) {
+          try { modelRend.dispose(); } catch(e) {}
+        }
+        modelRend = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        modelRend.setSize(w, h);
+        modelRend.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        modelRend.toneMapping = THREE.ACESFilmicToneMapping;
+        modelRend.toneMappingExposure = 1.2;
+
+        canvas.onmousedown = (e) => { modelDragging = true; lastM = { x: e.clientX, y: e.clientY }; };
+        window.onmousemove = (e) => {
+          if (!modelDragging || !state.panelOpen) return;
+          modelRotation.y += (e.clientX - lastM.x) * 0.01;
+          modelRotation.x = Math.max(-1.0, Math.min(1.0, modelRotation.x + (e.clientY - lastM.y) * 0.01));
+          lastM = { x: e.clientX, y: e.clientY };
+        };
+        window.onmouseup = () => { modelDragging = false; };
+
+        if (modelAnimId) cancelAnimationFrame(modelAnimId);
+
+        function animateModel() {
+          if (!state.panelOpen) return;
+          modelAnimId = requestAnimationFrame(animateModel);
+
+          const curW = container.clientWidth;
+          const curH = container.clientHeight;
+          if (curW > 0 && curH > 0 && (canvas.width !== curW || canvas.height !== curH)) {
+            modelCam.aspect = curW / curH;
+            modelCam.updateProjectionMatrix();
+            modelRend.setSize(curW, curH, false);
+          }
+
+          if (!modelDragging && modelGrp) modelRotation.y += 0.005;
+
+          if (modelGrp) {
+            modelGrp.rotation.y = modelRotation.y;
+            modelGrp.rotation.x = modelRotation.x;
+          }
+
+          modelRend.render(modelScene, modelCam);
+        }
+        animateModel();
+      });
+    }
+
+    function setupHotspots(plant) {
+      const container = document.getElementById('hotspotContainer');
+      container.innerHTML = '';
+      activeHotspotList = [];
+
+      const partPositions = {
+        stem: new THREE.Vector3(0.08, 0.45, 0.1),
+        leaf: new THREE.Vector3(0.32, 0.72, 0.1),
+        flower: new THREE.Vector3(-0.05, 0.95, 0.1),
+        fruit: new THREE.Vector3(0.28, 0.85, 0.15),
+        root: new THREE.Vector3(-0.1, 0.05, 0.1)
+      };
+
+      Object.entries(plant.parts).forEach(([partKey, partData]) => {
+        const pos = partPositions[partKey] || new THREE.Vector3(0, 0.5, 0);
+        const btn = document.createElement('button');
+        btn.className = 'hotspot';
+        btn.style.background = partKey === 'leaf' ? '#10b981' : (partKey === 'stem' ? '#854d0e' : '#eab308');
+        btn.innerHTML = `${partData.icon || '●'}<span class="hotspot-tag">${partData.name}</span>`;
+        btn.addEventListener('click', () => showHotspotDetail(partData));
+        container.appendChild(btn);
+
+        activeHotspotList.push({ element: btn, pos: pos.clone() });
+      });
+    }
+
+    function updateHotspotPositions(w, h) {
+      if (!modelGrp || !modelCam) return;
+      activeHotspotList.forEach(item => {
+        const worldPos = item.pos.clone().applyEuler(modelGrp.rotation).multiplyScalar(1.4);
+        const proj = worldPos.project(modelCam);
+        const px = (proj.x * 0.5 + 0.5) * w;
+        const py = (-proj.y * 0.5 + 0.5) * h;
+        if (proj.z < 1) {
+          item.element.style.left = px + 'px';
+          item.element.style.top = py + 'px';
+          item.element.style.display = 'flex';
+        } else {
+          item.element.style.display = 'none';
+        }
+      });
+    }
+
+    function showHotspotDetail(part) {
+      const popup = document.getElementById('hotspotPopup');
+      document.getElementById('hotspotIcon').textContent = part.icon || '🌿';
+      document.getElementById('hotspotTitle').textContent = part.name + ' — Medicinal Advantages';
+      document.getElementById('hotspotDesc').textContent = part.description;
+      document.getElementById('hotspotBenefitsList').innerHTML = part.benefits.map(b => `<li>${b}</li>`).join('');
+      document.getElementById('hotspotPrep').innerHTML = `<strong>🍵 Preparation Method:</strong> ${part.preparation}`;
+      popup.classList.remove('hidden');
+    }
+
+    function renderAnatomyPartTab(plant, partKey) {
+      const anatomy = plant.anatomy || {};
+      let partData = null;
+      let partName = '';
+      let partIcon = '🌱';
+
+      if (partKey === 'leaf') {
+        partData = anatomy.leaf || plant.parts?.leaf;
+        partName = 'Leaf Anatomy & Morphological Attributes';
+        partIcon = '🍃';
+      } else if (partKey === 'stem') {
+        partData = anatomy.stem || anatomy.bark || plant.parts?.stem;
+        partName = 'Stem & Bark Characteristics';
+        partIcon = '🌿';
+      } else if (partKey === 'root') {
+        partData = anatomy.root || plant.parts?.root;
+        partName = 'Root & Rhizome System';
+        partIcon = '🌰';
+      } else if (partKey === 'flower') {
+        partData = anatomy.flower || anatomy.fruit || anatomy.seed || plant.parts?.flower;
+        partName = 'Flower, Fruit & Seed Structure';
+        partIcon = '🌸';
+      }
+
+      if (!partData) {
+        return `
+          <div class="tab-section">
+            <h4>${partIcon} ${partName}</h4>
+            <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:20px;color:#cbd5e1;">
+              <p><strong>Aiven Cloud MySQL Status:</strong> Mapped directly in <code>info_db</code> for <em>${plant.name}</em>.</p>
+              <p style="margin-top:10px;font-size:0.9rem;color:#94a3b8;">Traditional medicinal use of ${plant.name} incorporates whole plant extracts, rich in secondary metabolites supporting Ayurvedic & AYUSH therapeutic preparations.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      const excludeKeys = ['plant_id', 'id', 'traditional_uses', 'traditional_preparations', 'interesting_fact', 'harvesting_method', 'description', 'traditional_use', 'preparation', 'benefits'];
+      const badgeEntries = Object.entries(partData).filter(([k, v]) => v && typeof v === 'string' && !excludeKeys.includes(k));
+
+      const badgesHtml = badgeEntries.length > 0
+        ? badgeEntries.map(([k, v]) => {
+            const label = k.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            return `<div class="info-card"><div class="info-label">${label}</div><div class="info-value">${v}</div></div>`;
+          }).join('')
+        : `<div class="info-card"><div class="info-label">Database Source</div><div class="info-value">Aiven Cloud MySQL info_db</div></div>`;
+
+      const usesText = partData.traditional_uses || partData.traditional_use || partData.description || plant.description || 'Traditional restorative use in AYUSH formulations.';
+      const prepText = partData.traditional_preparations || partData.preparation || partData.harvesting_method || 'Fresh juice, infusion, or fine dried powder.';
+      const factText = partData.interesting_fact || (Array.isArray(partData.benefits) ? partData.benefits.join(', ') : 'Contains active phytochemical constituents supporting cellular vitality.');
+
+      return `
+        <div class="tab-section">
+          <h4>${partIcon} ${partName}</h4>
+          <div class="info-grid" style="margin-bottom:20px;">
+            ${badgesHtml}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>📜 Traditional Uses & AYUSH Formulations (from info_db)</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#e2e8f0;font-size:0.92rem;line-height:1.6;">
+            ${usesText}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>🧪 Processing & Harvesting Method</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#cbd5e1;font-size:0.92rem;line-height:1.6;">
+            ${prepText}
+          </div>
+        </div>
+        <div class="tab-section">
+          <h4>💡 Phytochemical & Botanical Insight</h4>
+          <div style="background:rgba(14,32,22,0.85);border:1px solid var(--panel-border);border-radius:14px;padding:18px;color:#38bdf8;font-size:0.9rem;line-height:1.6;">
+            ${factText}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTabContent(plant, tab) {
+      const content = document.getElementById('tabContent');
+      if (tab === 'overview') {
+        content.innerHTML = `
+          <div class="tab-section">
+            <h4>📖 Botanical Profile & Info DB Summary</h4>
+            <p style="font-size:0.94rem;color:#cbd5e1;line-height:1.8">${plant.description}</p>
+          </div>
+          <div class="tab-section">
+            <div class="info-grid">
+              <div class="info-card"><div class="info-label">Botanical Name</div><div class="info-value" style="font-style:italic;color:#6ee7b7;">${plant.botanicalName || plant.botanical_name}</div></div>
+              <div class="info-card"><div class="info-label">Sanctuary Zone</div><div class="info-value">${plant.zone || 'Botanical Reserve'}</div></div>
+              <div class="info-card"><div class="info-label">AYUSH Stream</div><div class="info-value">${Array.isArray(plant.ayushSystem) ? plant.ayushSystem.join(', ') : (plant.ayushSystem || 'Ayurveda')}</div></div>
+              <div class="info-card"><div class="info-label">Vernacular Names</div><div class="info-value">${Array.isArray(plant.commonNames) ? plant.commonNames.join(', ') : (plant.name || plant.common_name)}</div></div>
+            </div>
+          </div>
+        `;
+      } else if (tab === 'leaf' || tab === 'stem' || tab === 'root' || tab === 'flower') {
+        content.innerHTML = renderAnatomyPartTab(plant, tab);
+      } else if (tab === 'medicinal') {
+        const medUses = plant.medicinalUses || {};
+        content.innerHTML = `
+          <div class="tab-section">
+            <h4>💊 Pharmacological & Traditional Uses</h4>
+            ${Object.keys(medUses).length > 0 ? Object.entries(medUses).map(([cat, uses]) => `
+              <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:16px;margin-bottom:12px;">
+                <div style="font-size:0.92rem;font-weight:700;color:#34d399;text-transform:capitalize;margin-bottom:8px;">✦ ${cat} Health</div>
+                <div>${Array.isArray(uses) ? uses.map(u => `<span class="use-tag">${u}</span>`).join('') : `<span class="use-tag">${uses}</span>`}</div>
+              </div>
+            `).join('') : `
+              <div style="background:rgba(14,32,22,0.75);border:1px solid var(--panel-border);border-radius:14px;padding:16px;">
+                <p style="font-size:0.9rem;color:#cbd5e1;">Traditional AYUSH restorative health uses fetched from Aiven Cloud MySQL info_db.</p>
+              </div>
+            `}
+          </div>
+        `;
+      } else if (tab === 'cultivation') {
+        const cult = plant.cultivation || {};
+        content.innerHTML = `
+          <div class="tab-section">
+            <h4>🌱 Gardening & Cultivation Guidelines</h4>
+            <div class="info-grid">
+              <div class="info-card"><div class="info-label">🪨 Soil Required</div><div class="info-value">${cult.soil || 'Well-draining loamy soil'}</div></div>
+              <div class="info-card"><div class="info-label">🌤️ Climate</div><div class="info-value">${cult.climate || 'Tropical & Subtropical'}</div></div>
+              <div class="info-card"><div class="info-label">💧 Watering</div><div class="info-value">${cult.watering || 'Moderate watering'}</div></div>
+              <div class="info-card"><div class="info-label">📅 Sowing Season</div><div class="info-value">${cult.season || 'Monsoon / Spring'}</div></div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // BOOKMARKS & TOURS
+    // ══════════════════════════════════════════════════════════
+    function toggleBookmarksPanel() {
+      const p = document.getElementById('bookmarksPanel');
+      document.getElementById('toursPanel').classList.add('hidden');
+      p.classList.toggle('hidden');
+      if (!p.classList.contains('hidden')) {
+        const list = document.getElementById('bookmarksList');
+        const saved = PLANTS_DATA.filter(pl => state.bookmarks.includes(pl.id));
+        if (saved.length === 0) {
+          list.innerHTML = '<p style="text-align:center;color:#666;padding:24px;">No saved herbs yet.</p>';
+        } else {
+          list.innerHTML = saved.map(pl => `
+            <div class="search-result-item" style="border-radius:10px;margin-bottom:8px;background:rgba(16,36,24,0.75);" onclick="teleportToPlant('${pl.id}')">
+              <span style="font-size:1.4rem;">🌿</span>
+              <div>
+                <div class="search-result-name">${pl.name}</div>
+                <div class="search-result-sub">${pl.botanicalName} (${pl.zone})</div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    window.teleportToPlant = function(id) {
+      const pl = PLANTS_DATA.find(p => p.id === id);
+      if (pl) {
+        state.yawObject.position.set(pl.position[0], 1.7, pl.position[2] + 3.5);
+        openPlantPanel(pl);
+        document.getElementById('bookmarksPanel').classList.add('hidden');
+        document.getElementById('toursPanel').classList.add('hidden');
+      }
+    };
+
+    function toggleToursPanel() {
+      const p = document.getElementById('toursPanel');
+      document.getElementById('bookmarksPanel').classList.add('hidden');
+      p.classList.toggle('hidden');
+      if (!p.classList.contains('hidden')) {
+        document.getElementById('toursList').innerHTML = TOURS_DATA.map(t => `
+          <div class="tour-card" onclick="startTour('${t.id}')">
+            <h4>${t.icon} ${t.name}</h4>
+            <p>${t.desc}</p>
+            <button class="tour-start-btn">Start Sanctuary Tour (${t.plants.length} Species) →</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    window.startTour = function(tourId) {
+      const tour = TOURS_DATA.find(t => t.id === tourId);
+      if (tour) {
+        document.getElementById('toursPanel').classList.add('hidden');
+        teleportToPlant(tour.plants[0]);
+        showToast(`🗺️ Commencing Tour: ${tour.name}`);
+      }
+    };
+
+    function toggleActiveBookmark() {
+      if (!state.activePlant) return;
+      const id = state.activePlant.id;
+      const idx = state.bookmarks.indexOf(id);
+      if (idx === -1) {
+        state.bookmarks.push(id);
+        showToast(`❤️ Saved ${state.activePlant.name}`);
+      } else {
+        state.bookmarks.splice(idx, 1);
+        showToast(`💔 Removed ${state.activePlant.name}`);
+      }
+      localStorage.setItem('v_garden_bookmarks', JSON.stringify(state.bookmarks));
+      updateBookmarkButtonUI();
+    }
+
+    function updateBookmarkButtonUI() {
+      const btn = document.getElementById('bookmarkBtn');
+      const isSaved = state.bookmarks.includes(state.activePlant?.id);
+      btn.innerHTML = isSaved ? '<span>❤️</span> Saved' : '<span>🤍</span> Bookmark';
+      btn.classList.toggle('active', isSaved);
+    }
+
+    function shareActivePlant() {
+      if (!state.activePlant) return;
+      const text = `🌿 Exploring ${state.activePlant.name} in the AYUSH Grand 3D Botanical Sanctuary!`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+        showToast('📋 Copied botanical profile to clipboard!');
+      }
+    }
+
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 2800);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // PROCEDURAL AMBIENT SOUNDSCAPE ENGINE (WEB AUDIO API)
+    // ══════════════════════════════════════════════════════════
+    let audioCtx = null;
+    let windGain = null;
+    let birdTimer = null;
+
+    function initAudioEngine() {
+      if (audioCtx) {
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return;
+      }
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+
+        // 1. Procedural Gentle Breeze (Filtered Pink/White Noise)
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * 0.35;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+        windGain = audioCtx.createGain();
+        windGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+
+        whiteNoise.connect(filter);
+        filter.connect(windGain);
+        windGain.connect(audioCtx.destination);
+        whiteNoise.start();
+
+        // 2. Schedule Random Natural Birdsong Chirps
+        scheduleNextBirdCall();
+      } catch (err) {
+        console.warn('AudioContext not supported or blocked:', err);
+      }
+    }
+
+    function scheduleNextBirdCall() {
+      if (!state.soundEnabled) return;
+      const delay = 2500 + Math.random() * 4500;
+      birdTimer = setTimeout(() => {
+        if (state.soundEnabled && audioCtx && audioCtx.state === 'running') {
+          playProceduralBirdCall();
+        }
+        scheduleNextBirdCall();
+      }, delay);
+    }
+
+    function playProceduralBirdCall() {
+      if (!audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Dynamic multi-note warble
+        const baseFreq = 1600 + Math.random() * 1000;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq + 600, now + 0.08);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq - 200, now + 0.16);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq + 400, now + 0.24);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.06, now + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } catch (e) {}
+    }
+
+    function toggleAmbience() {
+      state.soundEnabled = !state.soundEnabled;
+      const btn = document.getElementById('soundBtn');
+
+      if (state.soundEnabled) {
+        initAudioEngine();
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        if (windGain) {
+          windGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        }
+        btn.textContent = '🔊 Sound On';
+        btn.style.borderColor = 'var(--accent)';
+        showToast('🔊 Ambient sanctuary sound enabled');
+        scheduleNextBirdCall();
+      } else {
+        if (windGain && audioCtx) {
+          windGain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        }
+        if (birdTimer) {
+          clearTimeout(birdTimer);
+          birdTimer = null;
+        }
+        btn.textContent = '🔈 Ambience';
+        btn.style.borderColor = '';
+        showToast('🔈 Ambience sound muted');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initGrandSanctuary);
+  </script>
+</body>
+</html>

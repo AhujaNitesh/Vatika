@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.local
+*.log
+scratch/
+brain/
+.DS_Store

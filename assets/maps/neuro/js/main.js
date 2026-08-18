@@ -69,10 +69,35 @@ async function init() {
   // ── Clock ──
   state.clock = new THREE.Clock();
 
-  // ── Load plant data ──
-  const resp = await fetch('./data/plants.json');
-  const json = await resp.json();
-  state.allPlants = json.plants;
+  // ── Load plant data from API ──
+  try {
+    const apiResp = await fetch('/api/gardens/neuro');
+    const apiJson = await apiResp.json();
+    if (apiJson && apiJson.data && apiJson.data.length > 0) {
+      state.allPlants = apiJson.data.map((p, idx) => ({
+        id: (p.common_name || `plant_${p.plant_id}`).toLowerCase().replace(/[^a-z0-9]/g, '_'),
+        name: p.common_name,
+        botanicalName: p.botanical_name,
+        sanskritName: p.sanskrit_name || '',
+        commonNames: [p.common_name, p.sanskrit_name || ''].filter(Boolean),
+        ayushSystem: (p.traditional_systems || []).map(s => s.system_name),
+        habitat: p.climate || 'Tropical and Subtropical',
+        description: p.overall_traditional_uses || 'Traditional AYUSH medicinal flora.',
+        colorHex: ['#c084fc', '#a855f7', '#9333ea', '#7e22ce', '#6b21a8'][idx % 5],
+        position: [
+          (idx % 4 - 1.5) * 6,
+          0,
+          (Math.floor(idx / 4) - 1) * 6
+        ]
+      }));
+    } else {
+      throw new Error('No API data returned');
+    }
+  } catch (err) {
+    const resp = await fetch('./data/plants.json');
+    const json = await resp.json();
+    state.allPlants = json.plants;
+  }
 
   // ── Build the garden environment ──
   initGarden(state);

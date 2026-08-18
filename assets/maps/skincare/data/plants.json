@@ -1,0 +1,925 @@
+{
+  "plants": [
+    {
+      "id": "tulsi",
+      "name": "Tulsi",
+      "botanicalName": "Ocimum tenuiflorum",
+      "commonNames": ["Holy Basil", "Sacred Basil", "Vrinda", "Tulasi"],
+      "ayushSystem": ["Ayurveda"],
+      "habitat": "Native to the Indian subcontinent. Grows in tropical and subtropical regions up to 1800m altitude. Thrives in full sunlight.",
+      "description": "Tulsi is revered as the 'Queen of Herbs' in Ayurveda and holds a sacred place in Hindu tradition. This aromatic shrub is a cornerstone of traditional Indian medicine, used for millennia to treat a wide spectrum of ailments. Its adaptogenic properties help the body cope with stress while its antimicrobial compounds fight infections.",
+      "colorHex": "#2d6a4f",
+      "position": [-4, 0, 5],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#8B4513",
+          "description": "The stem of Tulsi is square-shaped, purple or greenish, and covered with fine hairs. It is woody at the base and herbaceous at the top.",
+          "benefits": [
+            "Contains eugenol — a potent anti-inflammatory compound",
+            "Stem decoction relieves throat infections and hoarseness",
+            "Used in Ayurvedic formulations for fever management",
+            "Anti-bacterial properties against E. coli and S. aureus",
+            "Stem paste applied to insect bites for instant relief"
+          ],
+          "preparation": "Boil 10–12 Tulsi stems in 2 cups of water for 10 minutes. Strain and drink warm with honey."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#228B22",
+          "description": "Tulsi leaves are oval with serrated edges, bright green, and release a strong aromatic scent when crushed due to essential oils like eugenol, methyl eugenol, and caryophyllene.",
+          "benefits": [
+            "Powerful adaptogen — reduces cortisol and stress",
+            "Boosts immunity by increasing T-helper cell and NK cell activity",
+            "Expectorant — clears congestion and relieves cough",
+            "Rich in Vitamin C, Vitamin A, and antioxidants",
+            "Anti-diabetic — lowers fasting blood glucose",
+            "Reduces anxiety and promotes mental clarity"
+          ],
+          "preparation": "Chew 5–7 fresh leaves each morning on an empty stomach, or brew as tea with ginger and black pepper."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌸",
+          "color": "#9b59b6",
+          "description": "Tulsi produces small purple or white flowers arranged in dense spikes (racemes). The flowers have a honey-like fragrance and are rich in essential oils.",
+          "benefits": [
+            "Potent anti-malarial properties documented in research",
+            "Flower tea relieves headaches and migraines",
+            "Helps in managing scorpion and snake venom effects (traditional use)",
+            "Rich in flavonoids — powerful antioxidants",
+            "Used in aromatherapy for stress relief"
+          ],
+          "preparation": "Steep 1 tablespoon of dried Tulsi flowers in hot water for 5 minutes. Add honey and drink."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#8B6914",
+          "description": "The roots of Tulsi are fibrous and light brown. They possess unique medicinal properties distinct from the aerial parts.",
+          "benefits": [
+            "Traditional treatment for malaria and periodic fevers",
+            "Root powder mixed with honey treats ringworm and skin infections",
+            "Anti-rheumatic — relieves joint pain and arthritis",
+            "Diuretic properties support kidney health",
+            "Used to treat snakebite (traditional emergency remedy)"
+          ],
+          "preparation": "Dry roots, grind to fine powder. Mix 1/2 teaspoon with warm water twice daily for joint pain."
+        }
+      },
+      "medicinalUses": {
+        "immunity": ["Boosts T-cells and NK cell count", "Adaptogenic — counters physical and mental stress", "Antiviral against H1N1 influenza"],
+        "respiratory": ["Relieves asthma, bronchitis, and chronic cough", "Expectorant — loosens mucus", "Anti-allergic properties"],
+        "digestive": ["Relieves bloating and flatulence", "Anti-ulcer properties protect gastric lining", "Improves digestion and appetite"],
+        "skincare": ["Anti-acne due to antimicrobial oils", "Reduces skin inflammation", "Lightens blemishes and dark spots"],
+        "mental": ["Reduces anxiety and stress (adaptogen)", "Improves memory and cognitive function", "Anti-depressant properties"]
+      },
+      "cultivation": {
+        "soil": "Well-drained, fertile loamy soil with pH 6.0–7.5",
+        "climate": "Tropical and subtropical, 20°C–35°C. Cannot tolerate frost.",
+        "watering": "Moderate — water every 2–3 days. Avoid waterlogging.",
+        "season": "Best planted at onset of monsoon (June–July). Harvest before flowering.",
+        "propagation": "Seeds or stem cuttings. Germination in 7–14 days.",
+        "spacing": "30–45 cm between plants"
+      },
+      "recipes": [
+        {
+          "name": "Tulsi Immunity Kadha",
+          "ingredients": ["10 Tulsi leaves", "1 inch ginger", "5 black peppercorns", "1 tsp honey", "2 cups water"],
+          "method": "Boil all ingredients (except honey) for 10 minutes. Strain, cool slightly, add honey. Drink twice daily.",
+          "benefits": "Boosts immunity, relieves cold and flu symptoms"
+        },
+        {
+          "name": "Tulsi Skin Toner",
+          "ingredients": ["20 Tulsi leaves", "1 cup water", "1 tsp rose water"],
+          "method": "Boil leaves in water for 15 minutes. Strain and cool. Mix with rose water. Apply with cotton pad.",
+          "benefits": "Reduces acne, brightens skin"
+        }
+      ]
+    },
+    {
+      "id": "ashwagandha",
+      "name": "Ashwagandha",
+      "botanicalName": "Withania somnifera",
+      "commonNames": ["Indian Ginseng", "Winter Cherry", "Asgandh", "Poison Gooseberry"],
+      "ayushSystem": ["Ayurveda"],
+      "habitat": "Dry, arid regions of India (Rajasthan, Gujarat, MP). Also found in Mediterranean and Africa. Grows up to 1500m altitude.",
+      "description": "Known as the 'King of Ayurvedic Herbs', Ashwagandha is one of the most powerful adaptogens in existence. The Sanskrit name means 'smell of horse' — symbolizing the strength and vitality it imparts. Used for 3000+ years to combat stress, anxiety, and fatigue.",
+      "colorHex": "#6b8e23",
+      "position": [-6, 0, -3],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#8B7355",
+          "description": "The stem is erect, branched, with a grayish-green color and covered with fine white hairs (tomentose). It is woody at the base.",
+          "benefits": [
+            "Stem bark contains alkaloids with anti-inflammatory action",
+            "Decoction helps in respiratory conditions",
+            "Contains withanolides — potent bioactive compounds",
+            "Anti-microbial properties against gram-positive bacteria",
+            "Used in traditional poultices for carbuncles and ulcers"
+          ],
+          "preparation": "Bark decoction: Boil 5g dried stem bark in 200ml water for 15 minutes. Drink 50ml twice daily."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#4a7c1f",
+          "description": "Simple, oval leaves with undulate margins. Bright green, larger in lower portions of the plant.",
+          "benefits": [
+            "Anti-tumor properties — withanolides induce cancer cell apoptosis",
+            "Leaf paste applied to carbuncles and swellings",
+            "Anti-inflammatory — reduces pain and joint swelling",
+            "Febrifuge — reduces fever",
+            "Veterinary use for livestock health"
+          ],
+          "preparation": "Crush fresh leaves into a paste. Apply directly to inflamed joints or skin swellings."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌼",
+          "color": "#90EE90",
+          "description": "Small, greenish or dull yellow bell-shaped flowers appearing in clusters at leaf axils.",
+          "benefits": [
+            "Flowers have diuretic properties",
+            "Used as emmenagogue in traditional medicine",
+            "Mild sedative effect — aids sleep quality",
+            "Anti-bacterial when applied topically"
+          ],
+          "preparation": "Flower tea: Steep dried flowers in hot water for 10 minutes. Strain and drink before bedtime."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#D2B48C",
+          "description": "The most important medicinal part — thick, fleshy taproot with a horse-like smell due to withanolides. Harvested in winter (Nov–Jan).",
+          "benefits": [
+            "Powerful adaptogen — normalizes stress response (cortisol regulation)",
+            "Enhances thyroid function in hypothyroidism",
+            "Boosts testosterone and male fertility",
+            "Improves muscle mass and strength (studied in athletes)",
+            "Neuroprotective — may reduce Alzheimer's progression",
+            "Anti-diabetic — lowers blood sugar comparably to oral drugs",
+            "Reduces anxiety scores by 40% (clinical trials)"
+          ],
+          "preparation": "Mix 1 tsp (3-5g) root powder in warm milk with honey. Drink nightly for 90 days for best results."
+        }
+      },
+      "medicinalUses": {
+        "mental": ["Reduces stress and anxiety (adaptogen)", "Improves memory and learning", "Anti-depressant effects"],
+        "immunity": ["Enhances immune cell activity", "Anti-tumor properties (withanolides)", "Anti-inflammatory"],
+        "hormonal": ["Balances thyroid hormones", "Boosts testosterone", "Improves fertility in both sexes"],
+        "physical": ["Increases muscle mass and strength", "Reduces exercise-induced fatigue", "Improves endurance"]
+      },
+      "cultivation": {
+        "soil": "Sandy loam to red, well-drained. pH 7.5–8.0. Tolerates poor soil.",
+        "climate": "Semi-arid, dry. 20°C–38°C. Drought-tolerant once established.",
+        "watering": "Minimal — once a week. Overwatering causes root rot.",
+        "season": "Sow seeds in August-September. Harvest roots after 150-180 days.",
+        "propagation": "Seeds (fresh seeds germinate better). Sow 1-2 cm deep.",
+        "spacing": "60 cm between plants, 90 cm between rows"
+      },
+      "recipes": [
+        {
+          "name": "Ashwagandha Golden Milk",
+          "ingredients": ["1 tsp Ashwagandha powder", "1 cup warm milk", "1/2 tsp turmeric", "1/4 tsp cinnamon", "1 tsp honey"],
+          "method": "Warm milk, whisk in all powders until smooth. Add honey. Drink 30 minutes before bedtime.",
+          "benefits": "Deep sleep, stress relief, muscle recovery"
+        }
+      ]
+    },
+    {
+      "id": "neem",
+      "name": "Neem",
+      "botanicalName": "Azadirachta indica",
+      "commonNames": ["Neem", "Indian Lilac", "Nimba", "Margosa Tree"],
+      "ayushSystem": ["Ayurveda", "Siddha", "Unani"],
+      "habitat": "Native to India and Myanmar. Grows throughout South Asia, Africa, and Caribbean. Thrives in tropical/subtropical regions with 400–1200mm annual rainfall.",
+      "description": "Called 'Sarva Roga Nivarani' (Curer of all diseases) in Sanskrit, Neem is one of the most versatile medicinal trees known. Every part — from bark to seed — has documented therapeutic properties. It is the world's most researched medicinal plant with thousands of scientific studies validating its traditional uses.",
+      "colorHex": "#228b22",
+      "position": [0, 0, 5],
+      "parts": {
+        "stem": {
+          "name": "Bark",
+          "icon": "🌳",
+          "color": "#5C4033",
+          "description": "The bark is thick, grayish-brown, with deep longitudinal furrows. It is extremely bitter due to nimbin, nimbidin, and nimbidol.",
+          "benefits": [
+            "Anti-malarial — bark decoction used for centuries against Plasmodium",
+            "Anti-ulcer — protects gastric mucosa",
+            "Reduces fever — traditional antipyretic",
+            "Treats jaundice and liver disorders",
+            "Bark paste relieves skin diseases including eczema and psoriasis"
+          ],
+          "preparation": "Neem bark decoction: Boil 10g bark in 400ml water until reduced to 100ml. Drink 50ml twice daily."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#006400",
+          "description": "Compound leaves with 8–19 leaflets, lance-shaped with serrated margins. Young leaves are reddish, mature ones deep green.",
+          "benefits": [
+            "Azadirachtin — powerful anti-bacterial and antifungal compound",
+            "Anti-diabetic — lowers blood sugar significantly",
+            "Dental health — neem twigs as toothbrush is an ancient practice",
+            "Acne treatment — reduces P. acnes bacterial count",
+            "Anti-parasitic — treats intestinal worms",
+            "Wound healing and scar reduction"
+          ],
+          "preparation": "Grind 20 fresh leaves with water into a smooth paste. Apply to acne or infected wounds. Or boil leaves for a medicinal bath."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌸",
+          "color": "#FFFACD",
+          "description": "Small, white, highly fragrant flowers appearing in spring. Rich in flavonoids and essential oils.",
+          "benefits": [
+            "Anti-viral — inhibits Herpes Simplex virus activity",
+            "Excellent for digestive health — eaten fresh in traditional cuisine",
+            "Reduces bile pigments — treats jaundice",
+            "Anti-spasmodic — relieves intestinal cramps",
+            "Flower extract shows anti-fertility effects (traditional contraceptive)"
+          ],
+          "preparation": "Eat 20-30 fresh flowers in the morning to purify blood and support liver. Cooked with jaggery in Ugadi festival."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#8B4513",
+          "description": "Neem roots are bitter and contain high concentrations of tetranortri terpenoids. The root bark is the most potent part.",
+          "benefits": [
+            "Root bark extract: powerful anti-inflammatory and analgesic",
+            "Traditional treatment for snake and scorpion bites",
+            "Anti-malarial — stronger than leaf extracts",
+            "Expectorant — loosens chest congestion",
+            "Root decoction treats burning urination (UTI)"
+          ],
+          "preparation": "Root bark decoction (very bitter): 5g dried root bark in 200ml water. Boil for 20 minutes. Take 30ml with warm water."
+        }
+      },
+      "medicinalUses": {
+        "skincare": ["Treats acne, eczema, psoriasis, ringworm", "Powerful antifungal for dandruff", "Wound healing and anti-scarring"],
+        "immunity": ["Broad-spectrum antimicrobial", "Anti-viral against multiple viruses", "Anti-parasitic and anti-malarial"],
+        "dental": ["Neem twig toothbrush prevents cavities", "Anti-gingivitis and anti-plaque", "Freshens breath naturally"],
+        "digestive": ["Treats intestinal worms", "Liver tonic and detoxifier", "Anti-ulcer properties"]
+      },
+      "cultivation": {
+        "soil": "Almost any soil type — clay, loam, sandy. pH 6.2–8.5. Very adaptable.",
+        "climate": "Tropical. Temperature 20°C–50°C. Extremely drought-tolerant.",
+        "watering": "Very minimal once established. Grows in rain-fed conditions.",
+        "season": "Year-round. Seeds sown in monsoon. Fast-growing — 3-5m in first year.",
+        "propagation": "Fresh seeds (viability drops quickly). Also from stem cuttings.",
+        "spacing": "8–10 meters apart (large tree)"
+      },
+      "recipes": [
+        {
+          "name": "Neem Face Pack",
+          "ingredients": ["20 neem leaves (paste)", "1 tbsp multani mitti", "1 tsp turmeric", "Rose water to mix"],
+          "method": "Mix all ingredients into a smooth paste with rose water. Apply to face for 15 minutes. Rinse with cool water.",
+          "benefits": "Reduces acne, brightens skin, antibacterial cleanse"
+        }
+      ]
+    },
+    {
+      "id": "turmeric",
+      "name": "Turmeric",
+      "botanicalName": "Curcuma longa",
+      "commonNames": ["Turmeric", "Haldi", "Indian Saffron", "Golden Spice", "Haridra"],
+      "ayushSystem": ["Ayurveda", "Unani", "Siddha"],
+      "habitat": "Native to South and Southeast Asia. Requires tropical climate with 1500mm+ annual rainfall and temperatures 20°C–35°C. Grown extensively in India (world's largest producer).",
+      "description": "Turmeric is perhaps the most scientifically studied medicinal plant, with over 12,000 published papers on curcumin alone. Used for 4000+ years in Ayurveda as 'Haridra', it is simultaneously a spice, dye, cosmetic, and medicine. Its golden color comes from curcuminoids — the most powerful natural anti-inflammatory compounds known.",
+      "colorHex": "#f4d35e",
+      "position": [-4, 0, -11],
+      "parts": {
+        "stem": {
+          "name": "Stem (Pseudostem)",
+          "icon": "🌿",
+          "color": "#90EE90",
+          "description": "Turmeric has a false stem (pseudostem) formed by leaf sheaths. The true stem is underground. The pseudostem is tender and edible.",
+          "benefits": [
+            "Pseudostem extract has anti-inflammatory compounds",
+            "Used in traditional medicine for fever reduction",
+            "Anti-oxidant properties in the leaf sheath extracts",
+            "Eaten as a vegetable in South India and Southeast Asia",
+            "Contains curcumin analogs with similar medicinal properties"
+          ],
+          "preparation": "Chop fresh pseudostem finely. Use in cooking or blend into fresh green juice."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#2E8B57",
+          "description": "Large, elongated leaves 35–75 cm long, bright green with distinct midrib. Used as food wrapper in South Indian cuisine (Patraveli).",
+          "benefits": [
+            "Anti-inflammatory — contains curcumin-related compounds",
+            "Leaf extract is anti-cancer in preliminary studies",
+            "Traditional wound dressing — leaves wrapped around injuries",
+            "Antibacterial when used as food wrapping (preserves food)",
+            "Leaf oil used in aromatherapy for relaxation"
+          ],
+          "preparation": "Use fresh leaves to wrap and steam food — this infuses food with curcuminoids. Also used in Patraveli (leaf plate) cooking."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌺",
+          "color": "#FFB6C1",
+          "description": "Beautiful pale yellow or white tubular flowers appearing at the center of the plant. Edible and used in traditional cuisine.",
+          "benefits": [
+            "Edible flowers rich in essential oils",
+            "Anti-inflammatory flavonoids",
+            "Traditional treatment for earache (flower juice)",
+            "Used in Thai and South Asian cuisine for color and aroma",
+            "Floral extract shows antibacterial properties"
+          ],
+          "preparation": "Fresh flowers can be added to salads or cooked in curries. Flower juice: press 10 flowers, dilute with water, and apply 2-3 drops in ear for earache."
+        },
+        "root": {
+          "name": "Rhizome (Root)",
+          "icon": "🟡",
+          "color": "#FF8C00",
+          "description": "The underground rhizome is the primary medicinal part — bright orange-yellow inside due to curcuminoids. Pungent, bitter, and slightly peppery in taste.",
+          "benefits": [
+            "Curcumin — most potent natural anti-inflammatory (inhibits NF-κB pathway)",
+            "Stronger than aspirin and ibuprofen for arthritis pain relief",
+            "Anti-cancer — induces apoptosis in multiple cancer cell lines",
+            "Anti-Alzheimer's — prevents amyloid plaque formation",
+            "Liver protective — regenerates hepatocytes",
+            "Accelerates wound healing by 3x (clinical evidence)",
+            "Lowers LDL cholesterol and prevents oxidative damage to arteries"
+          ],
+          "preparation": "Golden Milk: 1 tsp turmeric powder + pinch black pepper (piperine increases absorption by 2000%) + warm milk. Take daily."
+        }
+      },
+      "medicinalUses": {
+        "antiinflammatory": ["Arthritis and joint pain relief", "Reduces C-reactive protein (inflammation marker)", "Post-workout muscle soreness"],
+        "skincare": ["Brightens complexion (Haldi ceremony)", "Treats acne and hyperpigmentation", "Anti-aging antioxidant"],
+        "digestive": ["Stimulates bile production — aids fat digestion", "Treats IBD and Crohn's disease", "Anti-ulcer properties"],
+        "immunity": ["Anti-cancer (curcumin)", "Antiviral and antibacterial", "Boosts antioxidant enzyme activity"]
+      },
+      "cultivation": {
+        "soil": "Deep, well-drained loamy or alluvial soil. pH 5.5–7.0. Rich in organic matter.",
+        "climate": "Tropical. 20°C–30°C. Requires partial shade.",
+        "watering": "Regular irrigation every 7–10 days. Needs consistent moisture.",
+        "season": "Planted at beginning of monsoon (May–June). Harvested after 7–9 months.",
+        "propagation": "Rhizome pieces (15–25g each) with 2–3 buds. Plant 5–7cm deep.",
+        "spacing": "30–45 cm between plants"
+      },
+      "recipes": [
+        {
+          "name": "Turmeric Golden Milk",
+          "ingredients": ["1 tsp turmeric powder", "Pinch of black pepper", "1/2 tsp cinnamon", "1 cup warm milk (dairy or plant-based)", "1 tsp honey", "1/4 tsp ginger powder"],
+          "method": "Warm milk over low heat. Whisk in all spices. Do not boil. Add honey last. Drink nightly.",
+          "benefits": "Anti-inflammatory, immune booster, sleep aid, cancer prevention"
+        }
+      ]
+    },
+    {
+      "id": "brahmi",
+      "name": "Brahmi",
+      "botanicalName": "Bacopa monnieri",
+      "commonNames": ["Brahmi", "Water Hyssop", "Herb of Grace", "Jalanimba"],
+      "ayushSystem": ["Ayurveda"],
+      "habitat": "Grows in wet, marshy areas and along water bodies throughout India, Nepal, Sri Lanka, China, and Florida. Found at altitudes up to 1400m.",
+      "description": "Brahmi is Ayurveda's premier brain tonic and nervine herb, named after Lord Brahma — the Hindu god of creation and universal consciousness. Used for 3000+ years to sharpen intellect, improve memory, and treat epilepsy. Modern research confirms its remarkable neuroprotective and cognitive-enhancing properties.",
+      "colorHex": "#90ee90",
+      "position": [-2, 0, -3],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#6B8E23",
+          "description": "Creeping, succulent stem that spreads along the ground and roots at nodes. Light green and highly branched.",
+          "benefits": [
+            "Contains bacoside compounds along the entire stem",
+            "Anti-oxidant properties throughout aerial parts",
+            "Traditional treatment for skin disorders when applied as paste",
+            "Stem juice is a traditional hair tonic — prevents premature greying",
+            "Anti-inflammatory when consumed as tea"
+          ],
+          "preparation": "Brahmi stem juice: Crush a handful of stems, extract juice. Mix with coconut oil (1:4) for hair application."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#32CD32",
+          "description": "Small, succulent, oblong leaves (4–6mm long), slightly notched at the tip. Arranged alternately on the stem. Bitter taste.",
+          "benefits": [
+            "Bacosides A & B — enhance synaptic transmission and nerve signal speed",
+            "Increase BDNF (Brain-Derived Neurotrophic Factor) by up to 50%",
+            "Reduce anxiety by modulating serotonin and GABA receptors",
+            "Adaptogen — reduces cortisol and physiological stress response",
+            "Antiepileptic — reduces seizure frequency",
+            "Improve word recall and attention in clinical studies",
+            "Protect neurons from mercury and aluminum neurotoxicity"
+          ],
+          "preparation": "Chew 4–5 fresh leaves daily (bitter taste but highly effective). Or prepare Brahmi ghee: simmer leaves in clarified butter, strain, take 1 tsp daily."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌼",
+          "color": "#E0E0FF",
+          "description": "Small, white or light purple five-petaled flowers with 4 stamens. Appear throughout the year in favorable conditions.",
+          "benefits": [
+            "Flower extract shows anti-epileptic properties",
+            "Mild sedative effect — aids sleep quality",
+            "Anti-oxidant flavonoids",
+            "Used in traditional formulations for mental clarity"
+          ],
+          "preparation": "Brahmi flower tea: Steep 10–15 fresh or dried flowers in hot water. Add honey. Drink before meditation or study."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#DEB887",
+          "description": "White, fibrous roots at each node. The entire plant including roots is used medicinally in some preparations.",
+          "benefits": [
+            "Root extracts show anti-cancer properties in preliminary studies",
+            "Contains alkaloids with anti-spasmodic activity",
+            "Traditional treatment for bowel disorders",
+            "Diuretic properties"
+          ],
+          "preparation": "Whole plant decoction (including roots): Boil 20g plant material in 400ml water. Reduce to 100ml. Take 50ml twice daily."
+        }
+      },
+      "medicinalUses": {
+        "mental": ["Improves memory and learning (clinical trials)", "Reduces anxiety and depression", "Anti-epileptic properties", "ADHD management"],
+        "neuroprotective": ["Prevents neurodegeneration", "Increases BDNF", "Protects against heavy metal neurotoxicity"],
+        "physical": ["Anti-inflammatory", "Antioxidant", "Thyroid-regulating"],
+        "haircare": ["Prevents hair fall", "Prevents premature greying", "Improves scalp circulation"]
+      },
+      "cultivation": {
+        "soil": "Waterlogged or very moist soil. Can grow in water (semi-aquatic). pH 6.0–7.0.",
+        "climate": "Tropical. Thrives in warm, humid conditions. 15°C–40°C.",
+        "watering": "Requires consistent moisture — grows naturally in marshy areas. Keep soil always wet.",
+        "season": "Year-round in moist conditions. Best growth in monsoon.",
+        "propagation": "Stem cuttings (very easy). Each node roots readily in moist soil.",
+        "spacing": "20–30 cm between plants"
+      },
+      "recipes": [
+        {
+          "name": "Brahmi Brain Tonic",
+          "ingredients": ["1 tsp Brahmi powder", "1 cup warm milk", "1/2 tsp Ashwagandha powder", "1 tsp honey", "Pinch of cardamom"],
+          "method": "Warm milk, whisk in powders thoroughly. Add honey and cardamom. Drink every morning for 3 months.",
+          "benefits": "Enhanced memory, focus, anxiety relief, better sleep"
+        }
+      ]
+    },
+    {
+      "id": "aloe",
+      "name": "Aloe Vera",
+      "botanicalName": "Aloe barbadensis miller",
+      "commonNames": ["Aloe Vera", "Ghritkumari", "Indian Aloe", "Burn Plant", "First Aid Plant"],
+      "ayushSystem": ["Ayurveda", "Homeopathy", "Unani"],
+      "habitat": "Originally from Arabian Peninsula. Now cultivated worldwide in tropical, semi-tropical, and arid regions. Highly adaptable — grows in pots, deserts, and gardens.",
+      "description": "Aloe Vera is the original 'miracle plant' — used by Cleopatra, Alexander the Great, and ancient Indian physicians alike. Its thick gel contains 75+ active compounds including vitamins A, C, E, B12, minerals, enzymes, and polysaccharides. It is simultaneously one of the world's largest cosmetic ingredients and a potent internal medicine.",
+      "colorHex": "#8fbc8f",
+      "position": [0, 0, -11],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌵",
+          "color": "#556B2F",
+          "description": "Aloe Vera is a stemless or very short-stemmed plant. The apparent 'stem' is a compact rosette base from which leaves emerge.",
+          "benefits": [
+            "The rosette base contains concentrated aloin",
+            "Traditional use in Unani for liver disorders",
+            "Anti-fungal properties at the base",
+            "Contains storage of water and nutrients"
+          ],
+          "preparation": "The entire leaf base can be used. Split the base, extract the clear gel for topical use or internal consumption."
+        },
+        "leaf": {
+          "name": "Leaf (Gel & Latex)",
+          "icon": "🌿",
+          "color": "#6B8E4E",
+          "description": "Thick, fleshy, lance-shaped leaves with serrated edges. Inside: clear mucilaginous gel (inner parenchyma) and yellow bitter latex (rind layer). The gel is the primary medicine; the latex (aloin) is a powerful laxative.",
+          "benefits": [
+            "Gel: 99% water + 75 active compounds — supreme skin moisturizer",
+            "Sunburn relief — reduces redness and pain within hours",
+            "Accelerates wound healing — stimulates fibroblast growth",
+            "Anti-aging — increases collagen production and reduces wrinkles",
+            "Oral gel relieves mouth ulcers (aphthous stomatitis)",
+            "Anti-diabetic — lowers fasting blood glucose",
+            "Digestive aid — soothes IBS, acid reflux, and gastritis",
+            "Aloin (latex): extremely potent laxative — use cautiously"
+          ],
+          "preparation": "Fresh gel: Split leaf, scoop clear gel with spoon. Apply directly to burns/skin. For internal use: blend 2 tbsp gel in 1 glass water/juice. Take 20 minutes before meals."
+        },
+        "flower": {
+          "name": "Flower",
+          "icon": "🌼",
+          "color": "#FFA500",
+          "description": "Tubular orange or yellow flowers on a central spike (1 meter tall). Appear in spring/summer. Attracts birds and bees.",
+          "benefits": [
+            "Flower nectar is edible and rich in antioxidants",
+            "Traditional medicine uses flowers for menstrual problems",
+            "Anti-inflammatory properties in flower extracts",
+            "Used in Ayurvedic formulations for blood disorders"
+          ],
+          "preparation": "Flower tea: Steep 10 fresh or dried Aloe flowers in hot water for 8 minutes. Add honey."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#C4A882",
+          "description": "White, fibrous roots that store water. Usually kept in soil, not harvested.",
+          "benefits": [
+            "Root extracts show anti-bacterial properties",
+            "Traditional treatment for skin diseases in Ayurveda",
+            "Anti-tumor compounds in root extracts"
+          ],
+          "preparation": "Root decoction (rare): Boil 5g dried roots in 200ml water for 10 minutes. Use topically for skin infections."
+        }
+      },
+      "medicinalUses": {
+        "skincare": ["Burns, sunburn, and wound healing", "Anti-aging moisturizer", "Acne and eczema treatment", "Psoriasis relief"],
+        "digestive": ["Relieves acid reflux and GERD", "Treats IBS and constipation (aloin)", "Soothes gastric inflammation"],
+        "immunity": ["Rich in Vitamin C, E, and beta-carotene", "Anti-inflammatory acemannan polysaccharide", "Anti-viral properties"],
+        "dental": ["Aloe gel mouthwash reduces plaque", "Treats mouth ulcers", "Anti-gingivitis"]
+      },
+      "cultivation": {
+        "soil": "Sandy, well-drained, poor soil is preferred. pH 7.0–8.5. Excellent drainage is critical — root rot is the main killer.",
+        "climate": "Arid to semi-arid. Tolerates 10°C–40°C. Cannot survive frost. Full sun.",
+        "watering": "Minimal — water deeply but infrequently (every 2–3 weeks). Allow complete drying between waterings.",
+        "season": "Year-round in warm climates. Indoor plant in cold regions.",
+        "propagation": "Offsets/pups (baby plants) that appear around the base. Simply separate and replant.",
+        "spacing": "60 cm between mature plants"
+      },
+      "recipes": [
+        {
+          "name": "Aloe Vera Detox Drink",
+          "ingredients": ["2 tbsp fresh Aloe Vera gel", "1 cup coconut water", "Juice of 1 lemon", "1 tsp honey", "Pinch of pink salt"],
+          "method": "Scoop fresh Aloe gel, blend smoothly. Mix with all ingredients. Drink on empty stomach each morning for 30 days.",
+          "benefits": "Gut healing, skin glow, detoxification, weight management"
+        }
+      ]
+    },
+    {
+      "id": "giloy",
+      "name": "Giloy",
+      "botanicalName": "Tinospora cordifolia",
+      "commonNames": ["Giloy", "Guduchi", "Heart-Leaved Moonseed", "Amrita", "Indian Tinospora"],
+      "ayushSystem": ["Ayurveda"],
+      "habitat": "Widely distributed across tropical India, Myanmar, Sri Lanka. A climbing vine found in forests, hedges, and gardens. Thrives when climbing Neem trees.",
+      "description": "Called 'Amrita' (nectar of immortality) in Sanskrit, Giloy achieved global recognition during COVID-19 for its extraordinary immune-modulating properties. This heart-leafed vine has been central to Ayurvedic medicine for 2000+ years, prescribed for fevers, immune weakness, and as a rasayana (rejuvenating herb).",
+      "colorHex": "#3d9970",
+      "position": [2, 0, -3],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#8B7355",
+          "description": "The stem is the primary medicinal part of Giloy. It is thin, twining, with long aerial roots. The stem is fleshy, grayish-brown outside with white inside.",
+          "benefits": [
+            "Tinosporin and berberine — powerful immunomodulators",
+            "Primary treatment for chronic fever (including dengue and malaria)",
+            "Anti-malarial — stem extracts inhibit Plasmodium growth",
+            "Stem juice reduces dengue platelet destruction",
+            "Hepatoprotective — protects liver from alcohol and toxins",
+            "Anti-diabetic — improves insulin sensitivity",
+            "Anti-gout — reduces uric acid levels"
+          ],
+          "preparation": "Giloy stem juice: Crush 6-inch stem piece, extract juice with water. Take 20-30ml twice daily. Or prepare kadha (decoction)."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#1a5c38",
+          "description": "Beautiful heart-shaped (cordate) leaves, 5–7 cm across, bright green and smooth. Similar to paan (betel) leaf in shape.",
+          "benefits": [
+            "Anti-inflammatory — inhibits pro-inflammatory cytokines",
+            "Antioxidant — high DPPH radical scavenging activity",
+            "Immunomodulatory — increases macrophage activity",
+            "Antipyretic — traditional fever management",
+            "Anti-rheumatic — reduces joint inflammation"
+          ],
+          "preparation": "Fresh leaf juice: Blend 10 leaves with water. Strain and drink 30ml daily. Or dry and powder leaves."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "🌼",
+          "color": "#FFFF99",
+          "description": "Small, yellow, unisexual flowers appearing in spring on separate male and female plants.",
+          "benefits": [
+            "Flower extract has antimicrobial properties",
+            "Traditional fever management",
+            "Mild diuretic properties"
+          ],
+          "preparation": "Flower tea: Steep dried flowers in hot water. Take as a general tonic."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#D2B48C",
+          "description": "Yellowish, bitter roots with starchy pith. The root is used in Unani preparations.",
+          "benefits": [
+            "Anti-rheumatic — traditional treatment for arthritis",
+            "Antipyretic properties",
+            "Liver protective",
+            "Anti-helminthic (deworms)"
+          ],
+          "preparation": "Root decoction: Boil 5g dried roots in 200ml water for 15 minutes. Take 50ml twice daily."
+        }
+      },
+      "medicinalUses": {
+        "immunity": ["COVID-19 adjunct therapy (AYUSH protocol)", "Dengue fever management", "Chronic fever treatment", "Immunomodulation"],
+        "antiinflammatory": ["Arthritis and gout", "Reduces autoimmune inflammation", "Skin disease management"],
+        "digestive": ["Liver protection and detoxification", "Acid reflux and dyspepsia", "Bowel movement regulation"],
+        "metabolic": ["Anti-diabetic", "Reduces cholesterol", "Anti-obesity effects"]
+      },
+      "cultivation": {
+        "soil": "Any well-drained soil. pH 6.5–7.5. Grows best near Neem trees (Gil from Neem trees is considered most potent).",
+        "climate": "Tropical. 25°C–40°C. Cannot tolerate frost. Partial shade acceptable.",
+        "watering": "Moderate irrigation. Established vines are drought-tolerant.",
+        "season": "Plant stem cuttings in rainy season (June–July). Grows vigorously.",
+        "propagation": "Stem cuttings (10–15 cm) — very easy to propagate. Plant with support structure.",
+        "spacing": "3–4 meters between plants (climbing vine)"
+      },
+      "recipes": [
+        {
+          "name": "Giloy Immunity Kadha",
+          "ingredients": ["6 inch Giloy stem", "5 Tulsi leaves", "1 inch ginger", "1/4 tsp black pepper", "1 cup water", "Honey"],
+          "method": "Crush Giloy stem and ginger. Boil all ingredients in 1 cup water for 10 minutes. Strain, add honey. Drink warm twice daily during fever or illness.",
+          "benefits": "Fever reduction, immune boost, platelet increase in dengue"
+        }
+      ]
+    },
+    {
+      "id": "amla",
+      "name": "Amla",
+      "botanicalName": "Phyllanthus emblica",
+      "commonNames": ["Amla", "Indian Gooseberry", "Amalaki", "Emblic Myrobalan"],
+      "ayushSystem": ["Ayurveda", "Siddha", "Unani"],
+      "habitat": "Native to tropical India. Widely distributed in Myanmar, Pakistan, Bangladesh, Sri Lanka, and Malaysia. Grows in subtropical mountain forests and dry deciduous forests.",
+      "description": "Amla is the richest natural source of Vitamin C on Earth — containing 20x more than oranges. In Ayurveda, it is the most important single ingredient in Chyawanprash and Triphala — two of the most prescribed formulations. Named 'Amalaki' (meaning nurse) in Sanskrit, it is described as the ultimate rasayana (rejuvenating agent).",
+      "colorHex": "#7ec8a4",
+      "position": [4, 0, 5],
+      "parts": {
+        "stem": {
+          "name": "Bark",
+          "icon": "🌳",
+          "color": "#8B6914",
+          "description": "The bark is grayish-brown, peeling in thin flakes. The inner bark is reddish with a bitter taste.",
+          "benefits": [
+            "Bark decoction treats skin diseases including eczema",
+            "Anti-inflammatory — reduces swelling",
+            "Antipyretic properties",
+            "Traditional treatment for gonorrhea (Unani)",
+            "Wound healing — tannins in bark help coagulation"
+          ],
+          "preparation": "Bark decoction: Boil 10g bark in 400ml water. Reduce by half. Apply externally for skin diseases or drink 50ml for fever."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#4CAF50",
+          "description": "Very small, feathery, light green leaves arranged alternately — resembling a fern. When the tree sheds leaves, it looks spectacular like 'autumn leaves'.",
+          "benefits": [
+            "Leaf juice treats conjunctivitis and eye inflammations",
+            "Anti-diarrheal — astringent tannins",
+            "Anti-dysenteric properties",
+            "Leaf decoction for rinsing mouth — anti-gingivitis",
+            "Hair rinse with leaf water promotes hair growth"
+          ],
+          "preparation": "Leaf decoction: Boil a handful of fresh leaves in 500ml water for 10 minutes. Use as hair rinse or eye wash."
+        },
+        "fruit": {
+          "name": "Fruit",
+          "icon": "🟢",
+          "color": "#90EE90",
+          "description": "Small, round, greenish-yellow fruit with 6 vertical ridges. Extremely sour, astringent, and bitter with a sweet aftertaste. Contains the highest natural Vitamin C density.",
+          "benefits": [
+            "700–900mg Vitamin C per 100g (heat-stable unlike synthetic Vit C)",
+            "Boosts collagen synthesis — anti-aging",
+            "Triphala (Amla + Haritaki + Bibhitaki) — the world's most researched herbal formula",
+            "Improves iron absorption by 67% (critical for anemia)",
+            "Lowers LDL cholesterol — prevents arteriosclerosis",
+            "Anti-diabetic — reduces HbA1c",
+            "Powerful hepatoprotective — treats jaundice and fatty liver",
+            "Strengthens all 7 dhatus (tissues) of the body"
+          ],
+          "preparation": "Eat 1–2 fresh Amla daily. Or Amla juice: 30ml fresh juice + water + honey, morning. Amla murabba (preserved in sugar) is a traditional daily supplement."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#A0522D",
+          "description": "Yellowish-brown roots with medicinal bark. Less commonly used than fruit.",
+          "benefits": [
+            "Root bark treats jaundice in traditional medicine",
+            "Anti-ulcer properties",
+            "Diuretic — treats urinary disorders",
+            "Traditional treatment for dysentery"
+          ],
+          "preparation": "Root bark decoction: 5g bark in 200ml water, boiled for 15 minutes. Take 50ml for jaundice."
+        }
+      },
+      "medicinalUses": {
+        "immunity": ["Richest Vitamin C source", "Antioxidant — 75x pomegranate", "Boosts NK cell activity"],
+        "antiaging": ["Increases collagen synthesis", "Reduces oxidative stress markers", "Traditional rasayana (rejuvenating)"],
+        "haircare": ["Prevents hair fall (DHT blocker)", "Prevents premature greying", "Scalp nourishment"],
+        "digestive": ["Triphala — complete gut cleanser", "Relieves constipation", "Liver tonic"]
+      },
+      "cultivation": {
+        "soil": "Rocky, well-drained soil. pH 6.5–9.5. Highly adaptable to marginal lands.",
+        "climate": "Tropical and subtropical. 10°C–45°C. Very drought-tolerant once established.",
+        "watering": "Minimal once mature. Young trees need regular irrigation.",
+        "season": "Planted in July–August. Fruits appear in winter (December–February).",
+        "propagation": "Budding or grafting (for early fruiting). Seeds take longer.",
+        "spacing": "8–10 meters between trees"
+      },
+      "recipes": [
+        {
+          "name": "Amla Hair Oil",
+          "ingredients": ["10 dried Amla pieces", "200ml coconut oil", "5 curry leaves", "1 tsp fenugreek seeds"],
+          "method": "Heat coconut oil, add Amla and other ingredients. Simmer until Amla blackens. Strain and store. Massage into scalp weekly.",
+          "benefits": "Prevents greying, strengthens roots, promotes growth"
+        }
+      ]
+    },
+    {
+      "id": "peppermint",
+      "name": "Peppermint",
+      "botanicalName": "Mentha × piperita",
+      "commonNames": ["Peppermint", "Pudina", "Spearmint", "Brandy Mint", "Lamb Mint"],
+      "ayushSystem": ["Unani", "Homeopathy", "Ayurveda"],
+      "habitat": "Originally a hybrid of watermint and spearmint. Grows in moist soil near streams and water bodies. Cultivated worldwide, especially in India, US, Europe. Found at altitudes up to 2000m.",
+      "description": "Peppermint's primary compound, menthol, triggers cold receptors in the skin and mucous membranes — creating the characteristic cooling sensation without actually lowering temperature. Used across Ayurveda, Unani, and Homeopathy, peppermint is one of the oldest and most versatile medicinal herbs, documented in ancient Egyptian papyri dating to 1000 BCE.",
+      "colorHex": "#00fa9a",
+      "position": [4, 0, -11],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#8B008B",
+          "description": "Square stem (characteristic of all mints), reddish-purple in color, with opposite pairs of leaves. Highly aromatic when crushed.",
+          "benefits": [
+            "Contains menthol throughout the stem",
+            "Steam inhalation with peppermint stem relieves nasal congestion",
+            "Anti-microbial — inhibits growth of common pathogens",
+            "Analgesic when applied topically as compress"
+          ],
+          "preparation": "Add crushed peppermint stems to boiling water. Inhale steam with towel over head for 10 minutes for sinus relief."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#00C957",
+          "description": "Oval, toothed leaves, dark green above and pale below. Rich in menthol (40–55% of essential oil) and menthone. Intense cooling aroma.",
+          "benefits": [
+            "Menthol — activates cold receptors (TRPM8) without lowering temperature",
+            "IBS treatment — enteric-coated peppermint oil reduces abdominal pain by 40%",
+            "Tension headache relief — topical menthol equals paracetamol in studies",
+            "Antibacterial against H. pylori (ulcer-causing bacteria)",
+            "Antifungal against Candida albicans",
+            "Improves exercise performance — increases blood oxygen saturation",
+            "Anti-nausea — motion sickness and morning sickness"
+          ],
+          "preparation": "Peppermint tea: Steep 10 fresh leaves in boiling water for 5 minutes. Drink after meals for digestion. For headache: crush 2 leaves and rub on temples."
+        },
+        "flower": {
+          "name": "Flowers",
+          "icon": "💜",
+          "color": "#9370DB",
+          "description": "Tiny lilac/purple flowers in whorls around the stem. Appear in midsummer. Bees love peppermint flowers.",
+          "benefits": [
+            "Flower extract is strongly antimicrobial",
+            "Rich in flavonoids and rosmarinic acid",
+            "Anti-inflammatory properties",
+            "Relaxant — mild sedative effect in tea"
+          ],
+          "preparation": "Peppermint flower tea is a delicate, gently sedating brew. Steep 1 tablespoon dried flowers in hot water for 7 minutes."
+        },
+        "root": {
+          "name": "Root (Rhizome)",
+          "icon": "🌰",
+          "color": "#CD853F",
+          "description": "Peppermint spreads via underground runners (rhizomes). The rhizome is the primary means of propagation.",
+          "benefits": [
+            "Rhizome contains concentrated essential oils",
+            "Traditional treatment for digestive cramping",
+            "Anti-spasmodic",
+            "Diuretic in Unani medicine"
+          ],
+          "preparation": "Rhizome decoction: Boil fresh rhizomes in water for 10 minutes. Strain and drink for digestive issues."
+        }
+      },
+      "medicinalUses": {
+        "digestive": ["IBS symptom relief (evidence-based)", "Reduces bloating and gas", "Relieves nausea and vomiting"],
+        "pain": ["Headache and migraine (topical)", "Muscle pain relief (menthol)", "Fibromyalgia pain management"],
+        "respiratory": ["Clears nasal congestion", "Soothes sore throat", "Antibacterial for respiratory infections"],
+        "mental": ["Enhances alertness and focus", "Reduces mental fatigue", "Stress reduction (aromatherapy)"]
+      },
+      "cultivation": {
+        "soil": "Moist, rich, well-drained loam. pH 6.0–7.0. Prefers organic-rich soil.",
+        "climate": "Cool to warm. 18°C–25°C ideal. Tolerates mild frost.",
+        "watering": "Regular watering — keep consistently moist. Mulch to retain moisture.",
+        "season": "Spring planting. Harvest before flowering for maximum menthol content.",
+        "propagation": "Stem cuttings or root division (easiest). Root in water, then transplant.",
+        "spacing": "30–45 cm (spreads aggressively — use containers to control)"
+      },
+      "recipes": [
+        {
+          "name": "Peppermint Digestive Tea",
+          "ingredients": ["10–12 fresh peppermint leaves", "1 cup boiling water", "1 tsp lemon juice", "1 tsp honey"],
+          "method": "Pour boiling water over fresh leaves. Cover and steep for 5 minutes. Add lemon and honey. Drink after meals.",
+          "benefits": "Relieves bloating, gas, IBS pain, improves digestion"
+        }
+      ]
+    },
+    {
+      "id": "calendula",
+      "name": "Calendula",
+      "botanicalName": "Calendula officinalis",
+      "commonNames": ["Calendula", "Pot Marigold", "Zergul", "Garden Marigold", "English Marigold"],
+      "ayushSystem": ["Homeopathy", "Unani"],
+      "habitat": "Native to Mediterranean region. Now cultivated worldwide as an ornamental and medicinal plant. Grows in temperate to cool climates.",
+      "description": "Calendula's bright orange flowers have been used medicinally since ancient Rome and Greece. In Homeopathy, it is known as the 'rescue remedy for wounds' — one of the most prescribed remedies for cuts, bruises, and surgical wounds. In Unani medicine, it is 'Zergul', prescribed for inflammatory conditions. Modern research confirms its exceptional wound-healing, anti-inflammatory, and antifungal properties.",
+      "colorHex": "#f4a261",
+      "position": [6, 0, -3],
+      "parts": {
+        "stem": {
+          "name": "Stem",
+          "icon": "🌿",
+          "color": "#6B7C3B",
+          "description": "Branching, hairy, sticky stem with a strong aromatic smell due to terpenoids. Greenish with reddish tinge near base.",
+          "benefits": [
+            "Stem extracts are anti-inflammatory",
+            "Contains resin with wound-healing properties",
+            "Anti-microbial essential oils throughout the stem",
+            "Traditional use for treating skin irritations"
+          ],
+          "preparation": "Crush fresh stem and apply directly to minor wounds as a first-aid measure."
+        },
+        "leaf": {
+          "name": "Leaves",
+          "icon": "🍃",
+          "color": "#567D46",
+          "description": "Alternate, oblong, slightly hairy leaves with smooth margins. Light to medium green. Young leaves are edible in salads.",
+          "benefits": [
+            "Anti-inflammatory compounds including saponins and flavonoids",
+            "Wound healing when applied as poultice",
+            "Anti-microbial against Staphylococcus",
+            "Young leaves edible — add to salads",
+            "Leaf extract helps regulate menstrual cycles"
+          ],
+          "preparation": "Fresh leaf poultice: Crush fresh leaves and apply directly to minor wounds, bruises, or skin irritations. Replace every few hours."
+        },
+        "flower": {
+          "name": "Flower",
+          "icon": "🌼",
+          "color": "#FF7F00",
+          "description": "Large, bright orange or yellow daisy-like flowers with multiple ray and disc florets. The PRIMARY medicinal part — rich in flavonoids (quercetin, isorhamnetin), triterpenoids, carotenoids, and essential oils.",
+          "benefits": [
+            "Calendula cream/ointment — clinically proven for wound healing (better than petroleum jelly)",
+            "Anti-fungal against Candida albicans",
+            "Anti-bacterial against MRSA (antibiotic-resistant staph)",
+            "Reduces dermatitis and diaper rash (pediatric studies)",
+            "Anti-tumor — lymphocyte activation against cancer cells",
+            "Estrogenic activity — regulates menstrual irregularities",
+            "Conjunctivitis eye wash (anti-inflammatory)",
+            "In Homeopathy: Calendula 30c is the primary wound and surgery remedy"
+          ],
+          "preparation": "Calendula tea: Steep 2 tbsp dried flowers in boiling water for 10 minutes. Drink or use as wound wash. Calendula oil: Infuse dried flowers in coconut oil for 4–6 weeks for topical use."
+        },
+        "root": {
+          "name": "Root",
+          "icon": "🌰",
+          "color": "#D2691E",
+          "description": "Fibrous, yellowish-white roots. Less commonly used than flowers.",
+          "benefits": [
+            "Anti-inflammatory root extracts",
+            "Traditional treatment for fever",
+            "Emmenagogue — stimulates menstrual flow"
+          ],
+          "preparation": "Root decoction for fever: Boil 5g dried roots in 200ml water for 15 minutes. Take 50ml twice daily."
+        }
+      },
+      "medicinalUses": {
+        "skincare": ["Wound healing (clinically proven)", "Eczema and dermatitis", "Diaper rash treatment", "Anti-aging (carotenoids)"],
+        "antiinflammatory": ["Joint inflammation", "Lymph node swelling", "Mucous membrane inflammation"],
+        "womenshealth": ["Menstrual regulation", "Menopausal hot flashes", "Pelvic inflammatory disease"],
+        "antimicrobial": ["MRSA inhibition", "Anti-fungal (Candida)", "Anti-viral (HPV inhibition in studies)"]
+      },
+      "cultivation": {
+        "soil": "Well-drained, moderately fertile soil. pH 5.5–7.0. Tolerates poor soil.",
+        "climate": "Cool to temperate. 10°C–25°C. Frost-tolerant and heat-tolerant.",
+        "watering": "Moderate — water when top inch of soil is dry.",
+        "season": "Plant in early spring or fall. Blooms for months continuously.",
+        "propagation": "Direct seed sowing. Germinates in 5–10 days. Self-seeds readily.",
+        "spacing": "25–35 cm between plants"
+      },
+      "recipes": [
+        {
+          "name": "Calendula Wound-Healing Oil",
+          "ingredients": ["1 cup dried Calendula flowers", "2 cups coconut oil or olive oil"],
+          "method": "Place dried flowers in a clean jar. Cover completely with oil. Seal and place in sunny window for 4–6 weeks. Strain with cheesecloth. Apply to wounds, dry skin, eczema, or use as massage oil.",
+          "benefits": "Wound healing, scar reduction, anti-inflammatory skin therapy"
+        }
+      ]
+    }
+  ]
+}
