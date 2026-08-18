@@ -1,48 +1,27 @@
 {
   "name": "vatika-herbs",
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "**/*.{html,css,js,png,jpg,svg,glb,pem,json}",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/3-D Models/(.*)",
-      "dest": "/3-D Models/$1"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/css/(.*)",
-      "dest": "/css/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/js/$1"
-    },
-    {
-      "src": "/(dashboard|signin|register|forgot-password|reset-password|advanced-filters|advanced-search|my-garden|settings|study-notes)",
-      "dest": "/pages/$1.html"
-    },
-    {
-      "src": "/pages/(.*)",
-      "dest": "/pages/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/signin.html", "destination": "/pages/signin.html" },
+    { "source": "/signin", "destination": "/pages/signin.html" },
+    { "source": "/dashboard.html", "destination": "/pages/dashboard.html" },
+    { "source": "/dashboard", "destination": "/pages/dashboard.html" },
+    { "source": "/register.html", "destination": "/pages/register.html" },
+    { "source": "/register", "destination": "/pages/register.html" },
+    { "source": "/forgot-password.html", "destination": "/pages/forgot-password.html" },
+    { "source": "/forgot-password", "destination": "/pages/forgot-password.html" },
+    { "source": "/reset-password.html", "destination": "/pages/reset-password.html" },
+    { "source": "/reset-password", "destination": "/pages/reset-password.html" },
+    { "source": "/my-garden.html", "destination": "/pages/my-garden.html" },
+    { "source": "/my-garden", "destination": "/pages/my-garden.html" },
+    { "source": "/settings.html", "destination": "/pages/settings.html" },
+    { "source": "/settings", "destination": "/pages/settings.html" },
+    { "source": "/study-notes.html", "destination": "/pages/study-notes.html" },
+    { "source": "/study-notes", "destination": "/pages/study-notes.html" },
+    { "source": "/advanced-filters.html", "destination": "/pages/advanced-filters.html" },
+    { "source": "/advanced-filters", "destination": "/pages/advanced-filters.html" },
+    { "source": "/advanced-search.html", "destination": "/pages/advanced-search.html" },
+    { "source": "/advanced-search", "destination": "/pages/advanced-search.html" }
   ]
 }

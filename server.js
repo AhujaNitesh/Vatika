@@ -30,7 +30,7 @@ const pageRoutes = [
 ];
 
 pageRoutes.forEach(p => {
-  app.get(`/${p}`, (req, res) => {
+  app.get([`/${p}`, `/${p}.html`], (req, res) => {
     res.sendFile(path.join(__dirname, 'pages', `${p}.html`));
   });
 });
