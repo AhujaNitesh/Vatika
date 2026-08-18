@@ -1960,7 +1960,7 @@
       if (glbPath && typeof THREE.GLTFLoader !== 'undefined') {
         const loader = new THREE.GLTFLoader();
         loader.load(
-          glbPath,
+          encodeURI(glbPath),
           (gltf) => {
             const model = gltf.scene;
             const bbox = new THREE.Box3().setFromObject(model);

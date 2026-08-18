@@ -3,6 +3,8 @@
   "version": 2,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/3-D%20Models/(.*)", "destination": "/3-D Models/$1" },
+    { "source": "/models/(.*)", "destination": "/3-D Models/$1" },
     { "source": "/signin.html", "destination": "/pages/signin.html" },
     { "source": "/signin", "destination": "/pages/signin.html" },
     { "source": "/dashboard.html", "destination": "/pages/dashboard.html" },
