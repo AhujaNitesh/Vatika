@@ -319,9 +319,11 @@ const AuthAPI = {
 
 // Auto-run on DOM ready for pages
 document.addEventListener('DOMContentLoaded', () => {
+  const path = window.location.pathname.toLowerCase();
+
   // 1. Sign In Page Form Listener
   const signinForm = document.querySelector('.signin-form');
-  if (signinForm && window.location.pathname.includes('signin.html')) {
+  if (signinForm && (path.includes('signin') || document.getElementById('signin-email'))) {
     signinForm.onsubmit = async (e) => {
       e.preventDefault();
       const emailInput = document.getElementById('signin-email');
@@ -340,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (res.success) {
         AuthAPI.showAlert('auth-alert-box', 'Signed in successfully! Redirecting to Dashboard...', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+        setTimeout(() => { window.location.href = '/dashboard'; }, 800);
       } else {
         AuthAPI.showAlert('auth-alert-box', res.error, 'error');
         if (submitBtn) {
@@ -355,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Register Page Form Listener
   const regForm = document.querySelector('.signin-form');
-  if (regForm && window.location.pathname.includes('register.html')) {
+  if (regForm && (path.includes('register') || document.getElementById('reg-email'))) {
     regForm.onsubmit = async (e) => {
       e.preventDefault();
       const nameInput = document.getElementById('reg-fullname');
@@ -378,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (res.success) {
         AuthAPI.showAlert('auth-alert-box', 'Account created successfully! Welcome to Vatika Sanctuary.', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+        setTimeout(() => { window.location.href = '/dashboard'; }, 1000);
       } else {
         AuthAPI.showAlert('auth-alert-box', res.error, 'error');
         if (submitBtn) {
@@ -393,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. Forgot Password Form Listener
   const forgotForm = document.querySelector('.signin-form');
-  if (forgotForm && window.location.pathname.includes('forgot-password.html')) {
+  if (forgotForm && (path.includes('forgot') || document.getElementById('reset-email'))) {
     forgotForm.onsubmit = async (e) => {
       e.preventDefault();
       const emailInput = document.getElementById('reset-email');
