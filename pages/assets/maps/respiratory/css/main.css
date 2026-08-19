@@ -1,0 +1,1158 @@
+/* ══════════════════════════════════════════════════════════
+   VIRTUAL HERBAL GARDEN — AYUSH
+   main.css — Design System & Core Layout
+   ══════════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties (Design Tokens) ── */
+:root {
+  /* Colors */
+  --clr-forest:       hsl(150, 40%, 20%);
+  --clr-forest-mid:   hsl(150, 35%, 30%);
+  --clr-moss:         hsl(140, 30%, 42%);
+  --clr-sage:         hsl(145, 25%, 58%);
+  --clr-leaf:         hsl(138, 50%, 68%);
+  --clr-mint:         hsl(150, 60%, 82%);
+  --clr-cream:        hsl(48, 50%, 96%);
+  --clr-warm-white:   hsl(40, 40%, 98%);
+  --clr-amber:        hsl(38, 85%, 60%);
+  --clr-amber-deep:   hsl(30, 80%, 48%);
+  --clr-earth:        hsl(28, 35%, 35%);
+  --clr-soil:         hsl(25, 30%, 22%);
+
+  /* Semantic */
+  --clr-bg:           #0a1a0e;
+  --clr-surface:      hsl(150, 15%, 10%);
+  --clr-panel:        hsl(148, 18%, 8%);
+  --clr-panel-light:  hsl(148, 12%, 14%);
+  --clr-border:       hsl(148, 20%, 22%);
+  --clr-text:         hsl(140, 15%, 92%);
+  --clr-text-muted:   hsl(140, 10%, 65%);
+  --clr-text-dim:     hsl(140, 8%, 45%);
+  --clr-accent:       hsl(142, 60%, 52%);
+  --clr-accent-glow:  hsl(142, 60%, 42%);
+  --clr-gold:         hsl(45, 90%, 65%);
+  --clr-danger:       hsl(0, 70%, 60%);
+
+  /* Typography */
+  --font-heading:     'Lora', Georgia, serif;
+  --font-body:        'Inter', system-ui, sans-serif;
+
+  --fs-xs:    0.72rem;
+  --fs-sm:    0.85rem;
+  --fs-base:  1rem;
+  --fs-md:    1.1rem;
+  --fs-lg:    1.3rem;
+  --fs-xl:    1.6rem;
+  --fs-2xl:   2rem;
+  --fs-3xl:   2.6rem;
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semi:    600;
+  --fw-bold:    700;
+
+  /* Spacing */
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.25rem;
+  --sp-6:  1.5rem;
+  --sp-8:  2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+
+  /* Border Radius */
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
+  --shadow-xl:  0 16px 64px rgba(0,0,0,0.7);
+  --glow-green: 0 0 20px hsla(142, 60%, 52%, 0.4);
+  --glow-gold:  0 0 20px hsla(45, 90%, 65%, 0.4);
+
+  /* Transitions */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-inout: cubic-bezier(0.87, 0, 0.13, 1);
+  --dur-fast:   150ms;
+  --dur-mid:    300ms;
+  --dur-slow:   500ms;
+
+  /* Panel layout */
+  --panel-split: 50%;
+  --topbar-h:    64px;
+  --bottombar-h: 60px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Canvas ── */
+#gardenCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  transition: filter var(--dur-mid) var(--ease-out);
+}
+
+#gardenCanvas.blurred {
+  filter: blur(6px) brightness(0.5) saturate(0.7);
+}
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--clr-panel);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--clr-border);
+  border-radius: var(--r-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--clr-moss);
+}
+
+/* ── Focus Visible ── */
+:focus-visible {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 2px;
+}
+
+/* ── Buttons ── */
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.btn-primary {
+  background: var(--clr-accent);
+  color: var(--clr-forest);
+  font-weight: var(--fw-semi);
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover {
+  background: hsl(142, 70%, 58%);
+  box-shadow: var(--glow-green);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--clr-panel-light);
+  color: var(--clr-text-muted);
+  font-weight: var(--fw-medium);
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  border: 1px solid var(--clr-border);
+}
+.btn-secondary:hover {
+  background: var(--clr-border);
+  color: var(--clr-text);
+}
+
+/* ── START OVERLAY ── */
+#startOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#startBg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 60%, hsla(140, 60%, 15%, 0.8) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, hsla(35, 60%, 12%, 0.6) 0%, transparent 55%),
+    linear-gradient(160deg, hsl(150, 40%, 6%) 0%, hsl(25, 30%, 8%) 100%);
+  background-size: cover;
+}
+
+#startContent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--sp-12) var(--sp-8);
+  max-width: 720px;
+  width: 90%;
+}
+
+#startEmoji {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: var(--sp-4);
+  filter: drop-shadow(0 0 30px hsla(140, 80%, 40%, 0.6));
+  animation: floatEmoji 3s ease-in-out infinite;
+}
+
+@keyframes floatEmoji {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+#startTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: var(--fw-bold);
+  line-height: 1.15;
+  color: var(--clr-warm-white);
+  margin-bottom: var(--sp-4);
+  letter-spacing: -0.02em;
+}
+
+#startTagline {
+  font-size: var(--fs-md);
+  color: var(--clr-text-muted);
+  font-weight: var(--fw-light);
+  margin-bottom: var(--sp-8);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+#startFeatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-8);
+}
+
+.start-feature {
+  background: hsla(148, 30%, 12%, 0.8);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  backdrop-filter: blur(8px);
+  transition: all var(--dur-mid) var(--ease-out);
+}
+
+.start-feature:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+  transform: translateY(-3px);
+}
+
+.start-feature span { font-size: 1.6rem; }
+
+#enterBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: linear-gradient(135deg, var(--clr-accent), hsl(155, 60%, 40%));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  padding: var(--sp-5) var(--sp-10);
+  border-radius: var(--r-full);
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 24px hsla(142, 60%, 40%, 0.5);
+  transition: all var(--dur-mid) var(--ease-out);
+  margin-bottom: var(--sp-5);
+}
+
+#enterBtn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 36px hsla(142, 60%, 40%, 0.7);
+}
+
+#enterBtn .btn-arrow {
+  font-size: var(--fs-xl);
+  transition: transform var(--dur-fast);
+}
+
+#enterBtn:hover .btn-arrow { transform: translateX(4px); }
+
+#startHint {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── PLANT PANEL (Split Screen) ── */
+#plantPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: stretch;
+  background: var(--clr-panel);
+  animation: panelSlideIn var(--dur-slow) var(--ease-out) forwards;
+}
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+#closePanelBtn {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: hsla(0, 0%, 0%, 0.5);
+  color: var(--clr-text);
+  border: 1px solid hsla(255,255%,255%, 0.15);
+  border-radius: var(--r-full);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-sm);
+  backdrop-filter: blur(8px);
+  transition: all var(--dur-fast);
+}
+
+#closePanelBtn:hover {
+  background: hsla(0, 70%, 45%, 0.7);
+  border-color: hsla(0, 70%, 60%, 0.3);
+}
+
+/* LEFT: Model Viewer */
+#modelViewer {
+  width: var(--panel-split);
+  position: relative;
+  background: linear-gradient(160deg, hsl(150, 30%, 6%), hsl(150, 20%, 10%));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--clr-border);
+}
+
+#modelHeader {
+  position: absolute;
+  top: var(--sp-4);
+  left: var(--sp-6);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#modelPlantName {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--clr-warm-white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+
+#modelBotanicalName {
+  font-size: var(--fs-xs);
+  color: var(--clr-sage);
+  font-style: italic;
+}
+
+#modelCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#modelFooter {
+  position: absolute;
+  bottom: var(--sp-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.model-hint {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  background: hsla(0,0%,0%,0.4);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-full);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.04em;
+}
+
+/* Hotspot Dots */
+#hotspotContainer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.hotspot {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  pointer-events: all;
+  transform: translate(-50%, -50%);
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: var(--fw-bold);
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  animation: hotspotPulse 2s ease-in-out infinite;
+}
+
+.hotspot::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0.4;
+  animation: hotspotRing 2s ease-in-out infinite;
+}
+
+@keyframes hotspotPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes hotspotRing {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.hotspot:hover {
+  transform: translate(-50%, -50%) scale(1.3) !important;
+  animation: none;
+}
+
+.hotspot-label {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: hsla(0,0%,0%,0.75);
+  color: white;
+  font-size: var(--fs-xs);
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.hotspot:hover .hotspot-label { opacity: 1; }
+
+/* Hotspot Popup */
+#hotspotPopup {
+  position: absolute;
+  bottom: 80px;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  z-index: 10;
+  animation: popupSlideUp var(--dur-mid) var(--ease-out) forwards;
+}
+
+@keyframes popupSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#hotspotPopupInner {
+  background: hsla(148, 25%, 8%, 0.95);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  backdrop-filter: blur(16px);
+  max-height: 300px;
+  overflow-y: auto;
+  position: relative;
+}
+
+#closeHotspotBtn {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  color: var(--clr-text-muted);
+  font-size: var(--fs-sm);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: hsla(0,0%,100%,0.08);
+}
+
+#closeHotspotBtn:hover { background: hsla(0,70%,50%,0.3); color: white; }
+
+#hotspotPopupHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+#hotspotIcon { font-size: 1.8rem; }
+
+#hotspotTitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semi);
+  color: var(--clr-warm-white);
+}
+
+/* RIGHT: Info Panel */
+#infoPanel {
+  width: calc(100% - var(--panel-split));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--clr-panel);
+}
+
+#infoPanelHeader {
+  padding: var(--sp-6) var(--sp-6) var(--sp-4);
+  border-bottom: 1px solid var(--clr-border);
+  background: linear-gradient(180deg, hsla(150,20%,6%,1) 0%, transparent 100%);
+}
+
+#plantSystemBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-full);
+  background: hsla(142, 40%, 15%, 0.8);
+  border: 1px solid hsla(142, 40%, 30%, 0.5);
+  color: var(--clr-accent);
+  margin-bottom: var(--sp-3);
+}
+
+#plantCommonName {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: var(--fw-bold);
+  color: var(--clr-warm-white);
+  line-height: 1.1;
+  margin-bottom: var(--sp-1);
+}
+
+#plantBotanicalNameInfo {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  font-style: italic;
+  margin-bottom: var(--sp-4);
+}
+
+#plantActionBtns {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.plant-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-2) var(--sp-3);
+  transition: all var(--dur-fast);
+}
+
+.plant-action-btn:hover {
+  background: hsla(142, 30%, 15%, 0.8);
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+}
+
+.plant-action-btn.active {
+  background: hsla(0, 50%, 15%, 0.8);
+  border-color: hsla(0, 70%, 60%, 0.5);
+  color: hsl(0, 70%, 75%);
+}
+
+/* Tabs */
+#tabBar {
+  display: flex;
+  padding: 0 var(--sp-4);
+  border-bottom: 1px solid var(--clr-border);
+  gap: var(--sp-1);
+  background: var(--clr-panel);
+}
+
+.tab {
+  padding: var(--sp-3) var(--sp-4);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--clr-text-dim);
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: all var(--dur-fast);
+}
+
+.tab:hover {
+  color: var(--clr-text-muted);
+  background: hsla(142, 20%, 12%, 0.5);
+}
+
+.tab.active {
+  color: var(--clr-accent);
+  border-bottom-color: var(--clr-accent);
+  background: hsla(142, 30%, 10%, 0.5);
+}
+
+#tabContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-6);
+  line-height: 1.7;
+}
+
+/* Tab Content Styles */
+.tab-section {
+  margin-bottom: var(--sp-6);
+}
+
+.tab-section h4 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semi);
+  color: var(--clr-warm-white);
+  margin-bottom: var(--sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.tab-section p {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  line-height: 1.75;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.info-card {
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+}
+
+.info-card .info-label {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp-1);
+}
+
+.info-card .info-value {
+  font-size: var(--fs-sm);
+  color: var(--clr-text);
+  font-weight: var(--fw-medium);
+}
+
+.use-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  font-size: var(--fs-xs);
+  background: hsla(142, 40%, 12%, 0.8);
+  border: 1px solid hsla(142, 40%, 25%, 0.6);
+  color: var(--clr-sage);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-full);
+  margin: var(--sp-1);
+}
+
+.benefits-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.benefits-list li {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid hsla(148, 20%, 18%, 0.5);
+}
+
+.benefits-list li::before {
+  content: '✦';
+  color: var(--clr-accent);
+  flex-shrink: 0;
+  font-size: 0.6rem;
+  margin-top: 4px;
+}
+
+.recipe-card {
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-4);
+}
+
+.recipe-card h5 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  color: var(--clr-gold);
+  margin-bottom: var(--sp-3);
+}
+
+.recipe-section-label {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp-2);
+}
+
+.recipe-ingredients {
+  list-style: none;
+  margin-bottom: var(--sp-3);
+}
+
+.recipe-ingredients li {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  padding: 2px 0;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.recipe-ingredients li::before {
+  content: '•';
+  color: var(--clr-amber);
+}
+
+.recipe-method {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--sp-3);
+}
+
+.recipe-benefit {
+  font-size: var(--fs-xs);
+  color: var(--clr-accent);
+  font-weight: var(--fw-medium);
+  background: hsla(142, 40%, 10%, 0.6);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  border-left: 3px solid var(--clr-accent);
+}
+
+.cultivation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+.cultivation-item {
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+}
+
+.cultivation-item .c-icon { font-size: 1.4rem; margin-bottom: var(--sp-2); }
+.cultivation-item .c-label {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp-1);
+}
+.cultivation-item .c-value {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  line-height: 1.5;
+}
+
+/* Medicinal Use Categories */
+.use-category {
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+
+.use-category h5 {
+  font-size: var(--fs-sm);
+  color: var(--clr-text);
+  font-weight: var(--fw-semi);
+  margin-bottom: var(--sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.use-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+/* ── SIDE PANELS (Bookmarks & Tours) ── */
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  z-index: 800;
+  background: var(--clr-panel);
+  border-left: 1px solid var(--clr-border);
+  display: flex;
+  flex-direction: column;
+  animation: slidePanelIn var(--dur-mid) var(--ease-out) forwards;
+  box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+}
+
+@keyframes slidePanelIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+.side-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-5) var(--sp-5);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.side-panel-header h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  color: var(--clr-warm-white);
+  font-weight: var(--fw-semi);
+}
+
+.side-panel-close {
+  color: var(--clr-text-muted);
+  font-size: var(--fs-base);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+}
+
+.side-panel-close:hover {
+  background: hsla(0, 70%, 40%, 0.3);
+  color: white;
+}
+
+/* Bookmark List */
+#bookmarksList {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+}
+
+.bookmark-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  margin-bottom: var(--sp-2);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+
+.bookmark-card:hover {
+  border-color: var(--clr-accent);
+  background: hsla(142, 20%, 14%, 0.8);
+}
+
+.bookmark-card-icon { font-size: 1.6rem; }
+
+.bookmark-card-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--clr-text);
+}
+
+.bookmark-card-system {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--clr-text-dim);
+  font-size: var(--fs-sm);
+  padding: var(--sp-8);
+  line-height: 1.8;
+}
+
+/* Tour Cards */
+#toursList {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-4);
+}
+
+.tour-card {
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-3);
+  cursor: pointer;
+  transition: all var(--dur-mid) var(--ease-out);
+}
+
+.tour-card:hover {
+  border-color: var(--clr-accent);
+  transform: translateX(-4px);
+  box-shadow: 4px 0 20px hsla(142, 40%, 30%, 0.2);
+}
+
+.tour-icon { font-size: 2rem; margin-bottom: var(--sp-2); }
+
+.tour-name {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semi);
+  color: var(--clr-warm-white);
+  margin-bottom: var(--sp-2);
+}
+
+.tour-desc {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-dim);
+  line-height: 1.6;
+  margin-bottom: var(--sp-3);
+}
+
+.tour-plants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+
+.tour-plant-chip {
+  font-size: var(--fs-xs);
+  background: hsla(142, 30%, 12%, 0.8);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-sage);
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+}
+
+.tour-start-btn {
+  margin-top: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3);
+  background: linear-gradient(135deg, var(--clr-accent), hsl(155, 60%, 40%));
+  color: white;
+  font-weight: var(--fw-semi);
+  font-size: var(--fs-sm);
+  border-radius: var(--r-md);
+  transition: all var(--dur-fast);
+}
+
+.tour-start-btn:hover {
+  box-shadow: var(--glow-green);
+  transform: translateY(-1px);
+}
+
+/* ── NOTES MODAL ── */
+#notesOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+#notesModal {
+  background: var(--clr-panel);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-8);
+  width: 480px;
+  max-width: 90vw;
+  box-shadow: var(--shadow-xl);
+  animation: modalIn var(--dur-mid) var(--ease-out) forwards;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+#notesModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-5);
+}
+
+#notesModalHeader h3 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  color: var(--clr-warm-white);
+}
+
+#closeNotesBtn {
+  color: var(--clr-text-muted);
+  font-size: var(--fs-base);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+}
+
+#notesTextarea {
+  width: 100%;
+  height: 160px;
+  background: var(--clr-panel-light);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  resize: none;
+  outline: none;
+  margin-bottom: var(--sp-4);
+  transition: border-color var(--dur-fast);
+}
+
+#notesTextarea:focus { border-color: var(--clr-accent); }
+
+#notesActions {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: flex-end;
+}
+
+/* ── TOAST ── */
+#toastContainer {
+  position: fixed;
+  bottom: var(--sp-8);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  background: hsla(148, 30%, 12%, 0.95);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-full);
+  font-size: var(--fs-sm);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lg);
+  animation: toastIn var(--dur-mid) var(--ease-out) forwards;
+  white-space: nowrap;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast.exit {
+  animation: toastOut var(--dur-mid) var(--ease-in) forwards;
+}
+
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(-8px) scale(0.95); }
+}

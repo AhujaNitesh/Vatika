@@ -591,6 +591,18 @@
       box-shadow: 0 25px 60px rgba(0,0,0,0.95), 0 0 35px rgba(16, 185, 129, 0.35);
       animation: popupSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    #closeHotspotBtn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+    }
     /* 3D Hotspot Anatomical Data Modal */
     #anatomyPartModal {
       position: fixed;
@@ -700,18 +712,6 @@
       font-size: 0.9rem;
       line-height: 1.55;
       color: #e2e8f0;
-    }
-    #closeHotspotBtn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: rgba(255,255,255,0.12);
-      border: none;
-      color: #fff;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
     }
     #hotspotPopupHeader {
       display: flex;
@@ -980,8 +980,8 @@
     <div id="logo">
       <span class="logo-icon">🏛️</span>
       <div>
-        <span class="logo-title">NEURO-VITALITY & SLEEP 3D MAP</span>
-        <span class="logo-sub">Medhya Rasayana & Nootropic Bed</span>
+        <span class="logo-title">RESPIRATORY & PRANA 3D MAP</span>
+        <span class="logo-sub">Pranavaha Srotas Healing Bed</span>
       </div>
     </div>
 
@@ -1636,11 +1636,8 @@
       const bedStoneMat = new THREE.MeshStandardMaterial({ color: 0x8a7f72, roughness: 0.65 });
       const soilMat = new THREE.MeshStandardMaterial({ map: createSoilTexture(), roughness: 0.95 });
 
-      const planterPositions = [
-        [-6, 0, 10], [-16, 0, 4], [14, 0, 10], [-10, 0, -22], [-4, 0, -4],
-        [-16, 0, -14], [4, 0, -4], [14, 0, -4], [10, 0, -22], [16, 0, 4]
-      ];
-      planterPositions.forEach(([x, , z]) => {
+      PLANTS_DATA.forEach(p => {
+        const [x, , z] = p.position;
         const bedGeo = new THREE.CylinderGeometry(1.8, 1.9, 0.35, 18);
         const bedCurb = new THREE.Mesh(bedGeo, bedStoneMat);
         bedCurb.position.set(x, 0.17, z);
@@ -1857,7 +1854,7 @@
       let plantsToRender = [];
 
       try {
-        const res = await fetch('/api/gardens/neuro');
+        const res = await fetch('/api/gardens/respiratory');
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
           plantsToRender = json.data.map((p, idx) => ({
@@ -1867,15 +1864,15 @@
             sanskritName: p.sanskrit_name || '',
             commonNames: [p.common_name, p.sanskrit_name || ''].filter(Boolean),
             ayushSystem: (p.traditional_systems || []).map(s => s.system_name),
-            habitat: p.climate || 'Subtropical / Temperate',
-            description: p.overall_traditional_uses || 'Medhya Rasayana herb for neural wellness and stress relief.',
-            colorHex: ['#8b5cf6', '#a855f7', '#3b82f6', '#ec4899', '#10b981', '#f59e0b', '#8b5cf6', '#84cc16', '#f43f5e', '#06b6d4'][idx % 10],
-            veinHex: '#f3e8ff',
+            habitat: p.climate || 'Subtropical and Tropical',
+            description: p.overall_traditional_uses || 'Traditional respiratory decongestant and bronchodilator flora.',
+            colorHex: ['#38bdf8', '#0284c7', '#0369a1', '#075985', '#0c4a6e', '#0284c7', '#38bdf8', '#10b981', '#f59e0b', '#84cc16'][idx % 10],
+            veinHex: '#e0f2fe',
             position: fixedPositions[idx % fixedPositions.length],
-            zone: 'Mental Wellness & Sleep Sanctuary',
+            zone: 'Respiratory Wellness Sanctuary',
             parts: p.anatomy || {
-              leaf: { name: 'Leaves', icon: '🍃', description: p.overall_traditional_uses, benefits: ['Calms nervous system', 'Enhances memory recall'], preparation: 'Infuse as warm herbal tea' },
-              root: { name: 'Roots/Rhizome', icon: '🌰', description: 'Deep grounding medicinal root', benefits: ['Promotes restful sleep', 'Reduces cortisol'], preparation: 'Decoction with warm milk' }
+              leaf: { name: 'Leaves', icon: '🍃', description: p.overall_traditional_uses, benefits: ['Clears airway mucus', 'Soothes cough'], preparation: 'Steam inhalation / Kadha' },
+              root: { name: 'Roots/Rhizome', icon: '🌰', description: 'Bronchodilator root', benefits: ['Eases asthma spasms'], preparation: 'Decoction with honey' }
             }
           }));
         }
@@ -1886,9 +1883,6 @@
       if (plantsToRender.length === 0) {
         plantsToRender = PLANTS_DATA;
       }
-
-      // Update global PLANTS_DATA reference for path/planter rendering
-      window.ACTIVE_GARDEN_PLANTS = plantsToRender;
 
       plantsToRender.forEach(p => {
         const plantMesh = buildDetailedPlantMesh(p);
@@ -1995,12 +1989,12 @@
 
     function buildProceduralPlantMesh(data) {
       const grp = new THREE.Group();
-      const leafTex = createLeafVeinTexture(data.colorHex || '#8b5cf6', data.veinHex || '#f3e8ff');
+      const leafTex = createLeafVeinTexture(data.colorHex || '#38bdf8', data.veinHex || '#e0f2fe');
       const barkTex = createBarkTexture();
 
       const leafMat = new THREE.MeshStandardMaterial({ map: leafTex, roughness: 0.45, metalness: 0.05, side: THREE.DoubleSide });
       const stemMat = new THREE.MeshStandardMaterial({ map: barkTex, roughness: 0.75, metalness: 0.05 });
-      const flowerMat = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, roughness: 0.4, side: THREE.DoubleSide });
+      const flowerMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.4, side: THREE.DoubleSide });
 
       const stemCount = 6;
       for (let s = 0; s < stemCount; s++) {
@@ -2063,15 +2057,6 @@
     function setupInputEvents() {
       const canvas = document.getElementById('gardenCanvas');
 
-      const enterBtnEl = document.getElementById('enterBtn');
-      if (enterBtnEl) {
-        enterBtnEl.onclick = function() {
-          const ov = document.getElementById('startOverlay');
-          if (ov) { ov.style.display = 'none'; ov.classList.add('hidden'); }
-          try { if (canvas) canvas.requestPointerLock(); } catch(e){}
-          try { initAudioEngine(); } catch(e){}
-        };
-      }
       document.getElementById('enterBtn').addEventListener('click', () => {
         document.getElementById('startOverlay').classList.add('hidden');
         canvas.requestPointerLock();

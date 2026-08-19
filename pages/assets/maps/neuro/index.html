@@ -2063,15 +2063,6 @@
     function setupInputEvents() {
       const canvas = document.getElementById('gardenCanvas');
 
-      const enterBtnEl = document.getElementById('enterBtn');
-      if (enterBtnEl) {
-        enterBtnEl.onclick = function() {
-          const ov = document.getElementById('startOverlay');
-          if (ov) { ov.style.display = 'none'; ov.classList.add('hidden'); }
-          try { if (canvas) canvas.requestPointerLock(); } catch(e){}
-          try { initAudioEngine(); } catch(e){}
-        };
-      }
       document.getElementById('enterBtn').addEventListener('click', () => {
         document.getElementById('startOverlay').classList.add('hidden');
         canvas.requestPointerLock();
