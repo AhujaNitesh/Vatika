@@ -19,7 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRouter);
 app.use('/api', apiRouter);
 
-// Serve static frontend files (root & pages directory)
+// Serve static frontend files (root, pages & models)
+app.use('/3-D Models', express.static(path.join(__dirname, '3-D Models')));
+app.use('/assets/models', express.static(path.join(__dirname, 'assets', 'models')));
 app.use(express.static(path.join(__dirname, 'pages'), { extensions: ['html', 'htm'] }));
 app.use(express.static(__dirname, { extensions: ['html', 'htm'] }));
 
