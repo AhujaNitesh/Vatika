@@ -17,6 +17,7 @@
     "google-auth-library": "^11.0.2",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.9.7",
-    "nodemailer": "^9.0.5"
+    "nodemailer": "^9.0.5",
+    "pptxgenjs": "^4.0.1"
   }
 }

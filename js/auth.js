@@ -186,55 +186,66 @@ const AuthAPI = {
     const btn = document.getElementById(buttonId);
     if (!btn) return;
 
+    let clientId = window.VATIKA_GOOGLE_CLIENT_ID || '353733584687-vekhno3atgd40vjilqltillh38ttmtga.apps.googleusercontent.com';
+
     try {
       const configRes = await fetch('/api/config');
       const config = await configRes.json();
-      if (config.googleClientId) {
+      if (config && config.googleClientId) {
+        clientId = config.googleClientId;
         window.VATIKA_GOOGLE_CLIENT_ID = config.googleClientId;
       }
     } catch(e) {}
 
-    const clientId = window.VATIKA_GOOGLE_CLIENT_ID;
     let tokenClient = null;
 
-    if (clientId && typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
-      try {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: 'email profile openid',
-          callback: async (tokenResponse) => {
-            if (tokenResponse && tokenResponse.access_token) {
-              AuthAPI.showAlert('auth-alert-box', 'Verifying Google Account credentials...', 'success');
-              try {
-                const userRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                  headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
-                });
-                const userInfo = await userRes.json();
-                if (userInfo && userInfo.email) {
-                  AuthAPI.handleGoogleOAuthUser(userInfo);
-                } else {
-                  AuthAPI.showAlert('auth-alert-box', 'Failed to retrieve Google profile info.', 'error');
+    const setupTokenClient = () => {
+      if (tokenClient) return tokenClient;
+      const cid = window.VATIKA_GOOGLE_CLIENT_ID || clientId;
+      if (cid && typeof google !== 'undefined' && google.accounts && google.accounts.oauth2) {
+        try {
+          tokenClient = google.accounts.oauth2.initTokenClient({
+            client_id: cid,
+            scope: 'email profile openid',
+            callback: async (tokenResponse) => {
+              if (tokenResponse && tokenResponse.access_token) {
+                AuthAPI.showAlert('auth-alert-box', 'Verifying Google Account credentials...', 'success');
+                try {
+                  const userRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                  });
+                  const userInfo = await userRes.json();
+                  if (userInfo && userInfo.email) {
+                    AuthAPI.handleGoogleOAuthUser(userInfo);
+                  } else {
+                    AuthAPI.showAlert('auth-alert-box', 'Failed to retrieve Google profile info.', 'error');
+                  }
+                } catch(err) {
+                  AuthAPI.showAlert('auth-alert-box', 'Google user info fetch error: ' + err.message, 'error');
                 }
-              } catch(err) {
-                AuthAPI.showAlert('auth-alert-box', 'Google user info fetch error: ' + err.message, 'error');
+              } else if (tokenResponse && tokenResponse.error) {
+                AuthAPI.showAlert('auth-alert-box', 'Google OAuth error: ' + tokenResponse.error, 'error');
               }
-            } else if (tokenResponse && tokenResponse.error) {
-              AuthAPI.showAlert('auth-alert-box', 'Google OAuth error: ' + tokenResponse.error, 'error');
             }
-          }
-        });
-      } catch(e) {
-        console.warn('[Google OAuth Init Error]', e.message);
+          });
+        } catch(e) {
+          console.warn('[Google OAuth Init Error]', e.message);
+        }
       }
-    }
+      return tokenClient;
+    };
+
+    setupTokenClient();
 
     btn.addEventListener('click', () => {
-      if (tokenClient) {
-        tokenClient.requestAccessToken({ prompt: 'consent' });
-      } else if (clientId && typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+      const tc = setupTokenClient();
+      const cid = window.VATIKA_GOOGLE_CLIENT_ID || clientId;
+      if (tc) {
+        tc.requestAccessToken({ prompt: 'consent' });
+      } else if (cid && typeof google !== 'undefined' && google.accounts && google.accounts.id) {
         try {
           google.accounts.id.initialize({
-            client_id: clientId,
+            client_id: cid,
             callback: (response) => {
               if (response && response.credential) {
                 AuthAPI.handleGoogleResponse(response.credential);
