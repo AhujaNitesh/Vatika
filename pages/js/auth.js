@@ -278,7 +278,7 @@ const AuthAPI = {
         this.setToken(data.token, true);
         this.setUser(data.user);
         this.showAlert('auth-alert-box', `Welcome ${data.user.full_name || data.user.email}! Redirecting...`, 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+        setTimeout(() => { window.location.href = '/dashboard'; }, 800);
       } else {
         this.showAlert('auth-alert-box', data.message || 'Google authentication failed', 'error');
       }
@@ -306,7 +306,7 @@ const AuthAPI = {
         AuthAPI.setToken(data.token, true);
         AuthAPI.setUser(data.user);
         AuthAPI.showAlert('auth-alert-box', 'Signed in with Google as ' + data.user.email + '! Redirecting...', 'success');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+        setTimeout(() => { window.location.href = '/dashboard'; }, 800);
       } else {
         AuthAPI.showAlert('auth-alert-box', data.message, 'error');
       }
